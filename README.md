@@ -8,14 +8,16 @@ Generally it allows users to make informed decisions based on previous customers
 
 ## features 
 
-- ## Authentication/Authorization Feature 
+### Authentication/Authorization Feature 
 
-- - signin
-- - signup
-- - change username
+- signin
+- signup
+- change username
 
-- ## Business Features
-- - 
+### Business Features
+
+-  A normal user should be able to create, read, update and delete comments.
+-  An Admin should be able to create, read, update and delete channels(pages representing a company).
 
 ## group members
 
