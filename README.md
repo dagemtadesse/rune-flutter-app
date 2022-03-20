@@ -6,6 +6,17 @@ rune is a mobile application that provide an interactive platform for users to p
 It tries to automate and digitalize the old message box system; while making the data available to every registered user.  
 Generally it allows users to make informed decisions based on previous customers' experiences.
 
+## features 
+
+- ## Authentication/Authorization Feature 
+
+- - signin
+- - signup
+- - change username
+
+- ## Business Features
+- - 
+
 ## group members
 
 Dagem Tadesse (section 3, UGR/7445/12)  
