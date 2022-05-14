@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/widgets/widgets.dart';
+import 'package:rune/widgets/host_page.dart';
 
 void main() {
   runApp(const RuneApp());
@@ -16,7 +16,7 @@ class RuneApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const HostPage(),
     );
   }
 }
