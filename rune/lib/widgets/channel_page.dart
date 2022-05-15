@@ -39,7 +39,7 @@ class _ChannelPageState extends State<ChannelPage> {
                                 topLeft: Radius.circular(20.0)),
                             gradient: LinearGradient(colors: [
                               Color.fromARGB(250, 214, 165, 97),
-                              Color.fromARGB(205, 127, 50, 84),
+                              Colors.brown,
                             ])),
                         child: Column(
                           children: [
@@ -118,6 +118,33 @@ class _ChannelPageState extends State<ChannelPage> {
     );
   }
 
+  Widget SortingBtns() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 65.0),
+      child: Container(
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(
+            children: [
+              Text(
+                "Trending",
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                width: 15.0,
+              ),
+              Text(
+                "Subscribed",
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
+              )
+            ],
+          ),
+          IconButton(onPressed: () {}, icon: Icon(Icons.sort_rounded))
+        ]),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +159,10 @@ class _ChannelPageState extends State<ChannelPage> {
             height: 10.0,
           ),
           SearchBar(),
+          SizedBox(
+            height: 5.0,
+          ),
+          SortingBtns(),
           SizedBox(
             height: 10.0,
           ),
