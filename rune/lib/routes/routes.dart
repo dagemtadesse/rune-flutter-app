@@ -1,0 +1,10 @@
+export 'splash_page.dart';
+export 'signup_page.dart';
+export 'signin_page.dart';
+export 'home_page.dart';
+export 'channel_page.dart';
+export 'channel_details_page.dart';
+export 'profile_page.dart';
+export 'edit_profile_page.dart';
+export 'add_post_page.dart';
+export 'custom_search_delegate.dart';

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/widgets/channel_page.dart';
-import 'package:rune/widgets/home_page.dart';
-import 'package:rune/widgets/profile_page.dart';
+import './routes.dart';
 
 class HostPage extends StatefulWidget {
   const HostPage({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/widgets/add_post_page.dart';
+import './routes.dart';
 
 class ChannelDetailsPage extends StatefulWidget {
   const ChannelDetailsPage({Key? key}) : super(key: key);

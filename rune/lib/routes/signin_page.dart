@@ -1,23 +1,91 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
+import '../widgets/widgets.dart';
 import 'signup_page.dart';
 
-class SignIn extends StatefulWidget {
-  @override
-  State<SignIn> createState() => _SignInState();
-}
-
-class _SignInState extends State<SignIn> {
+class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(
-          229,
-          229,
-          229,
-          1.0,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
         ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+        child: Column(
+          children: [
+            const FormBanner(
+              header: "Let's Sign you in.",
+              description:
+                  'Welcome to Rune, a platform where everyone has a voice.',
+            ),
+            const SizedBox(
+              height: 48,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      suffixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      suffixIcon: const Icon(Icons.password),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("Don't have an account? "),
+                Text(
+                  'Register',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ExpandableButton(
+                  text: 'Sign In',
+                  onPressed: () {},
+                  theme: SplashTheme.buttonTheme,
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/*
+appBar: AppBar(
+        backgroundColor: Colors.green,
+        elevation: 0,
         iconTheme: IconThemeData(
           color: Colors.black, //change your color here
         ),
@@ -75,12 +143,7 @@ class _SignInState extends State<SignIn> {
               children: [
                 Text("Don't have an account?"),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => (SignUp())));
-                  },
+                  onTap: () {},
                   child: Text(
                     "Register",
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -104,6 +167,4 @@ class _SignInState extends State<SignIn> {
           ),
         ],
       )),
-    );
-  }
-}
+ */

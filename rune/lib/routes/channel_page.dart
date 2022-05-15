@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/widgets/channel_details_page.dart';
-import 'package:rune/widgets/custom_search_delegate.dart';
+import './routes.dart';
 
 class ChannelPage extends StatefulWidget {
   const ChannelPage({Key? key}) : super(key: key);

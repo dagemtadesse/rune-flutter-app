@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/widgets/host_page.dart';
-import 'package:rune/widgets/splash_page.dart';
-
+import 'package:rune/routes/routes.dart';
 
 void main() {
   runApp(const RuneApp());
@@ -12,24 +10,9 @@ class RuneApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return MaterialApp(
-      home:  MySplashPage( title: "Rune",),
+    return const MaterialApp(
+      home: Splash(),
       debugShowCheckedModeBanner: false,
     );
-  }
-}
-
-class MySplashPage extends StatefulWidget {
-   const MySplashPage({Key? key, required this.title}) : super(key: key);
-    final String title;
-
-  @override
-  State<MySplashPage> createState() => _MySplashPageState();
-}
-
-class _MySplashPageState extends State<MySplashPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Splash();
   }
 }
