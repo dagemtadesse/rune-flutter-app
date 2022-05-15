@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rune/widgets/channel_page.dart';
 import 'package:rune/widgets/home_page.dart';
 import 'package:rune/widgets/profile_page.dart';
-
-import 'channel_page.dart';
 
 class HostPage extends StatefulWidget {
   const HostPage({Key? key}) : super(key: key);
@@ -12,11 +11,11 @@ class HostPage extends StatefulWidget {
 }
 
 class _HostPageState extends State<HostPage> {
-  int myIndex = 0;
+  int myIndex = 1;
   final myPages = [
-    HomePage(),
-    ChannelPage(),
-    Profile2(),
+    const HomePage(),
+    const ChannelPage(),
+    const Profile2(),
   ];
   @override
   Widget build(BuildContext context) {
