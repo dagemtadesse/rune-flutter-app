@@ -96,7 +96,8 @@ class SignUpScreen extends StatelessWidget {
                     final provider = Provider.of<RegistrationFromModel>(context,
                         listen: false);
                     if (provider.validateEmail() &&
-                        provider.validatePassword()) {
+                        provider.validatePassword() &&
+                        provider.validateCPassword()) {
                       provider.setSignInRequestState(Sent());
                       try {
                         final data = await UserRequest.register(
