@@ -13,20 +13,12 @@ class _HostPageState extends State<HostPage> {
   final myPages = [
     // const HomePage(),
     const ChannelPage(),
-    const Profile2(),
+    const ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                // SliverAppBar(
-                //   title: Text("Home"),
-                //   centerTitle: true,
-                //   backgroundColor: Colors.blue,
-                // ),
-              ],
-          body: myPages[myIndex]),
+      body: myPages[myIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: myIndex,
           onTap: (int index) {
@@ -35,9 +27,9 @@ class _HostPageState extends State<HostPage> {
             });
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.groups_sharp), label: "Channel"),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), label: "Profile"),
           ]),

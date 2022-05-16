@@ -45,26 +45,26 @@ class RunePages extends StatelessWidget {
     return MaterialApp(
       home: Navigator(
         pages: [
+          // const MaterialPage(
+          //   key: ValueKey("splash page"),
+          //   child: Splash(),
+          // ),
+          // if (pageModel.currentPage == Pages.SIGN_IN_PAGE)
+          //   const MaterialPage(
+          //     key: ValueKey('sign up page'),
+          //     child: SignUpScreen(),
+          //   ),
+          // if (pageModel.currentPage == Pages.SIGN_IN_PAGE ||
+          //     registrationModel.signInRequestState is Received)
+          //   const MaterialPage(
+          //     key: ValueKey('sign in'),
+          //     child: SignInScreen(),
+          //   ),
+          // if (signInModel.loginRequestState is Received)
           const MaterialPage(
-            key: ValueKey("splash page"),
-            child: Splash(),
+            key: ValueKey('home page'),
+            child: HostPage(),
           ),
-          if (pageModel.currentPage == Pages.SIGN_IN_PAGE)
-            const MaterialPage(
-              key: ValueKey('sign up page'),
-              child: SignUpScreen(),
-            ),
-          if (pageModel.currentPage == Pages.SIGN_IN_PAGE ||
-              registrationModel.signInRequestState is Received)
-            const MaterialPage(
-              key: ValueKey('sign in'),
-              child: SignInScreen(),
-            ),
-          if (signInModel.loginRequestState is Received)
-            const MaterialPage(
-              key: ValueKey('home page'),
-              child: HostPage(),
-            ),
         ],
         onPopPage: (route, result) => route.didPop(result),
       ),

@@ -1,128 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Profile2 extends StatefulWidget {
-  const Profile2({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
-  @override
-  State<Profile2> createState() => _Profile2State();
-}
-
-class _Profile2State extends State<Profile2> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        Container(
-          color: Colors.blue,
-          constraints: BoxConstraints.expand(height: 200),
-        ),
-        Positioned(
-          top: 100,
-          left: 10,
-          child: CircleAvatar(
-            radius: 80,
-            backgroundImage: AssetImage("assets/test.jpg"),
+        SizedBox(
+          height: 192,
+          child: Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                  Color.fromRGBO(15, 36, 39, 1),
+                  Color.fromRGBO(32, 56, 67, 1),
+                  Color.fromRGBO(43, 83, 100, 1),
+                ])),
+                height: 154,
+              ),
+              const Positioned(
+                top: 100,
+                left: 18,
+                child: CircleAvatar(
+                  radius: 46,
+                  backgroundImage: AssetImage("assets/test.jpg"),
+                ),
+              ),
+            ],
           ),
         ),
-        Positioned(
-            top: 270,
-            left: 10,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Flash Thompson",
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "flash_thomspon",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.edit_outlined)),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Edit Profile")
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.bookmarks_outlined)),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Bookmarks")
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.image_outlined)),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Posts")
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.chat_bubble_outline)),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Comments")
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.donut_large_rounded)),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Channels")
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {}, icon: Icon(Icons.logout)),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Logout")
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+        Padding(
+          padding: const EdgeInsets.only(left: 18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              Text(
+                "Flash Thompson",
+                style: GoogleFonts.poppins(
+                    fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
-            ))
+              const SizedBox(height: 6),
+              Text(
+                "@flash_thomspon",
+                style: GoogleFonts.poppins(fontSize: 15),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    ListTile(
+                        leading: Icon(Icons.edit_outlined),
+                        title: Text("Edit Profile")),
+                    ListTile(
+                        leading: Icon(Icons.bookmarks_outlined),
+                        title: Text("Bookmarks")),
+                    ListTile(
+                        leading: Icon(Icons.image_outlined),
+                        title: Text("Posts")),
+                    ListTile(
+                        leading: Icon(Icons.chat_bubble_outline),
+                        title: Text("Comments")),
+                    ListTile(
+                      leading: Icon(Icons.logout),
+                      title: Text("Logout"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
