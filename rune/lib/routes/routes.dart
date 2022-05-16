@@ -7,3 +7,4 @@ export 'profile_page.dart';
 export 'edit_profile_page.dart';
 export 'add_post_page.dart';
 export 'custom_search_delegate.dart';
+export 'host_page.dart';

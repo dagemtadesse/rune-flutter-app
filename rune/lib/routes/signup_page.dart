@@ -72,6 +72,12 @@ class SignUpScreen extends StatelessWidget {
                       validationMsg: formProvider.cPasswordValidation,
                       hidePassword: true,
                     ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    NetworkProgress(
+                      state: formProvider.signInRequestState,
+                    ),
                   ],
                 ),
               );
@@ -95,6 +101,7 @@ class SignUpScreen extends StatelessWidget {
                   onPressed: () async {
                     final provider = Provider.of<RegistrationFromModel>(context,
                         listen: false);
+                    print(provider.password);
                     if (provider.validateEmail() &&
                         provider.validatePassword() &&
                         provider.validateCPassword()) {

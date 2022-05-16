@@ -1,7 +1,6 @@
 class UserValidator {
-
   static String? validateFullName(String fullName) {
-    if (fullName == null || fullName.trim().isEmpty) {
+    if (fullName.trim().isEmpty) {
       return "Please enter your full name";
     }
     if (!RegExp(r'^[a-z A-Z]+$').hasMatch(fullName)) {
@@ -12,7 +11,7 @@ class UserValidator {
   }
 
   static String? validateEmail(String email) {
-    if (email == null || email.trim().isEmpty) {
+    if (email.trim().isEmpty) {
       return 'Please enter your email address';
     }
 
@@ -24,7 +23,7 @@ class UserValidator {
   }
 
   static String? validatePassword(String password) {
-    if (password == null || password.trim().isEmpty) {
+    if (password.trim().isEmpty) {
       return 'This field is required';
     }
     if (password.trim().length < 8) {
@@ -33,21 +32,20 @@ class UserValidator {
     return null;
   }
 
-  static String? validateConfirmPassword(
-      String cPassword, String password) {
-    if (password == null || password.isEmpty) {
+  static String? validateConfirmPassword(String cPassword, String password) {
+    if (cPassword.isEmpty) {
       return 'This field is required';
     }
 
     if (password != cPassword) {
-      return 'Confimation password does not match the entered password';
+      return 'Confirmation password does not match the entered password';
     }
 
     return null;
   }
 
   static String? validateUserName(String userName) {
-    if (userName == null || userName.trim().isEmpty) {
+    if (userName.trim().isEmpty) {
       return "Username can't be empty";
     }
     if (userName.trim().length < 4) {
