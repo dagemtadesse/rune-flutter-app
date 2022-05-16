@@ -43,4 +43,8 @@ class SplashTheme {
   );
 }
 
+class RuneTheme {
+  static const borderColor = Color.fromRGBO(89, 89, 89, 1);
+}
+
 // class

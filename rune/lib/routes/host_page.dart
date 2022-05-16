@@ -9,7 +9,7 @@ class HostPage extends StatefulWidget {
 }
 
 class _HostPageState extends State<HostPage> {
-  int myIndex = 1;
+  int myIndex = 0;
   final myPages = [
     // const HomePage(),
     const ChannelPage(),
@@ -34,8 +34,8 @@ class _HostPageState extends State<HostPage> {
               myIndex = index;
             });
           },
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.groups_sharp), label: "Channel"),
             BottomNavigationBarItem(
