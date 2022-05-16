@@ -6,6 +6,7 @@ class ValidateInput extends StatelessWidget {
   final String placeholder;
   final String? validationMsg;
   final bool? hidePassword;
+  final bool? showIcon;
   final void Function()? toggler;
   final void Function(String) setter;
 
@@ -14,6 +15,7 @@ class ValidateInput extends StatelessWidget {
     this.toggler,
     this.hidePassword,
     this.validationMsg,
+    this.showIcon = false,
     required this.setter,
     required this.placeholder,
   }) : super(key: key);
@@ -22,7 +24,7 @@ class ValidateInput extends StatelessWidget {
   Widget build(BuildContext context) {
     IconButton? visibilityButton;
 
-    if (hidePassword != null) {
+    if (showIcon ?? false) {
       visibilityButton = IconButton(
         enableFeedback: false,
         icon: Icon(
@@ -39,7 +41,8 @@ class ValidateInput extends StatelessWidget {
       children: [
         TextFormField(
           onChanged: (value) => setter(value),
-          obscureText: hidePassword ?? false,
+          obscureText:
+              (hidePassword ?? false) && placeholder.contains('Password'),
           decoration: InputDecoration(
             hintText: placeholder,
             suffixIcon: visibilityButton,

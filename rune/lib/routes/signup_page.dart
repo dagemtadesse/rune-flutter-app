@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rune/models/providers/provider.dart';
 import 'package:rune/theme.dart';
 import 'package:rune/widgets/widgets.dart';
 
@@ -29,56 +31,48 @@ class SignUpScreen extends StatelessWidget {
             const SizedBox(
               height: 48,
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Full name',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+            Consumer<RegistrationFromModel>(
+                builder: (context, formProvider, _) {
+              return Expanded(
+                child: Column(
+                  children: [
+                    ValidateInput(
+                      placeholder: 'Full name',
+                      setter: (String value) => formProvider.fullName = value,
+                      validationMsg: formProvider.fullNameValidation,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                    const SizedBox(
+                      height: 16,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextField(
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      suffixIcon: const Icon(Icons.visibility),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                    ValidateInput(
+                      placeholder: 'Email',
+                      setter: (String value) => formProvider.email = value,
+                      validationMsg: formProvider.emailValidation,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextField(
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      hintText: 'Confirm Password',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                    const SizedBox(
+                      height: 16,
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    ValidateInput(
+                      placeholder: 'Password',
+                      setter: (String value) => formProvider.password = value,
+                      validationMsg: formProvider.passwordValidation,
+                      toggler: formProvider.togglePasswordVisibility,
+                      hidePassword: formProvider.hidePassword,
+                      showIcon: true,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    ValidateInput(
+                      placeholder: 'Confirm Password',
+                      setter: (String value) => formProvider.cPassword = value,
+                      validationMsg: formProvider.cPasswordValidation,
+                      hidePassword: true,
+                    ),
+                  ],
+                ),
+              );
+            }),
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

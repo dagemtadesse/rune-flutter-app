@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/models/providers/login_form.dart';
+import 'package:rune/models/providers/provider.dart';
 import 'package:rune/routes/routes.dart';
 
 void main() {
@@ -17,6 +17,9 @@ class RuneApp extends StatelessWidget {
         ChangeNotifierProvider<LoginFormModel>(
           create: (_) => LoginFormModel(),
         ),
+        ChangeNotifierProvider<RegistrationFromModel>(
+          create: (_) => RegistrationFromModel(),
+        )
       ],
       child: MaterialApp(
         home: Navigator(

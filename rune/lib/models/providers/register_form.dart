@@ -7,28 +7,35 @@ class RegistrationFromModel with ChangeNotifier {
   String password = "";
   String cPassword = "";
 
-  String? fullNameValidationMsg;
-  String? emailValidationMsg;
-  String? passwordValidationMsg;
-  String? cPasswordValidationMsg;
+  String? fullNameValidation;
+  String? emailValidation;
+  String? passwordValidation;
+  String? cPasswordValidation;
+
+  bool hidePassword = true;
+
+  void togglePasswordVisibility() {
+    hidePassword = !hidePassword;
+    notifyListeners();
+  }
 
   void validateFullName() {
-    fullNameValidationMsg = UserValidator.validateFullName(fullName);
+    fullNameValidation = UserValidator.validateFullName(fullName);
     notifyListeners();
   }
 
   void validateEmail() {
-    emailValidationMsg = UserValidator.validateEmail(email);
+    emailValidation = UserValidator.validateEmail(email);
     notifyListeners();
   }
 
   void validatePassword() {
-    passwordValidationMsg = UserValidator.validatePassword(password);
+    passwordValidation = UserValidator.validatePassword(password);
     notifyListeners();
   }
 
   void validateCPassword() {
-    cPasswordValidationMsg =
+    cPasswordValidation =
         UserValidator.validateConfirmPassword(cPassword, password);
     notifyListeners();
   }

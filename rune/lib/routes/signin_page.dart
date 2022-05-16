@@ -6,6 +6,8 @@ import '../widgets/widgets.dart';
 import 'signup_page.dart';
 
 class SignInScreen extends StatelessWidget {
+  const SignInScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +50,7 @@ class SignInScreen extends StatelessWidget {
                       setter: (String value) => formProvider.password = value,
                       toggler: formProvider.togglePasswordVisibility,
                       hidePassword: formProvider.hidePassword,
+                      showIcon: true,
                       validationMsg: formProvider.passwordValidation,
                     ),
                   ],
