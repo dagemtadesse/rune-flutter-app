@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rune/models/network/network_states.dart';
+import 'package:rune/models/network/user_requests.dart';
 import 'package:rune/models/providers/provider.dart';
+import 'package:rune/widgets/network_progress.dart';
 import '../theme.dart';
 import '../widgets/widgets.dart';
-import 'signup_page.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -46,12 +48,18 @@ class SignInScreen extends StatelessWidget {
                       height: 16,
                     ),
                     ValidateInput(
-                      placeholder: 'password',
+                      placeholder: 'Password',
                       setter: (String value) => formProvider.password = value,
                       toggler: formProvider.togglePasswordVisibility,
                       hidePassword: formProvider.hidePassword,
                       showIcon: true,
                       validationMsg: formProvider.passwordValidation,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    NetworkProgress(
+                      state: formProvider.loginRequestState,
                     ),
                   ],
                 ),
@@ -73,11 +81,20 @@ class SignInScreen extends StatelessWidget {
               children: [
                 ExpandableButton(
                   text: 'Sign In',
-                  onPressed: () {
+                  onPressed: () async {
                     final provider =
                         Provider.of<LoginFormModel>(context, listen: false);
-                    provider.validateEmail();
-                    provider.validatePassword();
+                    if (provider.validateEmail() &&
+                        provider.validatePassword()) {
+                      provider.setLoginRequestState(Sent());
+                      try {
+                        final data = await UserRequest.login(
+                            provider.email, provider.password);
+                        provider.setLoginRequestState(Received(data));
+                      } catch (error) {
+                        provider.setLoginRequestState(Failure(error));
+                      }
+                    }
                   },
                   theme: SplashTheme.buttonTheme,
                 ),
@@ -89,90 +106,3 @@ class SignInScreen extends StatelessWidget {
     );
   }
 }
-
-/*
-appBar: AppBar(
-        backgroundColor: Colors.green,
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-      ),
-      body: Center(
-          child: Column(
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          Stack(alignment: Alignment.centerLeft, children: <Widget>[
-            Image(
-              width: 332,
-              height: 205,
-              image: AssetImage("assets/Vector.png"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 30),
-              child: Text(
-                "Let's Sign You In.",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 27,
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w700),
-              ),
-            ),
-          ]),
-          Container(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 30),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Phone and Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 18,
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 30),
-            child: TextField(
-              decoration: InputDecoration(
-                suffixIcon: Icon(Icons.visibility),
-                hintText: 'Password',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          SizedBox(height: 250),
-          Container(
-            padding: EdgeInsets.only(left: 79, right: 102, bottom: 16),
-            child: Row(
-              children: [
-                Text("Don't have an account?"),
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    "Register",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 343,
-            height: 46,
-            child: ElevatedButton(
-                onPressed: () {},
-                child: Text("Sign In"),
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(18, 18, 18, 1.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                )),
-          ),
-        ],
-      )),
- */

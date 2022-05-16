@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:rune/models/validators/validators.dart';
 
+import '../network/network_states.dart';
+
 class RegistrationFromModel with ChangeNotifier {
   String fullName = "";
   String email = "";
@@ -14,29 +16,39 @@ class RegistrationFromModel with ChangeNotifier {
 
   bool hidePassword = true;
 
+  NetworkState signInRequestState = NotSend(null);
+  void setSignInRequestState(NetworkState newState) {
+    signInRequestState = newState;
+    notifyListeners();
+  }
+
   void togglePasswordVisibility() {
     hidePassword = !hidePassword;
     notifyListeners();
   }
 
-  void validateFullName() {
+  bool validateFullName() {
     fullNameValidation = UserValidator.validateFullName(fullName);
     notifyListeners();
+    return fullNameValidation == null;
   }
 
-  void validateEmail() {
+  bool validateEmail() {
     emailValidation = UserValidator.validateEmail(email);
     notifyListeners();
+    return emailValidation == null;
   }
 
-  void validatePassword() {
+  bool validatePassword() {
     passwordValidation = UserValidator.validatePassword(password);
     notifyListeners();
+    return passwordValidation == null;
   }
 
-  void validateCPassword() {
+  bool validateCPassword() {
     cPasswordValidation =
         UserValidator.validateConfirmPassword(cPassword, password);
     notifyListeners();
+    return cPasswordValidation == null;
   }
 }

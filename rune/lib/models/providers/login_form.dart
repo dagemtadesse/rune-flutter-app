@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:rune/models/network/network_states.dart';
+
+import '../models.dart';
 
 class LoginFormModel with ChangeNotifier {
   String email = "";
@@ -9,26 +12,35 @@ class LoginFormModel with ChangeNotifier {
   String? emailValidation;
   String? passwordValidation;
 
+  NetworkState loginRequestState = NotSend(null);
+
   void togglePasswordVisibility() {
     hidePassword = !hidePassword;
     notifyListeners();
   }
 
-  void validateEmail() {
+  void setLoginRequestState(NetworkState newState) {
+    loginRequestState = newState;
+    notifyListeners();
+  }
+
+  bool validateEmail() {
     if (email.isEmpty) {
       emailValidation = "Email Could not be empty";
     } else {
       emailValidation = null;
     }
     notifyListeners();
+    return emailValidation == null;
   }
 
-  void validatePassword() {
+  bool validatePassword() {
     if (password.isEmpty) {
       passwordValidation = "password Could not be empty";
     } else {
       passwordValidation = null;
     }
     notifyListeners();
+    return passwordValidation == null;
   }
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rune/models/network/network_states.dart';
 import 'package:rune/models/providers/provider.dart';
 import 'package:rune/theme.dart';
 import 'package:rune/widgets/widgets.dart';
+
+import '../models/network/user_requests.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -89,7 +92,23 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 ExpandableButton(
                   text: 'Register',
-                  onPressed: () {},
+                  onPressed: () async {
+                    final provider = Provider.of<RegistrationFromModel>(context,
+                        listen: false);
+                    if (provider.validateEmail() &&
+                        provider.validatePassword()) {
+                      provider.setSignInRequestState(Sent());
+                      try {
+                        final data = await UserRequest.register(
+                            provider.fullName,
+                            provider.email,
+                            provider.password);
+                        provider.setSignInRequestState(Received(data));
+                      } catch (error) {
+                        provider.setSignInRequestState(Failure(error));
+                      }
+                    }
+                  },
                   theme: SplashTheme.buttonTheme,
                 ),
               ],

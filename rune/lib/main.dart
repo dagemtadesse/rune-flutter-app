@@ -19,7 +19,7 @@ class RuneApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<RegistrationFromModel>(
           create: (_) => RegistrationFromModel(),
-        )
+        ),
       ],
       child: MaterialApp(
         home: Navigator(
