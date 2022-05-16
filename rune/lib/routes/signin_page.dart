@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rune/models/providers/provider.dart';
 import '../theme.dart';
 import '../widgets/widgets.dart';
 import 'signup_page.dart';
@@ -29,29 +31,27 @@ class SignInScreen extends StatelessWidget {
             const SizedBox(
               height: 48,
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      suffixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+            Consumer<LoginFormModel>(
+              builder: (context, formProvider, _) => Expanded(
+                child: Column(
+                  children: [
+                    ValidateInput(
+                      placeholder: 'Email',
+                      setter: (String value) => formProvider.email = value,
+                      validationMsg: formProvider.emailValidation,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      suffixIcon: const Icon(Icons.password),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                    const SizedBox(
+                      height: 16,
                     ),
-                  ),
-                ],
+                    ValidateInput(
+                      placeholder: 'password',
+                      setter: (String value) => formProvider.password = value,
+                      toggler: formProvider.togglePasswordVisibility,
+                      hidePassword: formProvider.hidePassword,
+                      validationMsg: formProvider.passwordValidation,
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 32),
@@ -70,7 +70,12 @@ class SignInScreen extends StatelessWidget {
               children: [
                 ExpandableButton(
                   text: 'Sign In',
-                  onPressed: () {},
+                  onPressed: () {
+                    final provider =
+                        Provider.of<LoginFormModel>(context, listen: false);
+                    provider.validateEmail();
+                    provider.validatePassword();
+                  },
                   theme: SplashTheme.buttonTheme,
                 ),
               ],

@@ -53,6 +53,9 @@ class SignUpScreen extends StatelessWidget {
                     height: 16,
                   ),
                   TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       hintText: 'Password',
                       suffixIcon: const Icon(Icons.visibility),
@@ -64,6 +67,9 @@ class SignUpScreen extends StatelessWidget {
                     height: 16,
                   ),
                   TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       hintText: 'Confirm Password',
                       border: OutlineInputBorder(

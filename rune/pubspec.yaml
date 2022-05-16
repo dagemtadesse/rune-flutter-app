@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^2.3.2
   flutter_svg: ^1.0.3
   flutter_svg_provider: ^1.0.3
+  flutter_bloc: ^8.0.1
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:

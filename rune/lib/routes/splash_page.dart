@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rune/routes/routes.dart';
-import 'package:rune/routes/signup_page.dart';
 import 'package:rune/theme.dart';
 
 class Splash extends StatelessWidget {
@@ -14,22 +13,23 @@ class Splash extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            flex: 35,
+            flex: 42,
             child: Container(
               padding: const EdgeInsets.all(18.0),
               child: const Image(
                 image: AssetImage("assets/splash.jpg"),
+                fit: BoxFit.fill,
               ),
             ),
           ),
           Flexible(
-            flex: 65,
+            flex: 58,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/waves.png"),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.cover,
                     alignment: Alignment.topLeft),
               ),
               child: Column(

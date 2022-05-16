@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:rune/models/validators/user_validator.dart';
 
 const BASE_URL = "http://localhost:9099/api/v1/";
 
-class User {
+class User extends UserValidator {
   final int id;
   final String fullName;
   final String? handle;
@@ -40,7 +41,6 @@ class User {
     );
 
     final body = jsonDecode(response.body);
-    print(body);
     if (response.statusCode == 200) {
       return User.fromJson(body["data"]);
     }
@@ -54,9 +54,7 @@ class User {
         body: {'fullname': fullName, 'email': email, 'password': password});
 
     final jsonBody = jsonDecode(response.body);
-    print(jsonBody);
     if (response.statusCode == 201) {
-      // print(jsonBody["data"]);
       return User.fromJson(jsonBody["data"]);
     }
 
