@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rune/models/network/network_states.dart';
-import 'package:rune/models/providers/change_password_form_model.dart';
-import 'package:rune/models/providers/page_model.dart';
 import 'package:rune/models/providers/provider.dart';
+import 'package:rune/routes/create_channel_page.dart';
 import 'package:rune/routes/routes.dart';
 
 void main() {
@@ -47,6 +46,14 @@ class RunePages extends StatelessWidget {
     final signInModel = Provider.of<LoginFormModel>(context);
 
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.black,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.black,
+        ),
+      ),
       home: Navigator(
         pages: [
           // tier 1
@@ -92,7 +99,7 @@ class RunePages extends StatelessWidget {
           if (pageModel.currentPage == Pages.createChannelPage)
             const MaterialPage(
               key: ValueKey('channel details page'),
-              child: ChannelDetailsPage(),
+              child: CreateChannelPage(),
             ),
           // tier 7
         ],

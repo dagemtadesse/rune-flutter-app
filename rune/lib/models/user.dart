@@ -12,10 +12,10 @@ class User with UserRequest {
   User(
       {required this.id,
       required this.fullName,
-      required this.handle,
+      this.handle,
       required this.email,
-      required this.avatar,
-      required this.mimeType});
+      this.avatar,
+      this.mimeType});
 
   factory User.fromJson(
     Map<String, dynamic> json,
