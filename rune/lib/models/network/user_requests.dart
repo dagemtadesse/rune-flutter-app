@@ -34,9 +34,13 @@ class UserRequest {
         return User.fromJson(jsonBody["data"]);
       }
 
-      throw {jsonBody['message']};
+      throw jsonBody['message'];
     } on Exception {
       throw "Unable to connect to the server";
     }
+  }
+
+  static Future<User> changePassword(String oldPassword, String newPassword) {
+    throw UnimplementedError();
   }
 }

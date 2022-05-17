@@ -101,7 +101,7 @@ class SignUpScreen extends StatelessWidget {
                   onPressed: () async {
                     final provider = Provider.of<RegistrationFromModel>(context,
                         listen: false);
-                    print(provider.password);
+                    // print(provider.password);
                     if (provider.validateEmail() &&
                         provider.validatePassword() &&
                         provider.validateCPassword()) {

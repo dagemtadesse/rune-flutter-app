@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rune/models/network/network_states.dart';
+import 'package:rune/models/providers/change_password_form_model.dart';
 import 'package:rune/models/providers/page_model.dart';
 import 'package:rune/models/providers/provider.dart';
 import 'package:rune/routes/routes.dart';
@@ -21,6 +22,9 @@ class RuneApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<RegistrationFromModel>(
           create: (_) => RegistrationFromModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChangePasswordFormModel(),
         ),
         ChangeNotifierProvider(
           create: (_) => PageModel(),
@@ -65,6 +69,10 @@ class RunePages extends StatelessWidget {
               key: ValueKey('home page'),
               child: HostPage(),
             ),
+          const MaterialPage(
+            key: ValueKey('change password page'),
+            child: ChangePasswordScreen(),
+          )
         ],
         onPopPage: (route, result) => route.didPop(result),
       ),

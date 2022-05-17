@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:rune/models/network/network_states.dart';
 
-import '../models.dart';
-
 class LoginFormModel with ChangeNotifier {
   String email = "";
   String password = "";

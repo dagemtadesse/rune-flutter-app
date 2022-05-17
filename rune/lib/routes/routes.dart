@@ -8,3 +8,4 @@ export 'edit_profile_page.dart';
 export 'add_post_page.dart';
 export 'custom_search_delegate.dart';
 export 'home_screen.dart';
+export 'change_password_screen.dart';
