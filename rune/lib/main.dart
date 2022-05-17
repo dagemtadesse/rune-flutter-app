@@ -72,7 +72,11 @@ class RunePages extends StatelessWidget {
           const MaterialPage(
             key: ValueKey('change password page'),
             child: ChangePasswordScreen(),
-          )
+          ),
+          const MaterialPage(
+            key: ValueKey('edit profile page'),
+            child: EditProfileScreen(),
+          ),
         ],
         onPopPage: (route, result) => route.didPop(result),
       ),

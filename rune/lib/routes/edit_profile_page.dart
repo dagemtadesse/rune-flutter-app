@@ -1,94 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:rune/theme.dart';
+import 'package:rune/widgets/widgets.dart';
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  Color.fromRGBO(97, 67, 133, 1.0),
-                  Color.fromRGBO(23, 0, 118, 1.0)
-                ]),
-          ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
         ),
         actions: [
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.save,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              ),
-              Text(
-                "Save",
-                style: TextStyle(fontSize: 15),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                width: 20,
-              )
-            ],
+          TextButton(
+            onPressed: () {},
+            child: Row(
+              children: [
+                const Icon(Icons.save, color: RuneTheme.borderColor),
+                const SizedBox(width: 4),
+                Text("Save",
+                    style: GoogleFonts.poppins(color: RuneTheme.borderColor))
+              ],
+            ),
           ),
+          const SizedBox(width: 18)
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 21, top: 29),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(
-              backgroundImage: AssetImage("assets/pp.jpg"),
-              radius: 50.0,
+              backgroundImage: const AssetImage("assets/pp.jpg"),
+              radius: 46.0,
               child: IconButton(
                 iconSize: 40.84,
-                icon: Icon(
+                icon: const Icon(
                   Icons.camera_alt_outlined,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 onPressed: () {},
               ),
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Full name',
-                  hintText: "Falsh Thompson"),
+            const SizedBox(
+              height: 36,
             ),
-            SizedBox(
-              height: 32,
+            const UnderlinedInput(label: 'Full name', hint: 'Flash Thompson'),
+            const SizedBox(
+              height: 18,
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'username',
-                hintText: "flashytom",
-              ),
+            const UnderlinedInput(label: 'Username', hint: "flashy_thompson"),
+            const SizedBox(
+              height: 18,
             ),
-            SizedBox(
-              height: 32,
-            ),
-            TextFormField(
-              //initialValue:"flashtomson@yourmoms.com" ,
-              decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Email',
-                  hintText: "flashtomson@yourmoms.com"),
-            ),
+            const UnderlinedInput(
+                label: 'Email', hint: "flashy_thompson@mail.com")
           ],
         ),
       ),

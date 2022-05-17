@@ -83,17 +83,13 @@ class SignUpScreen extends StatelessWidget {
               );
             }),
             const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('Already have an account? '),
-                Text(
-                  'Sign in',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
+            QuestionTextButton(
+                question: "Don't have an account?",
+                link: 'Register',
+                callback: () {
+                  // TODO: navigate to login page
+                }),
+            const SizedBox(height: 10),
             Row(
               children: [
                 ExpandableButton(

@@ -17,7 +17,7 @@ class SignInScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
@@ -66,17 +66,13 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Don't have an account? "),
-                Text(
-                  'Register',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
+            QuestionTextButton(
+                question: "Forgot password?",
+                link: 'Change password',
+                callback: () {
+                  // TODO: navigate to registration page
+                }),
+            const SizedBox(height: 10),
             Row(
               children: [
                 ExpandableButton(

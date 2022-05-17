@@ -25,6 +25,7 @@ class ChangePasswordScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const FormBanner(
               header: "Change Your password",
@@ -38,10 +39,11 @@ class ChangePasswordScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ValidateInput(
-                      placeholder: 'Old password',
+                      placeholder: 'Old Password',
                       setter: (String value) =>
                           formProvider.oldPassword = value,
                       validationMsg: formProvider.oldPasswordValidation,
+                      hidePassword: true,
                     ),
                     const SizedBox(
                       height: 16,
@@ -59,11 +61,11 @@ class ChangePasswordScreen extends StatelessWidget {
                       height: 16,
                     ),
                     ValidateInput(
-                      placeholder: 'Confirm New Password',
-                      setter: (String value) =>
-                          formProvider.cNewPassword = value,
-                      validationMsg: formProvider.cNewPassword,
-                    ),
+                        placeholder: 'Confirm New Password',
+                        hidePassword: true,
+                        setter: (String value) =>
+                            formProvider.cNewPassword = value,
+                        validationMsg: formProvider.cNewPasswordValidation),
                     const SizedBox(
                       height: 16,
                     ),
@@ -87,9 +89,10 @@ class ChangePasswordScreen extends StatelessWidget {
                         provider.validateNewPassword() &&
                         provider.validateConfirmPassword()) {
                       try {
-                        final data = await UserRequest.changePassword(
-                            provider.oldPassword, provider.newPassword);
-                        provider.setChangePasswordRequest(Received(data));
+                        provider.setChangePasswordRequest(Sent());
+                        // final data = await UserRequest.changePassword(
+                        //     provider.oldPassword, provider.newPassword);
+                        // provider.setChangePasswordRequest(Received(data));
                       } catch (error) {
                         provider.setChangePasswordRequest(Failure(error));
                       }
