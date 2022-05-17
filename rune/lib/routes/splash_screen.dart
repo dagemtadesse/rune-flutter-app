@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rune/routes/routes.dart';
 import 'package:rune/theme.dart';
 
-class Splash extends StatelessWidget {
-  const Splash({Key? key}) : super(key: key);
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
