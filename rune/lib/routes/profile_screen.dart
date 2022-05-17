@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:rune/models/providers/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final pageModel = Provider.of<PageModel>(context, listen: false);
     return Column(
       children: [
         SizedBox(
@@ -52,20 +55,23 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     ListTile(
-                        leading: Icon(Icons.edit_outlined),
-                        title: Text("Edit Profile")),
-                    ListTile(
+                        leading: const Icon(Icons.edit_outlined),
+                        title: const Text("Edit Profile"),
+                        onTap: () {
+                          pageModel.setCurrentPage(Pages.editProfilePage);
+                        }),
+                    const ListTile(
                         leading: Icon(Icons.bookmarks_outlined),
                         title: Text("Bookmarks")),
-                    ListTile(
+                    const ListTile(
                         leading: Icon(Icons.image_outlined),
                         title: Text("Posts")),
-                    ListTile(
+                    const ListTile(
                         leading: Icon(Icons.chat_bubble_outline),
                         title: Text("Comments")),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.logout),
                       title: Text("Logout"),
                     ),

@@ -86,8 +86,10 @@ class SignUpScreen extends StatelessWidget {
             QuestionTextButton(
                 question: "Don't have an account?",
                 link: 'Register',
-                callback: () {
-                  // TODO: navigate to login page
+                callback: (context) {
+                  final pageModel =
+                      Provider.of<PageModel>(context, listen: false);
+                  pageModel.setCurrentPage(Pages.signInPage);
                 }),
             const SizedBox(height: 10),
             Row(

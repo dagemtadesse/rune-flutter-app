@@ -5,6 +5,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+// ignore: constant_identifier_names
+const BASE_URL = "http://localhost:9999/api/v1";
+
 class UserRequest {
   static Future<User> login(String email, String password) async {
     try {

@@ -11,8 +11,8 @@ class HostPage extends StatefulWidget {
 class _HostPageState extends State<HostPage> {
   int myIndex = 0;
   final myPages = [
-    // const HomePage(),
     const ChannelPage(),
+    Container(),
     const ProfileScreen(),
   ];
   @override

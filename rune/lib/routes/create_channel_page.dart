@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-class CreateChannel extends StatefulWidget {
-  const CreateChannel({Key? key}) : super(key: key);
+class CreateChannelPage extends StatelessWidget {
+  const CreateChannelPage({Key? key}) : super(key: key);
 
-  @override
-  State<CreateChannel> createState() => _CreateChannelState();
-}
-
-class _CreateChannelState extends State<CreateChannel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,28 +21,28 @@ class _CreateChannelState extends State<CreateChannel> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 21, top: 29),
+        padding: const EdgeInsets.only(left: 21, top: 29),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage("assets/channel.png"),
+                  backgroundImage: const AssetImage("assets/channel.png"),
                   radius: 50.0,
                   child: IconButton(
                     iconSize: 40.84,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.camera_alt_outlined,
                       color: Colors.white,
                     ),
                     onPressed: () {},
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 38,
                 ),
-                Text(
+                const Text(
                   "Channel Icon",
                   style: TextStyle(fontFamily: "Poppins", fontSize: 16),
                 )
@@ -59,7 +54,7 @@ class _CreateChannelState extends State<CreateChannel> {
                 labelText: 'Channel name',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             TextFormField(
@@ -68,7 +63,7 @@ class _CreateChannelState extends State<CreateChannel> {
                 labelText: 'description',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             TextFormField(
@@ -78,7 +73,7 @@ class _CreateChannelState extends State<CreateChannel> {
                 labelText: 'E-mail address',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             TextFormField(
@@ -88,7 +83,7 @@ class _CreateChannelState extends State<CreateChannel> {
                 labelText: 'Location',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 35,
             ),
             SizedBox(
@@ -97,7 +92,7 @@ class _CreateChannelState extends State<CreateChannel> {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         Color.fromRGBO(97, 67, 133, 1.0),
                         Color.fromRGBO(23, 0, 118, 1.0)
@@ -113,7 +108,7 @@ class _CreateChannelState extends State<CreateChannel> {
                         ),
                         primary: Colors.transparent,
                         onPrimary: Colors.transparent),
-                    child: Text(
+                    child: const Text(
                       "CREATE CHANNEL",
                       style: TextStyle(color: Colors.white),
                     )),

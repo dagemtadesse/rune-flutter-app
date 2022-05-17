@@ -1,7 +1,4 @@
 import 'package:rune/models/network/user_requests.dart';
-import 'package:rune/models/validators/user_validator.dart';
-
-const BASE_URL = "http://192.168.12.1:9999/api/v1";
 
 class User with UserRequest {
   final int id;

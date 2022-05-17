@@ -1,7 +1,7 @@
 export 'splash_screen.dart';
 export 'signup_screen.dart';
 export 'signin_screen.dart';
-export 'channel_screen.dart';
+export 'search_screen.dart';
 export 'channel_details_page.dart';
 export 'profile_screen.dart';
 export 'edit_profile_page.dart';

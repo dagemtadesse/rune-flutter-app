@@ -69,8 +69,10 @@ class SignInScreen extends StatelessWidget {
             QuestionTextButton(
                 question: "Forgot password?",
                 link: 'Change password',
-                callback: () {
-                  // TODO: navigate to registration page
+                callback: (context) {
+                  final pageModel =
+                      Provider.of<PageModel>(context, listen: false);
+                  pageModel.setCurrentPage(Pages.changePasswordPage);
                 }),
             const SizedBox(height: 10),
             Row(

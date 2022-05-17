@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../models/providers/page_model.dart';
 import '../routes/routes.dart';
 import '../theme.dart';
 
@@ -9,12 +11,11 @@ class ChannelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pageModel = Provider.of<PageModel>(context, listen: false);
+
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return const ChannelDetailsPage();
-        }));
+        pageModel.setCurrentPage(Pages.channelPage);
       },
       child: Card(
         elevation: 1,

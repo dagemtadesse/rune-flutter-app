@@ -49,34 +49,52 @@ class RunePages extends StatelessWidget {
     return MaterialApp(
       home: Navigator(
         pages: [
+          // tier 1
           const MaterialPage(
             key: ValueKey("splash page"),
             child: SplashScreen(),
           ),
-          if (pageModel.currentPage == Pages.SIGN_IN_PAGE)
+          // tier 2
+          if (pageModel.currentPage == Pages.signInPage)
             const MaterialPage(
               key: ValueKey('sign up page'),
               child: SignUpScreen(),
             ),
-          if (pageModel.currentPage == Pages.SIGN_IN_PAGE ||
+          if (pageModel.currentPage == Pages.signInPage ||
               registrationModel.signInRequestState is Received)
             const MaterialPage(
               key: ValueKey('sign in'),
               child: SignInScreen(),
             ),
+          // tier 3
           if (signInModel.loginRequestState is Received)
             const MaterialPage(
               key: ValueKey('home page'),
               child: HostPage(),
             ),
-          const MaterialPage(
-            key: ValueKey('change password page'),
-            child: ChangePasswordScreen(),
-          ),
-          const MaterialPage(
-            key: ValueKey('edit profile page'),
-            child: EditProfileScreen(),
-          ),
+          // tier 4
+          if (pageModel.currentPage == Pages.changePasswordPage)
+            const MaterialPage(
+              key: ValueKey('change password page'),
+              child: ChangePasswordScreen(),
+            ),
+          if (pageModel.currentPage == Pages.editProfilePage)
+            const MaterialPage(
+              key: ValueKey('edit profile page'),
+              child: EditProfileScreen(),
+            ),
+          // tier 5
+          if (pageModel.currentPage == Pages.channelPage)
+            const MaterialPage(
+              key: ValueKey('channel details page'),
+              child: ChannelDetailsPage(),
+            ),
+          if (pageModel.currentPage == Pages.createChannelPage)
+            const MaterialPage(
+              key: ValueKey('channel details page'),
+              child: ChannelDetailsPage(),
+            ),
+          // tier 7
         ],
         onPopPage: (route, result) => route.didPop(result),
       ),

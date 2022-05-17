@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class QuestionTextButton extends StatelessWidget {
   final String question;
   final String link;
-  final void Function() callback;
+  final void Function(BuildContext) callback;
 
   const QuestionTextButton(
       {Key? key,
@@ -16,7 +16,7 @@ class QuestionTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: callback,
+      onTap: () => callback(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

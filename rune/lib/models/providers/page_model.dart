@@ -1,13 +1,24 @@
 import 'package:flutter/foundation.dart';
 
 enum Pages {
-  SPLASH_PAGE,
-  SIGN_IN_PAGE,
-  SIGN_UP_PAGE,
+  splashPage,
+  signInPage,
+  signUpPage,
+  changePasswordPage,
+  homePage,
+  profilePage,
+  searchPage,
+  bookmarksPage,
+  channelListPage,
+  postsPage,
+  commentsPage,
+  editProfilePage,
+  channelPage,
+  createChannelPage
 }
 
 class PageModel with ChangeNotifier {
-  Pages currentPage = Pages.SPLASH_PAGE;
+  Pages currentPage = Pages.splashPage;
 
   void setCurrentPage(Pages newPage) {
     currentPage = newPage;
