@@ -18,3 +18,5 @@ class Received extends NetworkState {
 class Failure extends NetworkState {
   Failure(data) : super(data);
 }
+
+const connectionError = "Unable to establish connection to the server.";

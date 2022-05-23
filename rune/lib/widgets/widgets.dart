@@ -7,5 +7,7 @@ export 'link_button.dart';
 export 'underlined_input.dart';
 export 'channel_app_bar.dart';
 export 'post_card.dart';
-export 'react.dart';
+export 'reactions.dart';
 export 'post_form.dart';
+export 'search_header.dart';
+export 'author_header.dart';

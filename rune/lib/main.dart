@@ -16,6 +16,10 @@ class RuneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<Repository>(
+            create: (_) => Repository()
+              ..authenticationKey =
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjM2LCJpYXQiOjE2NTI5ODE1MzYzMjMsImV4cCI6MTY1Mjk4MjE0MTEyM30.gOcMLIB1YndO8pPtVOZyNRkioKqRJlUVnUviaMMDhL4"),
         ChangeNotifierProvider<LoginFormModel>(
           create: (_) => LoginFormModel(),
         ),
@@ -92,15 +96,21 @@ class RunePages extends StatelessWidget {
             ),
           // tier 5
           if (pageModel.currentPage == Pages.channelPage)
-            const MaterialPage(
+            MaterialPage(
               key: ValueKey('channel details page'),
-              child: ChannelDetailsPage(),
+              child: ChannelDetailsPage(
+                context: context,
+              ),
             ),
           if (pageModel.currentPage == Pages.createChannelPage)
             const MaterialPage(
               key: ValueKey('channel details page'),
               child: CreateChannelPage(),
             ),
+          MaterialPage(
+            key: ValueKey('channel details page'),
+            child: ChannelDetailsPage(context: context),
+          ),
           // tier 7
         ],
         onPopPage: (route, result) => route.didPop(result),
