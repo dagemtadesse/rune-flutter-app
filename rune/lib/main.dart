@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:rune/bloc/bloc.dart';
 import 'package:rune/models/network/network_states.dart';
 import 'package:rune/models/providers/provider.dart';
 import 'package:rune/routes/create_channel_page.dart';
 import 'package:rune/routes/routes.dart';
+import 'package:rune/widgets/widgets.dart';
 
 void main() {
   runApp(const RuneApp());
@@ -107,9 +110,12 @@ class RunePages extends StatelessWidget {
               key: ValueKey('channel details page'),
               child: CreateChannelPage(),
             ),
+
           MaterialPage(
             key: ValueKey('channel details page'),
-            child: ChannelDetailsPage(context: context),
+            child: BlocProvider(
+                create: (_) => UploadPostBloc(),
+                child: Scaffold(body: PostForm())),
           ),
           // tier 7
         ],

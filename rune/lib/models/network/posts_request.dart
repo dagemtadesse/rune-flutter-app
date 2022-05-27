@@ -38,3 +38,22 @@ Future<Posts> fetchPosts({
     throw connectionError;
   }
 }
+
+uploadPost(int channelId, String postTitle, String postContent,
+    String? imagePath) async {
+  var url = Uri.parse(Repository.baseUrl + '/$channelId/post');
+  var request = http.MultipartRequest('POST', url, )
+    ..fields['title'] = postTitle
+    ..fields['text'] = postContent;
+
+  if (imagePath != null) {
+    request.files.add(await http.MultipartFile.fromPath('media', imagePath));
+  }
+
+  try {
+    var response = await request.send();
+    if (response.statusCode != 200) throw connectionError;
+  } on Exception {
+    throw connectionError;
+  }
+}

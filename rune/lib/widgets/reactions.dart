@@ -17,18 +17,18 @@ class ReactButtons extends StatefulWidget {
 }
 
 class _ReactButtonsState extends State<ReactButtons> {
-  late String vote;
-  late int upVoteCount;
-  late int downVoteCount;
+  late String _vote;
+  late int _upVote;
+  late int _downVote;
 
   _ReactButtonsState();
 
   @override
   void initState() {
     super.initState();
-    vote = widget.post.vote;
-    upVoteCount = widget.post.upVote;
-    downVoteCount = widget.post.downVote;
+    _vote = widget.post.vote;
+    _upVote = widget.post.upVote;
+    _downVote = widget.post.downVote;
   }
 
   @override
@@ -36,9 +36,14 @@ class _ReactButtonsState extends State<ReactButtons> {
     final repo = Provider.of<Repository>(context, listen: false);
 
     void react(bool isUpVote) async {
-      await votePost(repo, widget.post.id, isUpVote);
+      final newVote = isUpVote ? "UP_VOTE" : "DOWN_VOTE";
+      final vote = (_vote != newVote) ? newVote : "NONE";
+      final post = await votePost(repo, widget.post.id, vote);
+
       setState(() {
-        vote = isUpVote ? "UP_VOTE" : "DOWN_VOTE";
+        _vote = post.vote;
+        _upVote = post.upVote;
+        _downVote = post.downVote;
       });
     }
 
@@ -56,11 +61,11 @@ class _ReactButtonsState extends State<ReactButtons> {
                         react(true);
                       },
                       icon: const Icon(Icons.upload),
-                      color: (vote == "UP_VOTE")
+                      color: (_vote == "UP_VOTE")
                           ? Colors.red
                           : RuneTheme.borderColor),
                   Text(
-                    widget.post.upVote.toString(),
+                    _upVote.toString(),
                     style: GoogleFonts.poppins(),
                   ),
                   const SizedBox(
@@ -71,11 +76,11 @@ class _ReactButtonsState extends State<ReactButtons> {
                         react(false);
                       },
                       icon: Icon(Icons.download,
-                          color: (vote == "DOWN_VOTE")
+                          color: (_vote == "DOWN_VOTE")
                               ? Colors.red
                               : RuneTheme.borderColor)),
                   Text(
-                    widget.post.downVote.toString(),
+                    _downVote.toString(),
                     style: GoogleFonts.poppins(),
                   )
                 ],

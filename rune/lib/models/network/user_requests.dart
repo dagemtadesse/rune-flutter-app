@@ -28,8 +28,7 @@ Future<User> fetchUser(Repository repo, int userId) async {
   }
 }
 
-votePost(Repository repo, int postId, bool isUpVote) async {
-  final reaction = isUpVote ? "upvote" : 'downvote';
+Future<Post> votePost(Repository repo, int postId, String reaction) async {
   try {
     final response = await http.post(
       Uri.parse(Repository.baseUrl + "/$reaction/posts/$postId"),
@@ -40,6 +39,8 @@ votePost(Repository repo, int postId, bool isUpVote) async {
     if (apiResponse.statusCode != 200) {
       throw apiResponse;
     }
+
+    return Post.fromJson(apiResponse.data as Map<String, dynamic>);
   } on Exception {
     throw connectionError;
   }

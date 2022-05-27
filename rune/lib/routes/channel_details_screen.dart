@@ -11,12 +11,9 @@ class ChannelDetailsPage extends StatelessWidget {
   final BuildContext context;
   ChannelDetailsPage({Key? key, required this.context}) : super(key: key) {
     final repo = Provider.of<Repository>(context, listen: false);
-    Provider.of<PageModel>(context, listen: false).posts =
-        fetchPosts(repo: repo, channelId: 30);
-
-    fetchUser(repo, 36)
-        .then((value) => print(value))
-        .onError((error, stackTrace) => print("woopsy"));
+    final pageModel = Provider.of<PageModel>(context, listen: false);
+    pageModel.posts = fetchPosts(repo: repo, channelId: 30);
+    pageModel.channel = fetchChannel(repo, pageModel.currentChannelId!);
   }
 
   @override
@@ -24,28 +21,33 @@ class ChannelDetailsPage extends StatelessWidget {
     return Scaffold(
       body: Consumer<PageModel>(
         builder: (context, pageModel, child) => FutureBuilder(
-            future: pageModel.posts,
-            builder: (context, AsyncSnapshot<Posts> posts) {
-              if (posts.hasData) {
-                return ListView.builder(
-                  itemCount: posts.data!.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return const ChannelAppBar(
-                        description:
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididu",
-                        channelName: "Mechanical Engineering",
+          future: pageModel.channel,
+          builder: (context, AsyncSnapshot<Channel> channel) {
+            if (channel.hasData) {
+              return FutureBuilder(
+                  future: (pageModel.posts),
+                  builder: (context, AsyncSnapshot<Posts> posts) {
+                    if (posts.hasData) {
+                      return ListView.builder(
+                        itemCount: posts.data!.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return ChannelAppBar(channel: channel.data!);
+                          }
+                          return PostCard(post: posts.data![index - 1]);
+                        },
                       );
+                    } else if (posts.hasError) {
+                      // Center(child: Text,)
                     }
-                    return PostCard(post: posts.data![index - 1]);
-                  },
-                );
-              } else if (posts.hasError) {
-                // Center(child: Text,)
-              }
 
-              return const Center(child: CircularProgressIndicator());
-            }),
+                    return const Center(child: CircularProgressIndicator());
+                  });
+            }
+
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (() => showModalBottomSheet(
@@ -57,7 +59,7 @@ class ChannelDetailsPage extends StatelessWidget {
               ),
               context: context,
               builder: (_) {
-                return const PostForm();
+                return PostForm();
               },
             )),
         child: const Icon(

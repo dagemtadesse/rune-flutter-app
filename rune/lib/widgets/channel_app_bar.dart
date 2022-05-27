@@ -1,24 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:rune/models/network/channel_request.dart';
+import 'package:rune/models/providers/provider.dart';
+import 'package:rune/models/providers/repository_provider.dart';
 
-class ChannelAppBar extends StatelessWidget {
-  final String description;
-  final String channelName;
+import '../models/models.dart';
 
-  const ChannelAppBar(
-      {Key? key, required this.description, required this.channelName})
-      : super(key: key);
+class ChannelAppBar extends StatefulWidget {
+  final Channel channel;
+
+  const ChannelAppBar({Key? key, required this.channel}) : super(key: key);
+
+  @override
+  State<ChannelAppBar> createState() => _ChannelAppBarState();
+}
+
+class _ChannelAppBarState extends State<ChannelAppBar> {
+  bool _pinned = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pinned = widget.channel.pinned;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final background = (widget.channel.logoImageUrl != null)
+        ? NetworkImage(Repository.resBaseUrl + widget.channel.logoImageUrl!)
+        : const AssetImage("assets/mechanical.jpg");
+
     return Stack(
       children: [
         Container(
           constraints:
               const BoxConstraints.expand(height: 260, width: double.infinity),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/mechanical.jpg"), fit: BoxFit.cover),
+                image: background as ImageProvider, fit: BoxFit.cover),
           ),
         ),
         /////
@@ -36,10 +56,18 @@ class ChannelAppBar extends StatelessWidget {
                 elevation: 0,
                 actions: [
                   IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      final repo =
+                          Provider.of<Repository>(context, listen: false);
+                      await pinRequest(repo, widget.channel.id, !_pinned);
+                      setState(() {
+                        _pinned = !_pinned;
+                      });
+                      // Provider.of<PageModel>(context, listen: false).updateUi();
                     },
-                    icon: const Icon(Icons.bookmark_add_outlined),
+                    icon: Icon(!_pinned
+                        ? Icons.bookmark_add_outlined
+                        : Icons.bookmark),
                     color: Colors.white,
                   ),
                   const SizedBox(width: 18),
@@ -53,7 +81,7 @@ class ChannelAppBar extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Text(
-                        "Mechanical Engineering",
+                        widget.channel.name,
                         style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 24.0,
@@ -66,7 +94,7 @@ class ChannelAppBar extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Text(
-                        description,
+                        widget.channel.description,
                         style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,

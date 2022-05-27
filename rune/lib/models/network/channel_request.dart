@@ -32,3 +32,40 @@ Future<Channels> fetchChannels(Repository repo,
     throw connectionError;
   }
 }
+
+Future<Channel> fetchChannel(Repository repo, int channelId) async {
+  try {
+    final response = await http.get(
+      Uri.parse("${Repository.baseUrl}/channels/$channelId"),
+      headers: {'Authorization': "Bearer ${repo.authenticationKey}"},
+    );
+
+    final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
+
+    if (response.statusCode != 200) {
+      throw apiResponse;
+    }
+
+    return Channel.fromJson(apiResponse.data as Map<String, dynamic>);
+  } on Exception {
+    throw connectionError;
+  }
+}
+
+pinRequest(Repository repo, int channelId, bool pin) async {
+  try {
+    final action = pin ? "pin" : "unpin";
+    final response = await http.put(
+      Uri.parse("${Repository.baseUrl}/$action/$channelId"),
+      headers: {'Authorization': "Bearer ${repo.authenticationKey}"},
+    );
+
+    final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
+
+    if (response.statusCode != 201 && response.statusCode != 200) {
+      throw apiResponse;
+    }
+  } on Exception {
+    throw connectionError;
+  }
+}

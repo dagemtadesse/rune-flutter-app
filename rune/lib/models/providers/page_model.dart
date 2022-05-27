@@ -24,12 +24,19 @@ enum ChannelTab { trending, pinned }
 class PageModel with ChangeNotifier {
   late Future<Channels> channels;
   late Future<Posts> posts;
+  late Future<Channel> channel;
 
   Pages currentPage = Pages.splashPage;
   ChannelTab channelTab = ChannelTab.trending;
   String channelQuery = "";
   int channelPage = 0;
   String order = 'asc';
+
+  int? currentChannelId = 30;
+
+  void updateUi() {
+    notifyListeners();
+  }
 
   void setChannelTab(ChannelTab tab) {
     channelTab = tab;
