@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/Application/widgets/widgets.dart';
-import 'package:rune/Domain/authentication/authentication_models/change_password_form_model.dart';
-import 'package:rune/Infrastrucure/network_states.dart';
+import 'package:rune/application/widgets/widgets.dart';
+import 'package:rune/domain/authentication/change_password_form_model.dart';
+import 'package:rune/infrastructure/network_states.dart';
 import 'package:rune/theme.dart';
 
 class ChangePasswordScreen extends StatelessWidget {

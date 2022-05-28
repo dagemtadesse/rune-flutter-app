@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/Application/widgets/expandable_button.dart';
-import 'package:rune/Application/widgets/form_banner.dart';
-import 'package:rune/Application/widgets/link_button.dart';
-import 'package:rune/Application/widgets/network_progress.dart';
-import 'package:rune/Application/widgets/validated_inputs.dart';
-import 'package:rune/Domain/authentication/authentication_form_validators/register_form.dart';
-import 'package:rune/Domain/page_model.dart';
-import 'package:rune/Infrastrucure/network_states.dart';
-import 'package:rune/Infrastrucure/user/user_api_provider.dart';
+import 'package:rune/application/widgets/expandable_button.dart';
+import 'package:rune/application/widgets/form_banner.dart';
+import 'package:rune/application/widgets/link_button.dart';
+import 'package:rune/application/widgets/network_progress.dart';
+import 'package:rune/application/widgets/validated_inputs.dart';
+import 'package:rune/domain/authentication/register_form.dart';
+import 'package:rune/domain/page_model.dart';
+import 'package:rune/infrastructure/network_states.dart';
+import 'package:rune/infrastructure/user/user_api_provider.dart';
 import 'package:rune/theme.dart';
 
 class SignUpScreen extends StatelessWidget {

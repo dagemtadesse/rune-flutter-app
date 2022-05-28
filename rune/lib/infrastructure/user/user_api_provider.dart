@@ -1,6 +1,6 @@
 // import 'package:http/http.dart';
 
-import 'package:rune/Domain/user/user_models/user.dart';
+import 'package:rune/domain/user/user_models/user.dart';
 
 // import '../models.dart';
 import 'dart:async';

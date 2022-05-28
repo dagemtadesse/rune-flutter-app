@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/Domain/page_model.dart';
+import 'package:rune/domain/page_model.dart';
 import 'package:rune/theme.dart';
 
 class ChannelCard extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/Domain/authentication/authentication_form_validators/login_form.dart';
-import 'package:rune/Infrastrucure/network_states.dart';
+import 'package:rune/domain/authentication/login_form.dart';
+import 'package:rune/infrastructure/network_states.dart';
 
 import 'package:rune/presentation/auth/auth.dart';
 import 'package:rune/presentation/channels/channel.dart';
@@ -9,9 +9,9 @@ import 'package:rune/presentation/home/home_screen.dart';
 import 'package:rune/presentation/splash/splash_screen.dart';
 import 'package:rune/presentation/user/user.dart';
 
-import 'Domain/authentication/authentication_models/change_password_form_model.dart';
-import 'Domain/authentication/authentication_form_validators/register_form.dart';
-import 'Domain/page_model.dart';
+import 'domain/authentication/change_password_form_model.dart';
+import 'domain/authentication/register_form.dart';
+import 'domain/page_model.dart';
 
 void main() {
   runApp(const RuneApp());

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:rune/Infrastrucure/network_states.dart';
+import 'package:rune/infrastructure/network_states.dart';
 
 class LoginFormModel with ChangeNotifier {
   String email = "";

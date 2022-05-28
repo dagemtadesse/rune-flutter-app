@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rune/Application/widgets/channel_card.dart';
-import 'package:rune/Application/widgets/search_bar.dart';
+import 'package:rune/application/widgets/channel_card.dart';
+import 'package:rune/application/widgets/search_bar.dart';
 import 'package:rune/theme.dart';
 
 class ChannelPage extends StatelessWidget {

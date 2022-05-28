@@ -1,4 +1,4 @@
-import 'package:rune/Domain/user/user_models/user.dart';
+import 'package:rune/domain/user/user_models/user.dart';
 
 // import 'models.dart';
 

@@ -1,4 +1,4 @@
-import 'package:rune/Infrastrucure/user/user_api_provider.dart';
+import 'package:rune/infrastructure/user/user_api_provider.dart';
 
 class User with UserRequest {
   final int id;

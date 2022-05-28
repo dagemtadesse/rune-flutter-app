@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/Infrastrucure/network_states.dart';
+import 'package:rune/infrastructure/network_states.dart';
 
 class NetworkProgress extends StatelessWidget {
   final NetworkState state;
