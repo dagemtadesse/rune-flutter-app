@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/application/widgets/widgets.dart';
-import 'package:rune/domain/post/post_models/post.dart';
+import 'package:rune/domain/post/post.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
