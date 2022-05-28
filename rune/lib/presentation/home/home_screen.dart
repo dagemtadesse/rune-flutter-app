@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rune/Presentation/channels/search/search_screen.dart';
+import 'package:rune/presentation/channels/channel.dart';
 
-import '../../user/profile/profile_screen.dart';
+import '../user/profile/profile_screen.dart';
 
 class HostPage extends StatefulWidget {
   const HostPage({Key? key}) : super(key: key);

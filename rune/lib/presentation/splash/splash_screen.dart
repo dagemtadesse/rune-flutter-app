@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/Presentation/authentication/login/signin_screen.dart';
-import 'package:rune/Presentation/authentication/signup/signup_screen.dart';
+import 'package:rune/presentation/auth/auth.dart';
 import 'package:rune/theme.dart';
 
 class SplashScreen extends StatelessWidget {
