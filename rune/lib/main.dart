@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/models/network/network_states.dart';
-import 'package:rune/models/providers/provider.dart';
-import 'package:rune/routes/create_channel_page.dart';
-import 'package:rune/routes/routes.dart';
+import 'package:rune/Domain/authentication/authentication_form_validators/login_form.dart';
+import 'package:rune/Infrastrucure/network_states.dart';
+import 'package:rune/Presentation/authentication/forgot_password/change_password_screen.dart';
+import 'package:rune/Presentation/authentication/login/signin_screen.dart';
+import 'package:rune/Presentation/authentication/signup/signup_screen.dart';
+import 'package:rune/Presentation/channels/browse_channel/channel_details_screen.dart';
+import 'package:rune/Presentation/channels/create_channel/create_channel_page.dart';
+import 'package:rune/Presentation/channels/my_channels/home_screen.dart';
+import 'package:rune/Presentation/splash/splash_screen.dart';
+import 'package:rune/Presentation/user/edit_profile/edit_profile_screen.dart';
+
+import 'Domain/authentication/authentication_models/change_password_form_model.dart';
+import 'Domain/authentication/authentication_form_validators/register_form.dart';
+import 'Domain/page_model.dart';
 
 void main() {
   runApp(const RuneApp());
