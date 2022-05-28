@@ -44,3 +44,5 @@ app.*.map.json
 rune/android/app/debug
 rune/android/app/profile
 rune/android/app/release
+rune/pubspec.lock
+rune/.metadata
