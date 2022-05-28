@@ -5,7 +5,7 @@ import 'package:rune/application/widgets/form_banner.dart';
 import 'package:rune/application/widgets/link_button.dart';
 import 'package:rune/application/widgets/network_progress.dart';
 import 'package:rune/application/widgets/validated_inputs.dart';
-import 'package:rune/domain/authentication/login_form.dart';
+import 'package:rune/domain/auth/login_form.dart';
 import 'package:rune/domain/page_model.dart';
 import 'package:rune/infrastructure/network_states.dart';
 import 'package:rune/infrastructure/user/user_api_provider.dart';
@@ -90,7 +90,7 @@ class SignInScreen extends StatelessWidget {
                         provider.validatePassword()) {
                       provider.setLoginRequestState(Sent());
                       try {
-                        final data = await UserRequest.login(
+                        final data = await UserAPIProvider.login(
                             provider.email, provider.password);
                         provider.setLoginRequestState(Received(data));
                       } catch (error) {

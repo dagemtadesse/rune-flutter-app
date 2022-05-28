@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:rune/infrastructure/network_states.dart';
-import '../user/user_form_validators/user_validator.dart';
+import '../user/user_validator.dart';
 
 class ChangePasswordFormModel with ChangeNotifier {
   String oldPassword = "";

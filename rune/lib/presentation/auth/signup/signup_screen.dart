@@ -5,7 +5,7 @@ import 'package:rune/application/widgets/form_banner.dart';
 import 'package:rune/application/widgets/link_button.dart';
 import 'package:rune/application/widgets/network_progress.dart';
 import 'package:rune/application/widgets/validated_inputs.dart';
-import 'package:rune/domain/authentication/register_form.dart';
+import 'package:rune/domain/auth/register_form.dart';
 import 'package:rune/domain/page_model.dart';
 import 'package:rune/infrastructure/network_states.dart';
 import 'package:rune/infrastructure/user/user_api_provider.dart';
@@ -109,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
                         provider.validateCPassword()) {
                       provider.setSignInRequestState(Sent());
                       try {
-                        final data = await UserRequest.register(
+                        final data = await UserAPIProvider.register(
                             provider.fullName,
                             provider.email,
                             provider.password);

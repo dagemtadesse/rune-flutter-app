@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:rune/domain/user/user_form_validators/user_validator.dart';
+import 'package:rune/domain/user/user_validator.dart';
 
 import 'package:rune/infrastructure/network_states.dart';
 

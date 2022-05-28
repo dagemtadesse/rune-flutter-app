@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/domain/authentication/login_form.dart';
+import 'package:rune/domain/auth/login_form.dart';
 import 'package:rune/infrastructure/network_states.dart';
 
 import 'package:rune/presentation/auth/auth.dart';
@@ -9,8 +9,8 @@ import 'package:rune/presentation/home/home_screen.dart';
 import 'package:rune/presentation/splash/splash_screen.dart';
 import 'package:rune/presentation/user/user.dart';
 
-import 'domain/authentication/change_password_form_model.dart';
-import 'domain/authentication/register_form.dart';
+import 'domain/auth/change_password_form_model.dart';
+import 'domain/auth/register_form.dart';
 import 'domain/page_model.dart';
 
 void main() {
