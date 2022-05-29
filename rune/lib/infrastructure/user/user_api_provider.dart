@@ -72,8 +72,9 @@ class UserAPIProvider {
       }
 
       final response = await request.send();
-      final apiResponse =
-          APIResponse.fromJson(jsonDecode(response.stream.toString()));
+      final responseBody = await response.stream.bytesToString();
+      print(responseBody);
+      final apiResponse = APIResponse.fromJson(jsonDecode(responseBody));
 
       if (apiResponse.status == 'success') {
         return User.fromJson(apiResponse.data as Map<String, dynamic>);

@@ -57,13 +57,13 @@ void main() {
     test('should update a user', () async {
       final updatedUser = await userAPIProvider.update(
           imagePath: 'test_resources/images.jpeg',
-          fullName: "Car'a'cran Rand al'Thor",
-          email: 'rand@dragonmound.place',
+          fullName: "Lord Rand al'Thor",
+          email: 'Superman@email.place',
           authToken: newUser.authToken!);
 
       expect(updatedUser.email, 'rand@dragonmound.place');
       expect(updatedUser.avatar, isNot(null));
-      expect(updatedUser.fullName, "Car'a'cran Rand al'Thor");
+      expect(updatedUser.fullName, "Lord Rand al'Thor");
     });
 
     test('Should remove a user', () async {

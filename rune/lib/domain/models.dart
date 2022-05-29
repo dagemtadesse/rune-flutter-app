@@ -1,2 +1,2 @@
 export 'user/user.dart';
-// export 'post.dart';
+export 'channel/channel_model.dart';
