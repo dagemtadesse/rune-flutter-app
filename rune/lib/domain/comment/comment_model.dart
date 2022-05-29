@@ -1,12 +1,35 @@
-import 'package:flutter/cupertino.dart';
+import 'package:rune/domain/models.dart';
 
-class Comments {
-  String userName;
-  DateTime dateTime;
-  Image profileImg;
-  int upCount;
-  int downCount;
+class Comment {
+  final int id;
+  final int authorId;
+  final int postId;
+  final String content;
+  final DateTime updatedAt;
+  final int upVote;
+  final int downVote;
 
-  Comments(this.userName, this.dateTime, this.profileImg, this.upCount,
-      this.downCount);
+  late User author;
+  late Post post;
+
+  Comment(
+      {required this.id,
+      required this.authorId,
+      required this.postId,
+      required this.content,
+      required this.updatedAt,
+      required this.upVote,
+      required this.downVote});
+
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
+      id: json['id'],
+      authorId: json['authorId'],
+      postId: json['postId'],
+      content: json['content'],
+      updatedAt: DateTime.parse(json['updatedAt']),
+      upVote: json['upVote'] ?? 0,
+      downVote: json['downVote'] ?? 0,
+    );
+  }
 }

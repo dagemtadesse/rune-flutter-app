@@ -41,7 +41,6 @@ class PostAPIProvider {
           ),
           headers: {'Authorization': 'Bearer ${user.authToken}'});
 
-      print(response.body);
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
         return Post.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -74,7 +73,6 @@ class PostAPIProvider {
 
       final response = await request.send();
       final body = await response.stream.bytesToString();
-      print(body);
 
       final apiResponse = APIResponse.fromJson(jsonDecode(body));
       if (apiResponse.status == 'success') {
@@ -95,7 +93,6 @@ class PostAPIProvider {
           ),
           headers: {'Authorization': 'Bearer ${user.authToken}'});
 
-      print(response.body);
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
         return Post.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -125,15 +122,13 @@ class PostAPIProvider {
 
       final response = await request.send();
       final body = await response.stream.bytesToString();
-      print(body);
 
       final apiResponse = APIResponse.fromJson(jsonDecode(body));
       if (apiResponse.status == 'success') {
         return Post.fromJson(apiResponse.data as Map<String, dynamic>);
       }
       throw apiResponse;
-    } catch (error, stackTrace) {
-      print(stackTrace);
+    } on Exception {
       throw APIResponse.serverConnectionError;
     }
   }
@@ -147,7 +142,6 @@ class PostAPIProvider {
           ),
           headers: {'Authorization': 'Bearer ${user.authToken}'});
 
-      print(response.body);
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
 
       if (apiResponse.status == 'success') {
