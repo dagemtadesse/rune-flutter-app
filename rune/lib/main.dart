@@ -41,10 +41,6 @@ class RunePages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final pageModel = Provider.of<PageModel>(context);
-    // final registrationModel = Provider.of<RegistrationFromModel>(context);
-    // final signInModel = Provider.of<LoginFormModel>(context);
-
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,

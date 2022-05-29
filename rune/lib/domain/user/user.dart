@@ -10,10 +10,11 @@ class User {
   User(
       {required this.id,
       required this.fullName,
-      this.handle,
       required this.email,
+      this.handle,
       this.avatar,
-      this.mimeType});
+      this.mimeType,
+      this.authToken});
 
   factory User.fromJson(
     Map<String, dynamic> json,
@@ -24,6 +25,7 @@ class User {
         handle: json['handle'],
         email: json['email'],
         avatar: json['avatar'],
-        mimeType: json['mimeType']);
+        mimeType: json['mimeType'],
+        authToken: json['authenticationToken']);
   }
 }

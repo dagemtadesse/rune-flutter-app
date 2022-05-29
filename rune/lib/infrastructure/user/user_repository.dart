@@ -14,5 +14,10 @@ class UserRepository {
     loggedInUser = await userProvider.register(fullname, email, password);
   }
 
-  changePassword(String password, String newPassword) async {}
+  changePassword(String password, String newPassword) async {
+    if (loggedInUser == null) throw "Unauthorized user";
+    final currentUser = await userProvider.login(loggedInUser!.email, password);
+    loggedInUser = await userProvider.update(
+        password: newPassword, authToken: currentUser.authToken!);
+  }
 }

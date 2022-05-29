@@ -67,15 +67,6 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32),
-                QuestionTextButton(
-                    question: "Forgot password?",
-                    link: 'Change password',
-                    callback: (context) {
-                      final pageModel =
-                          Provider.of<PageModel>(context, listen: false);
-                      pageModel.setCurrentPage(Pages.changePasswordPage);
-                    }),
-                const SizedBox(height: 10),
                 AuthButton(
                     label: "Sign In",
                     dispatcher: () {
