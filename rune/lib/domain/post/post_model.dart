@@ -1,31 +1,43 @@
-class Posts {
-  String name;
-  String date;
-  String title;
-  String postText;
-  String imgUrl;
-  String upCount;
-  String downCount;
+import 'package:rune/domain/models.dart';
 
-  Posts(this.name, this.date, this.title, this.postText, this.imgUrl,
-      this.upCount, this.downCount);
+class Post {
+  final int id;
+  final int authorId;
+  final int channelId;
+  final String title;
+  final String content;
+  final String? image;
+  final DateTime updatedAt;
+  final int upVote;
+  final int downVote;
+  final String vote;
 
-  static List<Posts> post = [
-    Posts(
-        "Publisher 1",
-        "Jan 20 2021",
-        "Post Title",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididu",
-        "assets/test.jpg",
-        "125",
-        "34"),
-    Posts(
-        "Publisher 2",
-        "Jan 20 2021",
-        "Post Title",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididu",
-        "assets/test.jpg",
-        "123",
-        "89"),
-  ];
+  late User author;
+  late Channel channel;
+
+  Post(
+      {required this.id,
+      required this.authorId,
+      required this.channelId,
+      required this.title,
+      required this.content,
+      required this.image,
+      required this.updatedAt,
+      required this.upVote,
+      required this.downVote,
+      required this.vote});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+        id: json['id'],
+        authorId: json['authorId'],
+        channelId: json['channelId'],
+        title: json['title'],
+        content: json['text'],
+        image: json['mediaUrl'],
+        updatedAt: DateTime.parse(json['updatedAt']),
+        upVote: json['upVote'] ?? 0,
+        downVote: json['downVote'] ?? 0,
+        vote: json['vote'] ?? "NONE");
+  }
 }

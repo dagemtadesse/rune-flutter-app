@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../application/widgets/channel_app_bar.dart';
 import '../../../application/widgets/post_card.dart';
-import '../../../domain/post/post.dart';
+import '../../../domain/post/post_model.dart';
 import '../../../domain/user/user.dart';
 import '../../post/post_form/post_form.dart';
 
@@ -17,21 +17,7 @@ class ChannelDetailsPage extends StatelessWidget {
       email: "flash@mail.com",
     );
 
-    final posts = [
-      Post(
-          postTitle: "Post Title",
-          datePublished: DateTime.now(),
-          publisher: flash,
-          postContent:
-              "This is the random post content apparently wow wow wow wow "),
-      Post(
-          postTitle: "Post Title",
-          datePublished: DateTime.now(),
-          publisher: flash,
-          postImage: "",
-          postContent:
-              "This is the random post content apparently wow wow wow wow "),
-    ];
+    final posts = [];
 
     return Scaffold(
       body: ListView.builder(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/application/widgets/widgets.dart';
-import 'package:rune/domain/post/post.dart';
+import 'package:rune/domain/post/post_model.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -39,13 +39,13 @@ class PostCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        post.publisher.fullName,
+                        post.author.fullName,
                         style: GoogleFonts.poppins(
                             color: const Color.fromRGBO(18, 18, 18, 1),
                             fontSize: 15,
                             fontWeight: FontWeight.w500),
                       ),
-                      Text(post.datePublished.toString(),
+                      Text(post.updatedAt.toString(),
                           style: GoogleFonts.poppins(fontSize: 14))
                     ],
                   )
@@ -56,7 +56,7 @@ class PostCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: Text(
-                post.postTitle,
+                post.title,
                 style: GoogleFonts.poppins(
                     fontSize: 17.0, fontWeight: FontWeight.w500),
               ),
@@ -64,7 +64,7 @@ class PostCard extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            if (post.postImage != null)
+            if (post.image != null)
               Container(
                 constraints: const BoxConstraints.expand(
                     height: 180, width: double.infinity),
@@ -77,7 +77,7 @@ class PostCard extends StatelessWidget {
               padding:
                   const EdgeInsets.only(left: 40.0, top: 8.0, bottom: 16.0),
               child: Text(
-                post.postContent,
+                post.content,
                 style: GoogleFonts.poppins(fontSize: 16),
               ),
             ),
