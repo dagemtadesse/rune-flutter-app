@@ -1822,6 +1822,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
 bloc
+flutter_bloc
 
 The MIT License (MIT)
 Copyright (c) 2018 Felix Angelov

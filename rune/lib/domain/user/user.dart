@@ -1,6 +1,4 @@
-import 'package:rune/infrastructure/user/user_api_provider.dart';
-
-class User with UserAPIProvider {
+class User {
   final int id;
   final String fullName;
   final String? handle;

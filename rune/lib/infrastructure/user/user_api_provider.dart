@@ -1,48 +1,55 @@
-import 'package:rune/domain/user/user_models/user.dart';
+import 'package:rune/domain/user/user.dart';
 
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-// ignore: constant_identifier_names
-const BASE_URL = "http://localhost:9999/api/v1";
+import 'package:rune/infrastructure/api_response.dart';
 
 class UserAPIProvider {
-  static Future<User> login(String email, String password) async {
+  final String baseURL;
+
+  UserAPIProvider(this.baseURL);
+
+  Future<User> login(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse("$BASE_URL/auth-token"),
+        Uri.parse("$baseURL/auth-token"),
         body: {'email': email, 'password': password},
       );
-      final body = jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        return User.fromJson(body["data"]);
-      }
 
-      throw body['message'];
+      final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
+      if (apiResponse.status == 'success') {
+        return User.fromJson(apiResponse.data);
+      }
+      throw apiResponse;
     } on Exception {
-      throw "Unable to connect to the server";
+      throw APIResponse.serverConnectionError;
     }
   }
 
-  static Future<User> register(
-      String fullName, String email, String password) async {
+  Future<User> register(String fullName, String email, String password) async {
     try {
-      final response = await http.post(Uri.parse("$BASE_URL/user"),
-          body: {'fullname': fullName, 'email': email, 'password': password});
+      final response = await http.post(
+        Uri.parse("$baseURL/user"),
+        body: {
+          'fullname': fullName,
+          'email': email,
+          'password': password,
+        },
+      );
 
-      final jsonBody = jsonDecode(response.body);
-      if (response.statusCode == 201) {
-        return User.fromJson(jsonBody["data"]);
+      final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
+      if (apiResponse.status == 'success') {
+        return User.fromJson(apiResponse.data as Map<String, dynamic>);
       }
 
-      throw jsonBody['message'];
+      throw apiResponse;
     } on Exception {
-      throw "Unable to connect to the server";
+      throw APIResponse.serverConnectionError;
     }
   }
 
-  static Future<User> changePassword(String oldPassword, String newPassword) {
+  Future<User> changePassword(String oldPassword, String newPassword) {
     throw UnimplementedError();
   }
 }

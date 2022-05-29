@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rune/domain/auth/login_form.dart';
-import 'package:rune/infrastructure/network_states.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rune/infrastructure/repositories.dart';
+import 'package:rune/presentation/screens.dart';
 
-import 'package:rune/presentation/auth/auth.dart';
-import 'package:rune/presentation/channels/channel.dart';
-import 'package:rune/presentation/home/home_screen.dart';
-import 'package:rune/presentation/splash/splash_screen.dart';
-import 'package:rune/presentation/user/user.dart';
-
-import 'domain/auth/change_password_form_model.dart';
-import 'domain/auth/register_form.dart';
 import 'domain/page_model.dart';
 
 void main() {
@@ -22,22 +15,21 @@ class RuneApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiRepositoryProvider(
       providers: [
-        ChangeNotifierProvider<LoginFormModel>(
-          create: (_) => LoginFormModel(),
-        ),
-        ChangeNotifierProvider<RegistrationFromModel>(
-          create: (_) => RegistrationFromModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ChangePasswordFormModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => PageModel(),
-        ),
+        RepositoryProvider(create: (_) => UserRepository()),
+        RepositoryProvider(create: (_) => ChannelRepository()),
+        RepositoryProvider(create: (_) => PostRepository()),
+        RepositoryProvider(create: (_) => CommentRepository()),
       ],
-      child: const RunePages(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => PageModel(),
+          ),
+        ],
+        child: const RunePages(),
+      ),
     );
   }
 }
@@ -49,9 +41,9 @@ class RunePages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageModel = Provider.of<PageModel>(context);
-    final registrationModel = Provider.of<RegistrationFromModel>(context);
-    final signInModel = Provider.of<LoginFormModel>(context);
+    // final pageModel = Provider.of<PageModel>(context);
+    // final registrationModel = Provider.of<RegistrationFromModel>(context);
+    // final signInModel = Provider.of<LoginFormModel>(context);
 
     return MaterialApp(
       theme: ThemeData(
@@ -63,53 +55,53 @@ class RunePages extends StatelessWidget {
         ),
       ),
       home: Navigator(
-        pages: [
+        pages: const [
           // tier 1
-          const MaterialPage(
+          MaterialPage(
             key: ValueKey("splash page"),
             child: SplashScreen(),
           ),
           // tier 2
-          if (pageModel.currentPage == Pages.signInPage)
-            const MaterialPage(
-              key: ValueKey('sign up page'),
-              child: SignUpScreen(),
-            ),
-          if (pageModel.currentPage == Pages.signInPage ||
-              registrationModel.signInRequestState is Received)
-            const MaterialPage(
-              key: ValueKey('sign in'),
-              child: SignInScreen(),
-            ),
-          // tier 3
-          if (signInModel.loginRequestState is Received)
-            const MaterialPage(
-              key: ValueKey('home page'),
-              child: HostPage(),
-            ),
-          // tier 4
-          if (pageModel.currentPage == Pages.changePasswordPage)
-            const MaterialPage(
-              key: ValueKey('change password page'),
-              child: ChangePasswordScreen(),
-            ),
-          if (pageModel.currentPage == Pages.editProfilePage)
-            const MaterialPage(
-              key: ValueKey('edit profile page'),
-              child: EditProfileScreen(),
-            ),
-          // tier 5
-          if (pageModel.currentPage == Pages.channelPage)
-            const MaterialPage(
-              key: ValueKey('channel details page'),
-              child: ChannelDetailsPage(),
-            ),
-          if (pageModel.currentPage == Pages.createChannelPage)
-            const MaterialPage(
-              key: ValueKey('channel details page'),
-              child: CreateChannelPage(),
-            ),
-          // tier 7
+          // if (pageModel.currentPage == Pages.signInPage)
+          //   const MaterialPage(
+          //     key: ValueKey('sign up page'),
+          //     child: SignUpScreen(),
+          //   ),
+          // if (pageModel.currentPage == Pages.signInPage ||
+          //     registrationModel.signInRequestState is Received)
+          //   const MaterialPage(
+          //     key: ValueKey('sign in'),
+          //     child: SignInScreen(),
+          //   ),
+          // // tier 3
+          // if (signInModel.loginRequestState is Received)
+          //   const MaterialPage(
+          //     key: ValueKey('home page'),
+          //     child: HostPage(),
+          //   ),
+          // // tier 4
+          // if (pageModel.currentPage == Pages.changePasswordPage)
+          //   const MaterialPage(
+          //     key: ValueKey('change password page'),
+          //     child: ChangePasswordScreen(),
+          //   ),
+          // if (pageModel.currentPage == Pages.editProfilePage)
+          //   const MaterialPage(
+          //     key: ValueKey('edit profile page'),
+          //     child: EditProfileScreen(),
+          //   ),
+          // // tier 5
+          // if (pageModel.currentPage == Pages.channelPage)
+          //   const MaterialPage(
+          //     key: ValueKey('channel details page'),
+          //     child: ChannelDetailsPage(),
+          //   ),
+          // if (pageModel.currentPage == Pages.createChannelPage)
+          //   const MaterialPage(
+          //     key: ValueKey('channel details page'),
+          //     child: CreateChannelPage(),
+          //   ),
+          // // tier 7
         ],
         onPopPage: (route, result) => route.didPop(result),
       ),

@@ -1,2 +1,2 @@
-// export 'user.dart';
+export 'user/user.dart';
 // export 'post.dart';

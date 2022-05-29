@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../application/widgets/channel_app_bar.dart';
 import '../../../application/widgets/post_card.dart';
 import '../../../domain/post/post.dart';
-import '../../../domain/user/user_models/user.dart';
+import '../../../domain/user/user.dart';
 import '../../post/post_form/post_form.dart';
 
 class ChannelDetailsPage extends StatelessWidget {
