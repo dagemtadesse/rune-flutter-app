@@ -4,16 +4,16 @@ class User {
   final String? handle;
   final String email;
   final String? avatar;
-  final String? mimeType;
+  final DateTime updatedAt;
   String? authToken;
 
   User(
       {required this.id,
       required this.fullName,
       required this.email,
+      required this.updatedAt,
       this.handle,
       this.avatar,
-      this.mimeType,
       this.authToken});
 
   factory User.fromJson(
@@ -25,7 +25,7 @@ class User {
         handle: json['handle'],
         email: json['email'],
         avatar: json['avatar'],
-        mimeType: json['mimeType'],
+        updatedAt: DateTime.parse(json['updatedAt']),
         authToken: json['authenticationToken']);
   }
 }

@@ -11,12 +11,6 @@ class ChannelDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User flash = User(
-      id: 0,
-      fullName: "Flash Thompson",
-      email: "flash@mail.com",
-    );
-
     final posts = [];
 
     return Scaffold(
