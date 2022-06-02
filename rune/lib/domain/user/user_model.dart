@@ -7,7 +7,7 @@ class User extends Equatable {
   final String email;
   final String? avatar;
   final DateTime updatedAt;
-  String? authToken;
+  String? token;
 
   User(
       {required this.id,
@@ -16,7 +16,7 @@ class User extends Equatable {
       required this.updatedAt,
       this.handle,
       this.avatar,
-      this.authToken});
+      this.token});
 
   factory User.fromJson(
     Map<String, dynamic> json,
@@ -28,7 +28,7 @@ class User extends Equatable {
         email: json['email'],
         avatar: json['avatar'],
         updatedAt: DateTime.parse(json['updatedAt']),
-        authToken: json['authenticationToken']);
+        token: json['authenticationToken']);
   }
 
   Map<String, dynamic> toJson() =>
