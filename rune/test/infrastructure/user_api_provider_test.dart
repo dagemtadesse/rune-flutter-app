@@ -48,7 +48,7 @@ void main() {
 
     test('Should fetch a the user', () async {
       final differentUser =
-          await userAPIProvider.fetchUser(newUser.id, newUser.authToken!);
+          await userAPIProvider.fetchUser(newUser.id, newUser.token!);
 
       expect(differentUser?.email, "anakin@jedia.academy");
       expect(differentUser?.fullName, "Rand al'Thor");
@@ -59,7 +59,7 @@ void main() {
           imagePath: 'test_resources/images.jpeg',
           fullName: "Lord Rand al'Thor",
           email: 'Superman@email.place',
-          authToken: newUser.authToken!);
+          authToken: newUser.token!);
 
       expect(updatedUser.email, 'rand@dragonmound.place');
       expect(updatedUser.avatar, isNot(null));
@@ -67,7 +67,7 @@ void main() {
     });
 
     test('Should remove a user', () async {
-      await userAPIProvider.removeAccount(newUser.authToken!);
+      await userAPIProvider.removeAccount(newUser.token!);
     });
   });
 }

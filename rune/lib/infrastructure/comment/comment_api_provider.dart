@@ -18,7 +18,7 @@ class CommentAPIProvider {
             '/api/v1/$postId/comments',
             {'size': size.toString(), 'page': page.toString()},
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
@@ -39,7 +39,7 @@ class CommentAPIProvider {
             host,
             '/api/v1/comments/$commentId',
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
@@ -55,7 +55,7 @@ class CommentAPIProvider {
     try {
       final response = await http.post(
           Uri.http(host, '/api/v1/post/$postId/comment'),
-          headers: {'Authorization': 'Bearer ${user.authToken}'},
+          headers: {'Authorization': 'Bearer ${user.token}'},
           body: {"content": content});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
@@ -75,7 +75,7 @@ class CommentAPIProvider {
             host,
             '/api/v1/comments/$commentId',
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
@@ -91,7 +91,7 @@ class CommentAPIProvider {
     try {
       final response = await http.put(
           Uri.http(host, '/api/v1/comments/$commentId'),
-          headers: {'Authorization': 'Bearer ${user.authToken}'},
+          headers: {'Authorization': 'Bearer ${user.token}'},
           body: {"content": content});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
@@ -112,7 +112,7 @@ class CommentAPIProvider {
             host,
             '/api/v1/$action/comments/$commentId',
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
 

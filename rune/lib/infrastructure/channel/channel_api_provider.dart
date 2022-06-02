@@ -27,7 +27,7 @@ class ChannelAPIProvider {
               'bookmark': onlyBookmarked
             },
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
@@ -54,7 +54,7 @@ class ChannelAPIProvider {
             host,
             '/api/v1/$action/$channelId',
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
       // print(response.body);
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status != 'success') throw apiResponse;
@@ -77,7 +77,7 @@ class ChannelAPIProvider {
             '/api/v1/channels/',
           ),
           headers: {
-            'Authorization': 'Bearer ${user.authToken}'
+            'Authorization': 'Bearer ${user.token}'
           },
           body: {
             'name': name,
@@ -108,7 +108,7 @@ class ChannelAPIProvider {
         Uri.http(host, '/api/v1/channels/$channelId'),
       );
 
-      request.headers['Authorization'] = 'Bearer ${user.authToken}';
+      request.headers['Authorization'] = 'Bearer ${user.token}';
       if (email != null) request.fields['email'] = email;
       if (name != null) request.fields['name'] = name;
       if (description != null) request.fields['description'] = description;
@@ -138,7 +138,7 @@ class ChannelAPIProvider {
             host,
             '/api/v1/channels/$channelId',
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
@@ -157,7 +157,7 @@ class ChannelAPIProvider {
             host,
             '/api/v1/channels/$channelId',
           ),
-          headers: {'Authorization': 'Bearer ${user.authToken}'});
+          headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {

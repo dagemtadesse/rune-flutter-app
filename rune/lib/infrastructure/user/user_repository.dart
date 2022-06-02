@@ -18,6 +18,6 @@ class UserRepository {
     if (loggedInUser == null) throw "Unauthorized user";
     final currentUser = await userProvider.login(loggedInUser!.email, password);
     loggedInUser = await userProvider.update(
-        password: newPassword, authToken: currentUser.authToken!);
+        password: newPassword, authToken: currentUser.token!);
   }
 }
