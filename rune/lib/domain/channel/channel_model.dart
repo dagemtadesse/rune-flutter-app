@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:rune/domain/models.dart';
 
-class Channel {
+class Channel extends Equatable {
   final int id;
   final int authorId;
   final String name;
@@ -35,4 +36,17 @@ class Channel {
         pinned: json['pinned'] ?? false,
         verified: json['verified']);
   }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'authorId': authorId,
+        'name': name,
+        'description': description,
+        'verified': verified,
+        'createdAt': createdAt,
+        'pinned': pinned
+      };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }

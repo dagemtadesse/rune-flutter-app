@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:rune/domain/models.dart';
 
-class Comment {
+class Comment extends Equatable {
   final int id;
   final int authorId;
   final int postId;
@@ -32,4 +33,17 @@ class Comment {
       downVote: json['downVote'] ?? 0,
     );
   }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'authorId': authorId,
+        'postId': postId,
+        'content': content,
+        'updatedAt': updatedAt,
+        'upVote': upVote,
+        'downVote': downVote
+      };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }

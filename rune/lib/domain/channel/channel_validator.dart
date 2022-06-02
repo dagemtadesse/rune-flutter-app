@@ -5,10 +5,9 @@ class ChannelValidator {
     }
     if (!RegExp(r'^[a-z A-Z]+$').hasMatch(channelName)) {
       return "Please Enter a correct name";
-    } 
-    
+    }
+
     return null;
-    
   }
 
   static String? validateDesc(String description) {
@@ -18,7 +17,6 @@ class ChannelValidator {
 
     if (!RegExp(r'[A-Z a-z 0-9 !@#$%^&*(),.?":{}|<>]').hasMatch(description)) {
       return 'enter a valid description';
-    
     }
     return null;
   }
@@ -42,9 +40,7 @@ class ChannelValidator {
 
     if (!RegExp(r'[A-Z a-z 0-9]').hasMatch(location)) {
       return 'please enter a valid Location';
-    
     }
     return null;
   }
-
 }
