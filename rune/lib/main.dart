@@ -42,6 +42,9 @@ class RunePages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navCubit = context.read<NavigationCubit>();
+    final userRepo = RepositoryProvider.of<UserRepository>(context);
+
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
       return MaterialApp(
@@ -61,33 +64,33 @@ class RunePages extends StatelessWidget {
               child: SplashScreen(),
             ),
             // tier 2
-            if (state is RegisterScreen)
+            if (state is RegisterRoute)
               MaterialPage(
                 key: const ValueKey('sign up page'),
                 child: SignUpScreen(),
               ),
-            if (state is LoginScreen)
+            if (state is LoginRoute)
               MaterialPage(
                 key: const ValueKey('sign in'),
                 child: SignInScreen(),
               ),
             // // tier 3
-            if (state is DashboardScreen)
-              const MaterialPage(
-                key: ValueKey('home page'),
-                child: HostPage(),
+            if (state is DashboardRoute)
+              MaterialPage(
+                key: const ValueKey('home page'),
+                child: HostPage(state.tabIndex),
               ),
             // // tier 4
-            // if (pageModel.currentPage == Pages.changePasswordPage)
-            //   const MaterialPage(
-            //     key: ValueKey('change password page'),
-            //     child: ChangePasswordScreen(),
-            //   ),
-            // if (pageModel.currentPage == Pages.editProfilePage)
-            //   const MaterialPage(
-            //     key: ValueKey('edit profile page'),
-            //     child: EditProfileScreen(),
-            //   ),
+            if (state is ChangePasswordRoute)
+              const MaterialPage(
+                key: ValueKey('change password page'),
+                child: ChangePasswordScreen(),
+              ),
+            if (state is EditProfileRoute)
+              const MaterialPage(
+                key: ValueKey('edit profile page'),
+                child: EditProfileScreen(),
+              ),
             // // tier 5
             // if (pageModel.currentPage == Pages.channelPage)
             //   const MaterialPage(
@@ -101,7 +104,17 @@ class RunePages extends StatelessWidget {
             //   ),
             // // tier 7
           ],
-          onPopPage: (route, result) => route.didPop(result),
+          onPopPage: (route, result) {
+            if (!route.didPop(result)) {
+              return false;
+            }
+            switch (state.runtimeType) {
+              case EditProfileRoute:
+                navCubit.toDashboardScreen(userRepo.loggedInUser!, 1);
+                break;
+            }
+            return true;
+          },
         ),
         debugShowCheckedModeBanner: false,
       );

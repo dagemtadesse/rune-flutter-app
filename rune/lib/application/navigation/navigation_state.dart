@@ -2,30 +2,31 @@ part of 'navigation_cubit.dart';
 
 abstract class NavigationState {}
 
-class DefaultScreen extends NavigationState {}
+class DefaultRoute extends NavigationState {}
 
-class LoginScreen extends NavigationState {}
+class LoginRoute extends NavigationState {}
 
-class RegisterScreen extends NavigationState {}
+class RegisterRoute extends NavigationState {}
 
-class ProfileEditionScreen extends NavigationState {}
+class EditProfileRoute extends NavigationState {}
 
-class ChangePasswordScreen extends NavigationState {}
+class ChangePasswordRoute extends NavigationState {}
 
-class CommentsScreen extends NavigationState {}
+class CommentsRoute extends NavigationState {}
 
-class PostsScreen extends NavigationState {}
+class PostsRoute extends NavigationState {}
 
-class BookmarksScreen extends NavigationState {}
+class BookmarksRoute extends NavigationState {}
 
-class DashboardScreen extends NavigationState {
+class DashboardRoute extends NavigationState {
   final User loggedInUser;
+  final int tabIndex;
 
-  DashboardScreen(this.loggedInUser);
+  DashboardRoute(this.loggedInUser, [this.tabIndex = 0]);
 }
 
-class ChannelScreen extends NavigationState {
+class ChannelRoute extends NavigationState {
   final Channel selectedChannel;
 
-  ChannelScreen(this.selectedChannel);
+  ChannelRoute(this.selectedChannel);
 }

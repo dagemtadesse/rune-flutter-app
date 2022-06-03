@@ -4,15 +4,16 @@ import 'package:rune/domain/models.dart';
 part 'navigation_state.dart';
 
 class NavigationCubit extends Cubit<NavigationState> {
-  NavigationCubit() : super(DefaultScreen());
+  NavigationCubit() : super(DefaultRoute());
 
-  void toLoginScreen() => emit(LoginScreen());
-  void toRegisterScreen() => emit(RegisterScreen());
-  void toSplashScreen() => emit(DefaultScreen());
-  void toEditProfile() => emit(ProfileEditionScreen());
-  void toBookmarksScreen() => emit(BookmarksScreen());
-  void toCommentsScreen() => emit(CommentsScreen());
-  void toPostsScreen() => emit(PostsScreen());
-  void toChangePasswordScreen() => emit(ChangePasswordScreen());
-  void toDashboardScreen(User user) => emit(DashboardScreen(user));
+  void toLoginScreen() => emit(LoginRoute());
+  void toRegisterScreen() => emit(RegisterRoute());
+  void toSplashScreen() => emit(DefaultRoute());
+  void toEditProfile() => emit(EditProfileRoute());
+  void toBookmarksScreen() => emit(BookmarksRoute());
+  void toCommentsScreen() => emit(CommentsRoute());
+  void toPostsScreen() => emit(PostsRoute());
+  void toChangePasswordScreen() => emit(ChangePasswordRoute());
+  void toDashboardScreen(User user, [int tabIndex = 0]) =>
+      emit(DashboardRoute(user, tabIndex));
 }
