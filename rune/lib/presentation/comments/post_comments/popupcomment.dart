@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune_app/models/comment_model.dart';
-import 'package:rune_app/screens/comments/components/commentTextField.dart';
-import 'package:rune_app/screens/comments/components/commentcard.dart';
+import '../../../application/widgets/commentcard.dart';
 
 
 class PopUpComment extends StatelessWidget {
@@ -25,14 +23,5 @@ class PopUpComment extends StatelessWidget {
       body: buildCard(),
     );
   }
-
-  
-
-  // Widget buildPopUp() {
-  //   return Padding(
-  //     padding: EdgeInsets.all(8),
-  //     child:buildCard()
-  //   );
-  // }
 }
 
