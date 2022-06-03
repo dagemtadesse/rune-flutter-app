@@ -9,20 +9,30 @@ part 'comment_state.dart';
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc() : super(CommentLoading()) {
     on<LoadComments>(_onLoadComments);
-    // on<AddComment>(_onAddComment);
-    // on<DeleteComment>(_onDeleteComment);
+    on<AddComment>(_onAddComment);
+    on<DeleteComment>(_onDeleteComment);
   }
 
-  void _onLoadComments(LoadComments event, Emitter emit) async {
+  void _onLoadComments(LoadComments event, Emitter<CommentState> emit) async {
     await (Future.delayed(const Duration(seconds: 1)));
     emit(CommentLoaded(comments: event.comments));
   }
 
-  void _onAddComment(LoadComments event, Emitter emit) {
+  void _onAddComment(AddComment event, Emitter<CommentState> emit) {
     final state = this.state;
 
-    if (state is CommentLoaded) {}
+    if (state is CommentLoaded) {
+      emit(CommentLoaded(
+          comments: List.from(state.comments)..add(event.comment)));
+    }
   }
 
-  void _onDeleteComment(LoadComments event, Emitter emit) {}
+  void _onDeleteComment(DeleteComment event, Emitter<CommentState> emit) {
+    final state = this.state;
+
+    if (state is CommentLoaded) {
+      emit(CommentLoaded(
+          comments: List.from(state.comments)..remove(event.comment)));
+    }
+  }
 }
