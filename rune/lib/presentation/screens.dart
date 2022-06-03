@@ -3,3 +3,5 @@ export 'auth/login_screen.dart';
 export 'auth/signup_screen.dart';
 export 'splash/splash_screen.dart';
 export 'home/home_screen.dart';
+export 'user/edit_profile_screen.dart';
+export 'user/profile_screen.dart';

@@ -28,8 +28,9 @@ class ProfileScreen extends StatelessWidget {
                 height: 154,
               ),
               BlocBuilder<NavigationCubit, NavigationState>(
+                buildWhen: (_, state) => state is DashboardRoute,
                 builder: (context, state) {
-                  final user = (state as DashboardScreen).loggedInUser;
+                  final user = (state as DashboardRoute).loggedInUser;
                   return Positioned(
                     top: 100,
                     left: 18,
@@ -51,8 +52,9 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BlocBuilder<NavigationCubit, NavigationState>(
+                buildWhen: (_, state) => state is DashboardRoute,
                 builder: (context, state) {
-                  final user = (state as DashboardScreen).loggedInUser;
+                  final user = (state as DashboardRoute).loggedInUser;
 
                   return Column(
                     children: [
@@ -81,6 +83,10 @@ class ProfileScreen extends StatelessWidget {
                         leading: const Icon(Icons.edit_outlined),
                         title: const Text("Edit Profile"),
                         onTap: () => navCubit.toEditProfile()),
+                    ListTile(
+                        leading: const Icon(Icons.lock_outline),
+                        title: const Text("Change Password"),
+                        onTap: () => navCubit.toChangePasswordScreen()),
                     ListTile(
                         leading: const Icon(Icons.bookmarks_outlined),
                         title: const Text("Bookmarks"),
