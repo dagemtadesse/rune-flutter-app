@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/mychannels_model.dart';  
+import '../../domain/channel/mychannels_model.dart';   
   
   
   
