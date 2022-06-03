@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
 import 'package:rune/infrastructure/repositories.dart';
 
@@ -17,10 +18,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _handleLogin(LoginRequest event, emit) async {
     try {
       emit(AuthRequestSent());
-      await userRepository.login(event.email, event.password);
-      emit(AuthRequestSuccess());
+      final user = await userRepository.login(event.email, event.password);
+      emit(AuthRequestSuccess(user));
     } catch (error) {
       final errorMsg = error is APIResponse ? error.message : error;
+      print(error);
       emit(AuthRequestFailure(errorMsg as String));
     }
   }
@@ -28,9 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _handleSignUp(SignUpRequest event, emit) async {
     try {
       emit(AuthRequestSent());
-      await userRepository.register(
+      final user = await userRepository.register(
           event.email, event.password, event.fullName);
-      emit(AuthRequestSuccess());
+      emit(AuthRequestSuccess(user));
     } catch (error) {
       print(error);
       final errorMsg = error is APIResponse ? error.message : error;

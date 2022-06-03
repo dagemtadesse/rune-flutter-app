@@ -28,6 +28,11 @@ class AuthButton extends StatelessWidget {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(state.message)));
               }
+
+              if (state is AuthRequestSuccess) {
+                final navCubit = context.read<NavigationCubit>();
+                navCubit.toDashboardScreen(state.loggedUser);
+              }
             },
             builder: (context, state) {
               return TextButton(
