@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rune/application/channel/bloc/channel_bloc.dart';
 import 'package:rune/application/navigation/navigation_cubit.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/presentation/screens.dart';
@@ -25,6 +26,7 @@ class RuneApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<ChannelBloc>(create: (_) => ChannelBloc()),
           BlocProvider<NavigationCubit>(create: (_) => NavigationCubit()),
         ],
         child: const RunePages(),

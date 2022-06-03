@@ -13,3 +13,9 @@ class DashboardScreen extends NavigationState {
 
   DashboardScreen(this.loggedInUser);
 }
+
+class ChannelScreen extends NavigationState {
+  final Channel selectedChannel;
+
+  ChannelScreen(this.selectedChannel);
+}
