@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rune/application/blocs.dart';
 import 'package:rune/domain/page_model.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,7 +10,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageModel = Provider.of<PageModel>(context, listen: false);
+    final navCubit = context.read<NavigationCubit>();
+
     return Column(
       children: [
         SizedBox(
@@ -24,13 +27,20 @@ class ProfileScreen extends StatelessWidget {
                 ])),
                 height: 154,
               ),
-              const Positioned(
-                top: 100,
-                left: 18,
-                child: CircleAvatar(
-                  radius: 46,
-                  backgroundImage: AssetImage("assets/test.jpg"),
-                ),
+              BlocBuilder<NavigationCubit, NavigationState>(
+                builder: (context, state) {
+                  final user = (state as DashboardScreen).loggedInUser;
+                  return Positioned(
+                    top: 100,
+                    left: 18,
+                    child: CircleAvatar(
+                      radius: 46,
+                      backgroundImage: (user.avatar == null
+                          ? const AssetImage("assets/test.jpg")
+                          : NetworkImage(user.avatar!)) as ImageProvider,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -40,16 +50,27 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 12),
-              Text(
-                "Flash Thompson",
-                style: GoogleFonts.poppins(
-                    fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                "@flash_thomspon",
-                style: GoogleFonts.poppins(fontSize: 15),
+              BlocBuilder<NavigationCubit, NavigationState>(
+                builder: (context, state) {
+                  final user = (state as DashboardScreen).loggedInUser;
+
+                  return Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      Text(
+                        user.fullName,
+                        style: GoogleFonts.poppins(
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 6),
+                      if (user.handle != null)
+                        Text(
+                          user.handle!,
+                          style: GoogleFonts.poppins(fontSize: 15),
+                        )
+                    ],
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -59,21 +80,23 @@ class ProfileScreen extends StatelessWidget {
                     ListTile(
                         leading: const Icon(Icons.edit_outlined),
                         title: const Text("Edit Profile"),
-                        onTap: () {
-                          pageModel.setCurrentPage(Pages.editProfilePage);
-                        }),
-                    const ListTile(
-                        leading: Icon(Icons.bookmarks_outlined),
-                        title: Text("Bookmarks")),
-                    const ListTile(
-                        leading: Icon(Icons.image_outlined),
-                        title: Text("Posts")),
-                    const ListTile(
-                        leading: Icon(Icons.chat_bubble_outline),
-                        title: Text("Comments")),
-                    const ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text("Logout"),
+                        onTap: () => navCubit.toEditProfile()),
+                    ListTile(
+                        leading: const Icon(Icons.bookmarks_outlined),
+                        title: const Text("Bookmarks"),
+                        onTap: () => navCubit.toBookmarksScreen()),
+                    ListTile(
+                        leading: const Icon(Icons.image_outlined),
+                        title: const Text("Posts"),
+                        onTap: () => navCubit.toPostsScreen()),
+                    ListTile(
+                        leading: const Icon(Icons.chat_bubble_outline),
+                        title: const Text("Comments"),
+                        onTap: () => navCubit.toCommentsScreen()),
+                    ListTile(
+                      leading: const Icon(Icons.logout),
+                      title: const Text("Logout"),
+                      onTap: () => navCubit.toSplashScreen(),
                     ),
                   ],
                 ),
