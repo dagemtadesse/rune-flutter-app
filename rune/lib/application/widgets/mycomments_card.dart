@@ -1,10 +1,11 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:rune_app/models/mycomment_model.dart';
-import 'package:rune_app/screens/mycomments/components/reaction_count.dart';
+import '../../domain/comment/mycomment_model.dart';  
 
-import '../../../models/mychannels_model.dart';
+import 'reaction_count.dart';
+
+import '../../domain/channel/mychannels_model.dart'; 
 
 Widget buildCard() {
   return Expanded(
