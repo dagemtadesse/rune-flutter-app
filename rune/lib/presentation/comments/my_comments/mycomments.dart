@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'components/mycomments_appbar.dart';
-import 'components/bottomnav.dart';
-import 'components/mycomments_card.dart';
+import '../../../application/widgets/mycomments_appbar.dart';
+import '../../../application/widgets/bottomnav.dart';
+import '../../../application/widgets/mycomments_card.dart';
 
 
 class MyComments extends StatelessWidget {
