@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rune_app/models/popupComment_model.dart';
-import 'package:rune_app/screens/comments/components/commentTextField.dart';
-import 'package:rune_app/screens/comments/components/reaction_count.dart';
-
-
-
-
+import '../../domain/comment/popupComment_model.dart';
+import 'commentTextField.dart';
+import 'reaction_count.dart';
 
 
 Widget buildCard() {
