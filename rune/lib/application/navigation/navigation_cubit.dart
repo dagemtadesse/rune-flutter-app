@@ -9,5 +9,10 @@ class NavigationCubit extends Cubit<NavigationState> {
   void toLoginScreen() => emit(LoginScreen());
   void toRegisterScreen() => emit(RegisterScreen());
   void toSplashScreen() => emit(DefaultScreen());
+  void toEditProfile() => emit(ProfileEditionScreen());
+  void toBookmarksScreen() => emit(BookmarksScreen());
+  void toCommentsScreen() => emit(CommentsScreen());
+  void toPostsScreen() => emit(PostsScreen());
+  void toChangePasswordScreen() => emit(ChangePasswordScreen());
   void toDashboardScreen(User user) => emit(DashboardScreen(user));
 }
