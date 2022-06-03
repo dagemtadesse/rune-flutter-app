@@ -12,4 +12,7 @@ class AuthRequestFailure extends AuthState {
   AuthRequestFailure(this.message);
 }
 
-class AuthRequestSuccess extends AuthState {}
+class AuthRequestSuccess extends AuthState {
+  final User loggedUser;
+  AuthRequestSuccess(this.loggedUser);
+}

@@ -1,4 +1,4 @@
-import 'package:rune/domain/user/user_model.dart';
+import 'package:rune/domain/models.dart';
 
 import 'dart:async';
 import 'dart:convert';
