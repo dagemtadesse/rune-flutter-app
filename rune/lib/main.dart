@@ -42,7 +42,8 @@ class RunePages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navcubit = context.read<NavigationCubit>();
+    final navCubit = context.read<NavigationCubit>();
+    final userRepo = RepositoryProvider.of<UserRepository>(context);
 
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
@@ -75,9 +76,9 @@ class RunePages extends StatelessWidget {
               ),
             // // tier 3
             if (state is DashboardRoute)
-              const MaterialPage(
-                key: ValueKey('home page'),
-                child: HostPage(),
+              MaterialPage(
+                key: const ValueKey('home page'),
+                child: HostPage(state.tabIndex),
               ),
             // // tier 4
             if (state is ChangePasswordRoute)
@@ -107,10 +108,11 @@ class RunePages extends StatelessWidget {
             if (!route.didPop(result)) {
               return false;
             }
-
-            // if (state is EditProfileRoute) {
-            //   navcubit
-            // }
+            switch (state.runtimeType) {
+              case EditProfileRoute:
+                navCubit.toDashboardScreen(userRepo.loggedInUser!, 1);
+                break;
+            }
             return true;
           },
         ),

@@ -14,5 +14,6 @@ class NavigationCubit extends Cubit<NavigationState> {
   void toCommentsScreen() => emit(CommentsRoute());
   void toPostsScreen() => emit(PostsRoute());
   void toChangePasswordScreen() => emit(ChangePasswordRoute());
-  void toDashboardScreen(User user) => emit(DashboardRoute(user));
+  void toDashboardScreen(User user, [int tabIndex = 0]) =>
+      emit(DashboardRoute(user, tabIndex));
 }

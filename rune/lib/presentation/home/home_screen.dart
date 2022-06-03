@@ -4,19 +4,31 @@ import 'package:rune/presentation/channels/channel.dart';
 import '../user/profile_screen.dart';
 
 class HostPage extends StatefulWidget {
-  const HostPage({Key? key}) : super(key: key);
+  final int defaultIndex;
+
+  const HostPage(
+    this.defaultIndex, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HostPage> createState() => _HostPageState();
 }
 
 class _HostPageState extends State<HostPage> {
-  int myIndex = 0;
+  late int myIndex;
+
   final myPages = [
     const ChannelPage(),
-    Container(),
     const ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    myIndex = widget.defaultIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +42,13 @@ class _HostPageState extends State<HostPage> {
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.groups_sharp), label: "Channel"),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+              icon: Icon(Icons.search),
+              label: "Search",
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: "Profile"),
+              icon: Icon(Icons.account_circle),
+              label: "Profile",
+            ),
           ]),
     );
   }

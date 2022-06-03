@@ -20,8 +20,9 @@ class BookmarksRoute extends NavigationState {}
 
 class DashboardRoute extends NavigationState {
   final User loggedInUser;
+  final int tabIndex;
 
-  DashboardRoute(this.loggedInUser);
+  DashboardRoute(this.loggedInUser, [this.tabIndex = 0]);
 }
 
 class ChannelRoute extends NavigationState {
