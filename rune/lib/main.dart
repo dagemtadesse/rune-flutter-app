@@ -71,8 +71,8 @@ class RunePages extends StatelessWidget {
               ),
             // // tier 3
             if (state is DashboardScreen)
-              MaterialPage(
-                key: const ValueKey('home page'),
+              const MaterialPage(
+                key: ValueKey('home page'),
                 child: HostPage(),
               ),
             // // tier 4

@@ -1,10 +1,11 @@
 class Expect<T> {
   final T? _data;
-  final String? error;
+  final String? _error;
 
-  Expect(this._data, this.error);
+  Expect(this._data, this._error);
 
-  bool get hasError => error != null;
+  bool get hasError => _error != null;
 
+  String get error => _error!;
   T get data => _data!;
 }

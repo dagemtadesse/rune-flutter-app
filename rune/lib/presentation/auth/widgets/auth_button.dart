@@ -23,7 +23,6 @@ class AuthButton extends StatelessWidget {
         Expanded(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              print(state);
               if (state is AuthRequestFailure) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(state.message)));
