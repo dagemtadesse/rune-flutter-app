@@ -35,6 +35,6 @@ class User extends Equatable {
       {'id': id, 'fullName': fullName, 'email': email, 'updatedAt': updatedAt};
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props =>
+      [id, fullName, email, updatedAt, handle, avatar, token];
 }

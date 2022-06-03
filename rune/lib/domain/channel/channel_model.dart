@@ -47,6 +47,16 @@ class Channel extends Equatable {
       };
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+        id,
+        authorId,
+        name,
+        description,
+        verified,
+        createdAt,
+        pinned,
+        address,
+        email,
+        logo
+      ];
 }
