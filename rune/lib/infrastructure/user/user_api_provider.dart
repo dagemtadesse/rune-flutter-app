@@ -16,7 +16,6 @@ class UserAPIProvider {
         Uri.parse("$baseURL/auth-token"),
         body: {'email': email, 'password': password},
       );
-
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
         return User.fromJson(apiResponse.data);
