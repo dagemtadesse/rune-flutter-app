@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottomnav.dart';
-import '../widgets/mychannels_appbar.dart';
-import '../widgets/mychannels_card.dart';
-
+import '../../../application/widgets/bottomnav.dart';
+import '../../../application/widgets/mychannels_appbar.dart';
+import '../../../application/widgets/mychannels_card.dart';
 
 
 
