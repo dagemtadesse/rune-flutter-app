@@ -25,7 +25,9 @@ class UserRepository {
     try {
       loggedInUser = await userProvider.register(fullname, email, password);
       return Expect(loggedInUser, null);
-    } catch (error) {
+    } catch (error, stackTrace) {
+      print(error);
+      print(stackTrace);
       String message = "Unable to Login";
       if (error is APIResponse && error.message != null) {
         message = error.message!;
