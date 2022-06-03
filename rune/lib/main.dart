@@ -92,16 +92,16 @@ class RunePages extends StatelessWidget {
                 child: EditProfileScreen(),
               ),
             // // tier 5
-            // if (pageModel.currentPage == Pages.channelPage)
-            //   const MaterialPage(
-            //     key: ValueKey('channel details page'),
-            //     child: ChannelDetailsPage(),
-            //   ),
-            // if (pageModel.currentPage == Pages.createChannelPage)
-            //   const MaterialPage(
-            //     key: ValueKey('channel details page'),
-            //     child: CreateChannelPage(),
-            //   ),
+            if (state is ChannelRoute)
+              const MaterialPage(
+                key: ValueKey('channel details page'),
+                child: ChannelDetailsPage(),
+              ),
+            if (state is CreateChannelRoute)
+              const MaterialPage(
+                key: ValueKey('channel details page'),
+                child: CreateChannelPage(),
+              ),
             // // tier 7
           ],
           onPopPage: (route, result) {
@@ -109,6 +109,10 @@ class RunePages extends StatelessWidget {
               return false;
             }
             switch (state.runtimeType) {
+              case ChangePasswordRoute:
+              case BookmarksRoute:
+              case PostsRoute:
+              case CommentsRoute:
               case EditProfileRoute:
                 navCubit.toDashboardScreen(userRepo.loggedInUser!, 1);
                 break;

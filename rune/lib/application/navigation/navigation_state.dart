@@ -12,6 +12,8 @@ class EditProfileRoute extends NavigationState {}
 
 class ChangePasswordRoute extends NavigationState {}
 
+class CreateChannelRoute extends NavigationState {}
+
 class CommentsRoute extends NavigationState {}
 
 class PostsRoute extends NavigationState {}

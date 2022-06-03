@@ -5,3 +5,5 @@ export 'splash/splash_screen.dart';
 export 'home/home_screen.dart';
 export 'user/edit_profile_screen.dart';
 export 'user/profile_screen.dart';
+export 'channels/channel.dart';
+export 'channels/search/search_screen.dart';
