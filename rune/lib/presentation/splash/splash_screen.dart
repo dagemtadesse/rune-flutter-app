@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rune/application/blocs.dart';
 import 'package:rune/presentation/screens.dart';
 import 'package:rune/theme.dart';
 
@@ -7,6 +9,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navCubit = context.read<NavigationCubit>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -63,10 +67,7 @@ class SplashScreen extends StatelessWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => SignUpScreen()));
+                              navCubit.toRegisterScreen();
                             },
                             child: Text("Register",
                                 style: SplashTheme.textTheme.labelMedium),
@@ -76,10 +77,7 @@ class SplashScreen extends StatelessWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => SignInScreen()));
+                              navCubit.toLoginScreen();
                             },
                             child: Text("Sign In",
                                 style: SplashTheme.textTheme.labelMedium),
