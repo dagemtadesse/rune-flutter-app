@@ -49,5 +49,14 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
     }
   }
 
-  void _onSearchChannel(SearchChannel event, Emitter<ChannelState> emit) {}
+  void _onSearchChannel(SearchChannel event, Emitter<ChannelState> emit) async {
+    emit(SearchLoading());
+    final searchResults = await channelRepo.getChannels(user: userRepo.loggedInUser!);
+
+    if (searchResults.hasError) {
+      emit(SearchLoadingFailed(searchResults.error));
+      return;
+    }
+    emit(SearchLoadedSuccesfully(channels: searchResults.data));
+  }
 }
