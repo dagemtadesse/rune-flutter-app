@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:rune/domain/channel/channel_model.dart';
 import 'package:rune/infrastructure/repositories.dart';
+import 'dart:developer' as developer;
 
 part 'channel_event.dart';
 part 'channel_state.dart';
@@ -21,8 +22,9 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
 
   void _onLoadChannels(LoadChannels event, Emitter<ChannelState> emit) async {
     emit(ChannelLoading());
+    developer.log("logged in user is null ${userRepo.loggedInUser == null}");
     final expectedChannels =
-        await channelRepo.getChannels(user: userRepo.loggedInUser!);
+        await channelRepo.getChannels(user: userRepo.loggedInUser);
     if (expectedChannels.hasError) {
       emit(ChannleLoadingFailed(expectedChannels.error));
       return;

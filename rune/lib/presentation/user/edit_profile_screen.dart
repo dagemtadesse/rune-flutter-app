@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rune/domain/user/user_model.dart';
 import 'package:rune/theme.dart';
 
 import '../../application/widgets/widgets.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+class EditProfileScreen extends StatelessWidget {
+  final User currentUser;
 
-  @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
-}
+  const EditProfileScreen({Key? key, required this.currentUser})
+      : super(key: key);
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

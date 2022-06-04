@@ -52,7 +52,16 @@ class ChannelPage extends StatelessWidget {
               }
 
               if (state is ChannleLoadingFailed) {
-                return const CenteredMessage(child: Text("Error"));
+                return CenteredMessage(
+                  sad: true,
+                  child: Text(
+                    state.errMsg,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 21,
+                    ),
+                  ),
+                );
               }
 
               return Container();

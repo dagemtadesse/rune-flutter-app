@@ -74,39 +74,43 @@ class ProfileScreen extends StatelessWidget {
                   );
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                        leading: const Icon(Icons.edit_outlined),
-                        title: const Text("Edit Profile"),
-                        onTap: () => navCubit.toEditProfile()),
-                    ListTile(
-                        leading: const Icon(Icons.lock_outline),
-                        title: const Text("Change Password"),
-                        onTap: () => navCubit.toChangePasswordScreen()),
-                    ListTile(
-                        leading: const Icon(Icons.bookmarks_outlined),
-                        title: const Text("Bookmarks"),
-                        onTap: () => navCubit.toBookmarksScreen()),
-                    ListTile(
-                        leading: const Icon(Icons.image_outlined),
-                        title: const Text("Posts"),
-                        onTap: () => navCubit.toPostsScreen()),
-                    ListTile(
-                        leading: const Icon(Icons.chat_bubble_outline),
-                        title: const Text("Comments"),
-                        onTap: () => navCubit.toCommentsScreen()),
-                    ListTile(
-                      leading: const Icon(Icons.logout),
-                      title: const Text("Logout"),
-                      onTap: () => navCubit.toSplashScreen(),
-                    ),
-                  ],
-                ),
-              ),
+              BlocBuilder<NavigationCubit, NavigationState>(
+                  builder: (context, state) {
+                final user = (state as DashboardRoute).loggedInUser;
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                          leading: const Icon(Icons.edit_outlined),
+                          title: const Text("Edit Profile"),
+                          onTap: () => navCubit.toEditProfile(user)),
+                      ListTile(
+                          leading: const Icon(Icons.lock_outline),
+                          title: const Text("Change Password"),
+                          onTap: () => navCubit.toChangePasswordScreen(user)),
+                      ListTile(
+                          leading: const Icon(Icons.bookmarks_outlined),
+                          title: const Text("Bookmarks"),
+                          onTap: () => navCubit.toBookmarksScreen()),
+                      ListTile(
+                          leading: const Icon(Icons.image_outlined),
+                          title: const Text("Posts"),
+                          onTap: () => navCubit.toPostsScreen()),
+                      ListTile(
+                          leading: const Icon(Icons.chat_bubble_outline),
+                          title: const Text("Comments"),
+                          onTap: () => navCubit.toCommentsScreen()),
+                      ListTile(
+                        leading: const Icon(Icons.logout),
+                        title: const Text("Logout"),
+                        onTap: () => navCubit.toSplashScreen(),
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
         )

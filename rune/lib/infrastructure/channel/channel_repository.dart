@@ -1,9 +1,17 @@
 import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
+import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/channel/channel_api_provider.dart';
+import 'package:rune/infrastructure/channel/channel_cache_provider.dart';
+import 'dart:developer' as developer;
 
 class ChannelRepository {
-  final channelAPIProvider = ChannelAPIProvider('localhost:9999');
+  final ChannelAPIProvider channelAPIProvider;
+  final ChannelCacheProvider channelCacheProvider;
+
+  ChannelRepository(CacheDatabase database, String host)
+      : channelCacheProvider = ChannelCacheProvider(database),
+        channelAPIProvider = ChannelAPIProvider(host);
 
   Future<Expect<List<Channel>>> getChannels(
       {required User user,
@@ -12,8 +20,10 @@ class ChannelRepository {
       String query = " ",
       String onlyBookmarked = ""}) async {
     try {
+      developer.log("request sent");
       final channels = await channelAPIProvider.fetchChannels(
           user: user, size: size, query: query, onlyBookmarked: onlyBookmarked);
+
       return Expect(channels, null);
     } catch (error) {
       var message = "Unable to Fetch channels";

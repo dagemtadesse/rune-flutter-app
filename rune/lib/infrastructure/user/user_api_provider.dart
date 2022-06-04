@@ -4,16 +4,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rune/infrastructure/api_response.dart';
+import 'dart:developer' as developer;
 
 class UserAPIProvider {
-  final String baseURL;
+  final String host;
 
-  UserAPIProvider(this.baseURL);
+  UserAPIProvider(this.host);
 
   Future<User> login(String email, String password) async {
     try {
+      developer.log(Uri.http(host, "/auth-token").toString());
       final response = await http.post(
-        Uri.parse("$baseURL/auth-token"),
+        Uri.http(host, "/api/v1/auth-token"),
         body: {'email': email, 'password': password},
       );
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
@@ -21,7 +23,8 @@ class UserAPIProvider {
         return User.fromJson(apiResponse.data);
       }
       throw apiResponse;
-    } on Exception {
+    } catch (error) {
+      developer.log("$error");
       throw APIResponse.serverConnectionError;
     }
   }
@@ -29,7 +32,7 @@ class UserAPIProvider {
   Future<User> register(String fullName, String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse("$baseURL/user"),
+        Uri.http(host, "/api/v1/user"),
         body: {
           'fullname': fullName,
           'email': email,
@@ -58,7 +61,7 @@ class UserAPIProvider {
     try {
       final request = http.MultipartRequest(
         'PUT',
-        Uri.parse("$baseURL/user"),
+        Uri.http(host, "/api/v1/user"),
       );
 
       request.headers['Authorization'] = 'Bearer $authToken';
@@ -86,7 +89,7 @@ class UserAPIProvider {
 
   Future<User?> fetchUser(int userId, String authToken) async {
     try {
-      final response = await http.get(Uri.parse("$baseURL/user/id/$userId"),
+      final response = await http.get(Uri.http(host, "/api/v1/user/id/$userId"),
           headers: {'Authorization': 'Bearer $authToken'});
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
       if (apiResponse.status == 'success') {
@@ -101,7 +104,7 @@ class UserAPIProvider {
 
   removeAccount(String authToken) async {
     try {
-      final response = await http.delete(Uri.parse("$baseURL/user/"),
+      final response = await http.delete(Uri.http(host, "/api/v1/user"),
           headers: {'Authorization': 'Bearer $authToken'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
