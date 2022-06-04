@@ -1,49 +1,110 @@
-import 'package:drift/drift.dart';
-import 'package:rune/infrastructure/channel/channel_cache_model.dart';
-import 'package:rune/infrastructure/comment/comment_cache_model.dart';
-import 'package:rune/infrastructure/post/post_cache_model.dart';
-import 'package:rune/infrastructure/user/user_cache_model.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:flutter/widgets.dart';
+import 'dart:async';
 
-part 'cache_provider.g.dart';
+class CacheDatabase {
+  Database? _database;
 
-@DriftDatabase(
-    tables: [CachedUsers, CachedChannels, CachedComments, CachedPosts])
-class CacheDatabase extends _$CacheDatabase {
-  CacheDatabase(QueryExecutor e) : super(e);
+  final String createUserTable = '''
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+      fullName TEXT NOT NULL,
+      handle TEXT,
+      email TEXT NOT NULL,
+      avatar TEXT,
+      updatedAT DATETIME NOT NULL,
+      token TEXT
+  )
+  ''';
 
-  @override
-  int get schemaVersion => 1;
+  final String createCommentsTable = '''
+  CREATE TABLE IF NOT EXISTS comments (
+    id INTEGER PRIMARY KEY,
+    authorId INTEGER NOT NULL,
+    postId INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    upVote INTEGER NOT NULL,
+    downVote INTEGER NOT NULL,
+    vote Text NOT NULL
+  )
+  ''';
 
-  Future<int> addUser(CachedUser user) {
-    return into(cachedUsers).insert(
-      CachedUsersCompanion.insert(
-          id: Value(user.id),
-          fullName: user.fullName,
-          email: user.email,
-          updatedAt: user.updatedAt,
-          handle: Value(user.handle),
-          avatar: Value(user.avatar),
-          token: Value(user.token)),
+  final String createChannelTable = '''
+  CREATE TABLE IF NOT EXISTS channels(
+    id INTEGER PRIMARY KEY,
+      authorId INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      descritption TEXT NOT NULL,
+      pinned bool NOT NULL,
+      updatedAT DATETIME NOT NULL,
+      logo TEXT,
+      email TEXT,
+      address TEXT
+  )
+  ''';
+
+  final String createPostTable = '''
+  CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY,
+    authorId INTEGER NOT NULL,
+    channelId INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    image TEXT,
+    updatedAt DATETIME NOT NULL,
+    upVote INTEGER NOT NULL,
+    downVote INTEGER NOT NULL,
+    vote Text NOT NULL
+  )
+  ''';
+
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+
+    WidgetsFlutterBinding.ensureInitialized();
+    _database = await openDatabase(
+      join(await getDatabasesPath(), 'rune_cache.db'),
+      version: 1,
+      onCreate: (db, version) {
+        db.execute(createUserTable);
+        db.execute(createChannelTable);
+        db.execute(createCommentsTable);
+        db.execute(createPostTable);
+      },
+    );
+
+    return _database!;
+  }
+
+  Future<void> insert(String table, Map<String, dynamic> data) async {
+    (await database)
+        .insert(table, data, conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<List<Map<String, dynamic>>> fetchRows(String table) async {
+    return (await database).query(table);
+  }
+
+  Future<List<Map<String, dynamic>>> getRow(String table, int id) async {
+    final rows = await (await database)
+        .query(table, where: "id = ?", whereArgs: [id], limit: 1);
+    return rows;
+  }
+
+  Future<void> delete(String table, int id) async {
+    (await database).delete(table, where: "id = ? ", whereArgs: [id]);
+  }
+
+  Future<void> update(String table, Map<String, dynamic> data) async {
+    (await database).update(
+      table,
+      data,
+      where: 'id = ?',
+      whereArgs: [data['id']],
     );
   }
-
-  Future<void> updateUser(CachedUser user) {
-    return update(cachedUsers).replace(user);
-  }
-
-  Future<CachedUser> getUser(int id) {
-    return (select(cachedUsers)..where((u) => u.id.equals(id))).getSingle();
-  }
-
-  Future deleteUser(int id) {
-    return (delete(cachedUsers)..where((user) => user.id.equals(id))).go();
-  }
 }
-
-// LazyDatabase _openConnection() {
-//   return LazyDatabase(() async {
-//     final dbFolder = await getApplicationDocumentsDirectory();
-//     final file = File(p.join(dbFolder.path, 'db.sqlite'));
-//     return NativeDatabase(file);
-//   });
-// }

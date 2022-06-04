@@ -18,8 +18,9 @@ class SignUpRequest extends AuthEvent {
 }
 
 class ChangePasswordRequest extends AuthEvent {
+  final String email;
   final String password;
   final String newPassword;
 
-  ChangePasswordRequest(this.password, this.newPassword);
+  ChangePasswordRequest(this.password, this.newPassword, this.email);
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rune/infrastructure/api_response.dart';
+import 'dart:developer' as developer;
 
 class ChannelAPIProvider {
   ChannelAPIProvider(this.host);
@@ -37,6 +38,7 @@ class ChannelAPIProvider {
       }
       throw apiResponse;
     } catch (error, stackTrace) {
+      developer.log("ChannelReposiory", error: error, stackTrace: stackTrace);
       throw APIResponse.serverConnectionError;
     }
   }
@@ -126,7 +128,6 @@ class ChannelAPIProvider {
       }
       throw apiResponse;
     } catch (error, stackTrace) {
-      print(stackTrace);
       throw APIResponse.serverConnectionError;
     }
   }

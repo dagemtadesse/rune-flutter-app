@@ -9,11 +9,12 @@ class NavigationCubit extends Cubit<NavigationState> {
   void toLoginScreen() => emit(LoginRoute());
   void toRegisterScreen() => emit(RegisterRoute());
   void toSplashScreen() => emit(DefaultRoute());
-  void toEditProfile() => emit(EditProfileRoute());
+  void toEditProfile(User user) => emit(EditProfileRoute(user));
   void toBookmarksScreen() => emit(BookmarksRoute());
   void toCommentsScreen() => emit(CommentsRoute());
+  void toChannelScreen(Channel channel) => emit(ChannelRoute(channel));
   void toPostsScreen() => emit(PostsRoute());
-  void toChangePasswordScreen() => emit(ChangePasswordRoute());
+  void toChangePasswordScreen(User user) => emit(ChangePasswordRoute(user));
   void toDashboardScreen(User user, [int tabIndex = 0]) =>
       emit(DashboardRoute(user, tabIndex));
 }

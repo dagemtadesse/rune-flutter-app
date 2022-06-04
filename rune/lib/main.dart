@@ -1,32 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rune/application/channel/bloc/channel_bloc.dart';
-import 'package:rune/application/navigation/navigation_cubit.dart';
+
+import 'package:rune/application/blocs.dart';
+import 'package:rune/application/post/bloc/post_bloc.dart';
+import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/presentation/screens.dart';
 
-import 'domain/page_model.dart';
+bool externalDevice = true;
+String host = externalDevice ? "192.168.12.1:9999" : "localhost:9999";
+
+final database = CacheDatabase();
+
+final userRepository = UserRepository(database, host);
+final channelRepository = ChannelRepository(database, host);
+final postRepository = PostRepository(database, host);
+final commmentRepository = CommentRepository(database, host);
 
 void main() {
-  runApp(const RuneApp());
+  runApp(RuneApp());
 }
 
 class RuneApp extends StatelessWidget {
-  const RuneApp({Key? key}) : super(key: key);
-
+  RuneApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (_) => UserRepository()),
-        RepositoryProvider(create: (_) => ChannelRepository()),
-        RepositoryProvider(create: (_) => PostRepository()),
-        RepositoryProvider(create: (_) => CommentRepository()),
+        RepositoryProvider(create: (_) => userRepository),
+        RepositoryProvider(create: (_) => channelRepository),
+        RepositoryProvider(create: (_) => commmentRepository),
+        RepositoryProvider(create: (_) => postRepository),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<ChannelBloc>(create: (_) => ChannelBloc()),
+          BlocProvider(create: (_) => AuthBloc(userRepository: userRepository)),
+          BlocProvider<ChannelBloc>(
+              create: (_) => ChannelBloc(channelRepository, userRepository)),
+          BlocProvider(create: (_) => PostBloc(postRepository, userRepository)),
           BlocProvider<NavigationCubit>(create: (_) => NavigationCubit()),
         ],
         child: const RunePages(),
@@ -82,26 +93,22 @@ class RunePages extends StatelessWidget {
               ),
             // // tier 4
             if (state is ChangePasswordRoute)
-              const MaterialPage(
+              MaterialPage(
                 key: ValueKey('change password page'),
                 child: ChangePasswordScreen(),
               ),
             if (state is EditProfileRoute)
-              const MaterialPage(
+              MaterialPage(
                 key: ValueKey('edit profile page'),
                 child: EditProfileScreen(),
               ),
             // // tier 5
-            // if (pageModel.currentPage == Pages.channelPage)
-            //   const MaterialPage(
-            //     key: ValueKey('channel details page'),
-            //     child: ChannelDetailsPage(),
-            //   ),
-            // if (pageModel.currentPage == Pages.createChannelPage)
-            //   const MaterialPage(
-            //     key: ValueKey('channel details page'),
-            //     child: CreateChannelPage(),
-            //   ),
+            if (state is ChannelRoute)
+              MaterialPage(
+                key: const ValueKey('channel details page'),
+                child: ChannelDetailsPage(channel: state.selectedChannel),
+              ),
+
             // // tier 7
           ],
           onPopPage: (route, result) {
@@ -109,8 +116,16 @@ class RunePages extends StatelessWidget {
               return false;
             }
             switch (state.runtimeType) {
+              case ChangePasswordRoute:
+              case BookmarksRoute:
+              case PostsRoute:
+              case CommentsRoute:
               case EditProfileRoute:
-                navCubit.toDashboardScreen(userRepo.loggedInUser!, 1);
+                navCubit.toDashboardScreen(userRepo.loggedInUser, 1);
+                break;
+
+              case ChannelRoute:
+                navCubit.toDashboardScreen(userRepo.loggedInUser);
                 break;
             }
             return true;

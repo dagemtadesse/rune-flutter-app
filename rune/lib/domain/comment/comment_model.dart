@@ -9,6 +9,7 @@ class Comment extends Equatable {
   final DateTime updatedAt;
   final int upVote;
   final int downVote;
+  final String vote;
 
   late User author;
   late Post post;
@@ -20,18 +21,19 @@ class Comment extends Equatable {
       required this.content,
       required this.updatedAt,
       required this.upVote,
-      required this.downVote});
+      required this.downVote,
+      required this.vote});
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
-      id: json['id'],
-      authorId: json['authorId'],
-      postId: json['postId'],
-      content: json['content'],
-      updatedAt: DateTime.parse(json['updatedAt']),
-      upVote: json['upVote'] ?? 0,
-      downVote: json['downVote'] ?? 0,
-    );
+        id: json['id'],
+        authorId: json['authorId'],
+        postId: json['postId'],
+        content: json['content'],
+        updatedAt: DateTime.parse(json['updatedAt']),
+        upVote: json['upVote'] ?? 0,
+        downVote: json['downVote'] ?? 0,
+        vote: json['vote'] ?? 'NONE');
   }
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -40,7 +42,8 @@ class Comment extends Equatable {
         'content': content,
         'updatedAt': updatedAt,
         'upVote': upVote,
-        'downVote': downVote
+        'downVote': downVote,
+        'vote': vote
       };
 
   @override

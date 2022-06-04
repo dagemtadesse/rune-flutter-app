@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/theme.dart';
 
 import '../../application/widgets/widgets.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
-}
-
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  @override
   Widget build(BuildContext context) {
+    final user = context.read<UserRepository>().loggedInUser;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

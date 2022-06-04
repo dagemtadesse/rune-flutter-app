@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rune/presentation/channels/channel.dart';
-
-import '../user/profile_screen.dart';
+import 'package:rune/presentation/screens.dart';
 
 class HostPage extends StatefulWidget {
   final int defaultIndex;

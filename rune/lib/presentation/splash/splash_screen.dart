@@ -16,21 +16,18 @@ class SplashScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(
-              height: 30,
-            ),
             Container(
+              constraints: BoxConstraints(minHeight: size.height / 2),
               padding: const EdgeInsets.all(18.0),
               child: const Image(
                 image: AssetImage("assets/splash.jpg"),
                 fit: BoxFit.fill,
               ),
             ),
-            const SizedBox(
-              height: 70,
-            ),
             Container(
+              constraints: BoxConstraints(minHeight: size.height / 2),
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -38,60 +35,57 @@ class SplashScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                     alignment: Alignment.topLeft),
               ),
-              child: Column(
-                children: [
-                  Container(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 140,
-                        ),
-                        Text("Rune", style: SplashTheme.textTheme.headline1),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Container(
-                          child: Text(
-                            "lorem iosum do  dor sit amet id the simple lorem iosum  dor sit amet id the simple iosum  id the simple iosum   dor sit amet id the simple lorem iosum dodor sit amet id the simplevvv sample paragraph",
-                            style: SplashTheme.textTheme.headline3,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 24.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: const Color.fromRGBO(228, 228, 220, 1),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: TextButton(
-                                  onPressed: () {
-                                    navCubit.toRegisterScreen();
-                                  },
-                                  child: Text("Register",
-                                      style: SplashTheme.textTheme.labelMedium),
-                                  style: SplashTheme.buttonTheme,
-                                ),
-                              ),
-                              Expanded(
-                                child: TextButton(
-                                  onPressed: () {
-                                    navCubit.toLoginScreen();
-                                  },
-                                  child: Text("Sign In",
-                                      style: SplashTheme.textTheme.labelMedium),
-                                  style: SplashTheme.transparentButton,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                ],
+                    Text("Rune", style: SplashTheme.textTheme.headline1),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Container(
+                      child: Text(
+                        "lorem iosum do  dor sit amet id the simple lorem iosum  dor sit amet id the simple iosum  id the simple iosum   dor sit amet id the simple lorem iosum dodor sit amet id the simplevvv sample paragraph",
+                        style: SplashTheme.textTheme.headline3,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 24.0, bottom: 12.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: const Color.fromRGBO(228, 228, 220, 1),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () {
+                                navCubit.toRegisterScreen();
+                              },
+                              child: Text("Register",
+                                  style: SplashTheme.textTheme.labelMedium),
+                              style: SplashTheme.buttonTheme,
+                            ),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () {
+                                navCubit.toLoginScreen();
+                              },
+                              child: Text("Sign In",
+                                  style: SplashTheme.textTheme.labelMedium),
+                              style: SplashTheme.transparentButton,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

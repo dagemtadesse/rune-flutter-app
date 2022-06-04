@@ -8,9 +8,19 @@ class LoginRoute extends NavigationState {}
 
 class RegisterRoute extends NavigationState {}
 
-class EditProfileRoute extends NavigationState {}
+class EditProfileRoute extends NavigationState {
+  final User loggedInUser;
 
-class ChangePasswordRoute extends NavigationState {}
+  EditProfileRoute(this.loggedInUser);
+}
+
+class ChangePasswordRoute extends NavigationState {
+  final User loggedInUser;
+
+  ChangePasswordRoute(this.loggedInUser);
+}
+
+class CreateChannelRoute extends NavigationState {}
 
 class CommentsRoute extends NavigationState {}
 

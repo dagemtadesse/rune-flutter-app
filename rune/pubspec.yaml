@@ -36,27 +36,23 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   google_fonts: ^2.3.2
-  provider: ^6.0.2
   flutter_bloc: ^8.0.1
   test: ^1.19.5
-  sqlite3_flutter_libs: ^0.5.0
-  path_provider: ^2.0.0
-  path: ^1.8.0
   equatable: ^2.0.3
-  go_router: ^3.1.1
+  sqflite: ^2.0.2+1
+  path: ^1.8.1 # dependecy for sqflite
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^5.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
-  drift_dev: ^1.6.0
-  build_runner: ^2.1.11
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
