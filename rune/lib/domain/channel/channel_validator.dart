@@ -1,6 +1,6 @@
 class ChannelValidator {
-  static String? validateChannelName(String channelName) {
-    if (channelName.trim().isEmpty) {
+  static String? validateChannelName(String? channelName) {
+    if (channelName == null || channelName.trim().isEmpty) {
       return "Please enter a channel Name ";
     }
     if (!RegExp(r'^[a-z A-Z]+$').hasMatch(channelName)) {
@@ -10,8 +10,8 @@ class ChannelValidator {
     return null;
   }
 
-  static String? validateDesc(String description) {
-    if (description.trim().isEmpty) {
+  static String? validateDesc(String? description) {
+    if (description== null||description.trim().isEmpty) {
       return 'Please enter a description for your channel';
     }
 
@@ -21,8 +21,8 @@ class ChannelValidator {
     return null;
   }
 
-  static String? validateEmail(String email) {
-    if (email.trim().isEmpty) {
+  static String? validateEmail(String? email) {
+    if (email==null ||email.trim().isEmpty) {
       return 'Please enter your email address';
     }
 
@@ -33,8 +33,8 @@ class ChannelValidator {
     return null;
   }
 
-  static String? validateLocation(String location) {
-    if (location.trim().isEmpty) {
+  static String? validateLocation(String? location) {
+    if (location== null ||location.trim().isEmpty) {
       return 'Please enter a description for your channel';
     }
 

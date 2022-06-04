@@ -1,105 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:rune/application/auth/bloc/auth_bloc.dart';
 import 'package:rune/application/widgets/widgets.dart';
+import 'package:rune/domain/user/user_form_validator.dart';
 import 'package:rune/infrastructure/network_states.dart';
+import 'package:rune/infrastructure/repositories.dart';
+import 'package:rune/presentation/auth/widgets/widgets.dart';
 import 'package:rune/theme.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({Key? key}) : super(key: key);
-
+  ChangePasswordScreen({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  final oldPasswordController= TextEditingController();
+  final newPasswordController= TextEditingController();
+  final confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    final authBloc = AuthBloc(userRepository: context.read<UserRepository>());
+    return BlocProvider(
+      create: (context) => authBloc,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          iconTheme: const IconThemeData(
+            color: Colors.black, //change your color here
+          ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FormBanner(
-              header: "Change Your password",
-              description: '',
-            ),
-            const SizedBox(
-              height: 48,
-            ),
-            // Consumer<ChangePasswordFormModel>(
-            //   builder: (context, formProvider, _) => Expanded(
-            //     child: Column(
-            //       children: [
-            //         ValidateInput(
-            //           placeholder: 'Old Password',
-            //           setter: (String value) =>
-            //               formProvider.oldPassword = value,
-            //           validationMsg: formProvider.oldPasswordValidation,
-            //           hidePassword: true,
-            //         ),
-            //         const SizedBox(
-            //           height: 16,
-            //         ),
-            //         ValidateInput(
-            //           placeholder: 'New Password',
-            //           setter: (String value) =>
-            //               formProvider.newPassword = value,
-            //           toggler: formProvider.togglePasswordVisibility,
-            //           hidePassword: formProvider.hidePassword,
-            //           showIcon: true,
-            //           validationMsg: formProvider.newPasswordValidation,
-            //         ),
-            //         const SizedBox(
-            //           height: 16,
-            //         ),
-            //         ValidateInput(
-            //             placeholder: 'Confirm New Password',
-            //             hidePassword: true,
-            //             setter: (String value) =>
-            //                 formProvider.cNewPassword = value,
-            //             validationMsg: formProvider.cNewPasswordValidation),
-            //         const SizedBox(
-            //           height: 16,
-            //         ),
-            //         NetworkProgress(
-            //           state: formProvider.changePasswordRequest,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(height: 32),
-            Row(
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ExpandableButton(
-                  text: 'Change Password',
-                  onPressed: () async {
-                    // final provider = Provider.of<ChangePasswordFormModel>(
-                    //     context,
-                    //     listen: false);
-                    // if (provider.validateOldPassword() &&
-                    //     provider.validateNewPassword() &&
-                    //     provider.validateConfirmPassword()) {
-                    //   try {
-                    //     provider.setChangePasswordRequest(Sent());
-                    //     // final data = await UserRequest.changePassword(
-                    //     //     provider.oldPassword, provider.newPassword);
-                    //     // provider.setChangePasswordRequest(Received(data));
-                    //   } catch (error) {
-                    //     provider.setChangePasswordRequest(Failure(error));
-                    //   }
-                    // }
+                const FormBanner(
+                  header: "Change Your password",
+                  description: '',
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
+                Expanded(
+                    child: Column(children: [
+                  PasswordInput(
+                      textHint: 'Old Password',
+                      controller: oldPasswordController,
+                      validator: UserFormValidator.validatePassword),
+                ])),
+                const SizedBox(
+                  height: 16,
+                ),
+                PasswordInput(
+                  textHint: 'New Password',
+                  controller: newPasswordController,
+                  validator: UserFormValidator.validatePassword,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                PasswordInput(
+                  textHint: 'Confirm New Password',
+                  validator: UserFormValidator.validatePassword,
+                  controller: confirmPasswordController,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const SizedBox(height: 32),
+                AuthButton(
+                  label: 'Change Password',
+                  dispatcher: () {
+                    authBloc.add(
+                      ChangePasswordRequest(
+                        oldPasswordController.text,
+                        newPasswordController.text,
+                        
+                      ),
+                    );
                   },
-                  theme: SplashTheme.buttonTheme,
+                  formKey: _formKey,
                 ),
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );
