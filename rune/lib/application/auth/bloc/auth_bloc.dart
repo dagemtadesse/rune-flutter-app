@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
 import 'package:rune/infrastructure/repositories.dart';
 
@@ -15,27 +16,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
 
   _handleLogin(LoginRequest event, emit) async {
-    try {
-      emit(AuthRequestSent());
-      await userRepository.login(event.email, event.password);
-      emit(AuthRequestSuccess());
-    } catch (error) {
-      final errorMsg = error is APIResponse ? error.message : error;
-      emit(AuthRequestFailure(errorMsg as String));
+    emit(AuthRequestSent());
+    final expect = await userRepository.login(event.email, event.password);
+    if (expect.hasError) {
+      emit(AuthRequestFailure(expect.error));
+      return;
     }
+
+    emit(AuthRequestSuccess(expect.data));
   }
 
   _handleSignUp(SignUpRequest event, emit) async {
-    try {
-      emit(AuthRequestSent());
-      await userRepository.register(
-          event.email, event.password, event.fullName);
-      emit(AuthRequestSuccess());
-    } catch (error) {
-      print(error);
-      final errorMsg = error is APIResponse ? error.message : error;
-      emit(AuthRequestFailure(errorMsg as String));
+    emit(AuthRequestSent());
+    final expect = await userRepository.register(
+        event.email, event.password, event.fullName);
+    if (expect.hasError) {
+      emit(AuthRequestFailure(expect.error));
+      return;
     }
+
+    emit(AuthRequestSuccess(expect.data));
   }
 
   _handleChangePassword(event, emit) {}

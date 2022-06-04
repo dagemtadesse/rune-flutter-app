@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rune/application/widgets/widgets.dart';
-import 'package:rune/infrastructure/network_states.dart';
 import 'package:rune/theme.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
