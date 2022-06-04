@@ -7,7 +7,7 @@ class Channel extends Equatable {
   final String name;
   final String description;
   final String? address;
-  final DateTime createdAt;
+  final DateTime updatedAt;
   final String? email;
   final String? logo;
   final bool pinned;
@@ -20,7 +20,7 @@ class Channel extends Equatable {
       required this.name,
       required this.description,
       required this.verified,
-      required this.createdAt,
+      required this.updatedAt,
       required this.pinned,
       this.address,
       this.email,
@@ -32,7 +32,7 @@ class Channel extends Equatable {
         authorId: json['authorId'],
         name: json['name'],
         description: json['description'],
-        createdAt: DateTime.parse(json['createAt']),
+        updatedAt: DateTime.parse(json['updatedAt']),
         pinned: json['pinned'] ?? false,
         verified: json['verified']);
   }
@@ -42,7 +42,7 @@ class Channel extends Equatable {
         'name': name,
         'description': description,
         'verified': verified,
-        'createdAt': createdAt,
+        'createdAt': updatedAt,
         'pinned': pinned
       };
 
@@ -53,7 +53,7 @@ class Channel extends Equatable {
         name,
         description,
         verified,
-        createdAt,
+        updatedAt,
         pinned,
         address,
         email,

@@ -9,11 +9,7 @@ abstract class ChannelEvent extends Equatable {
 }
 
 class LoadChannels extends ChannelEvent {
-  final List<Channel> channels;
-
-  const LoadChannels({required this.channels});
-  @override
-  List<Object> get props => [channels];
+  const LoadChannels();
 }
 
 class CreateChannel extends ChannelEvent {

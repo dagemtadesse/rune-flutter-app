@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rune/application/channel/bloc/channel_bloc.dart';
-import 'package:rune/application/navigation/navigation_cubit.dart';
+
+import 'package:rune/application/blocs.dart';
+import 'package:rune/application/post/bloc/post_bloc.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/presentation/screens.dart';
 
-import 'domain/page_model.dart';
-
 void main() {
-  runApp(const RuneApp());
+  runApp(RuneApp());
 }
 
 class RuneApp extends StatelessWidget {
-  const RuneApp({Key? key}) : super(key: key);
+  RuneApp({Key? key}) : super(key: key);
+
+  final userRepository = UserRepository();
+  final channelRepository = ChannelRepository();
+  final postRepository = PostRepository();
+  final commmentRepository = CommentRepository();
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (_) => UserRepository()),
-        RepositoryProvider(create: (_) => ChannelRepository()),
-        RepositoryProvider(create: (_) => PostRepository()),
-        RepositoryProvider(create: (_) => CommentRepository()),
+        RepositoryProvider(create: (_) => userRepository),
+        RepositoryProvider(create: (_) => channelRepository),
+        RepositoryProvider(create: (_) => commmentRepository),
+        RepositoryProvider(create: (_) => postRepository),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<ChannelBloc>(create: (_) => ChannelBloc()),
+          BlocProvider<ChannelBloc>(
+              create: (_) => ChannelBloc(channelRepository, userRepository)),
+          BlocProvider(create: (_) => PostBloc(postRepository, userRepository)),
           BlocProvider<NavigationCubit>(create: (_) => NavigationCubit()),
         ],
         child: const RunePages(),
@@ -93,15 +98,11 @@ class RunePages extends StatelessWidget {
               ),
             // // tier 5
             if (state is ChannelRoute)
-              const MaterialPage(
-                key: ValueKey('channel details page'),
-                child: ChannelDetailsPage(),
+              MaterialPage(
+                key: const ValueKey('channel details page'),
+                child: ChannelDetailsPage(channel: state.selectedChannel),
               ),
-            if (state is CreateChannelRoute)
-              const MaterialPage(
-                key: ValueKey('channel details page'),
-                child: CreateChannelPage(),
-              ),
+
             // // tier 7
           ],
           onPopPage: (route, result) {
@@ -115,6 +116,10 @@ class RunePages extends StatelessWidget {
               case CommentsRoute:
               case EditProfileRoute:
                 navCubit.toDashboardScreen(userRepo.loggedInUser!, 1);
+                break;
+
+              case ChannelRoute:
+                navCubit.toDashboardScreen(userRepo.loggedInUser!);
                 break;
             }
             return true;
