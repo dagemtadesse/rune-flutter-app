@@ -6,6 +6,8 @@ import 'package:rune/infrastructure/post/post_cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'dart:developer' as developer;
 
+import 'package:rune/main.dart';
+
 class PostRepository {
   final PostAPIProvider postAPIProvider;
   final PostCacheProvider postCacheProvider;
@@ -30,6 +32,26 @@ class PostRepository {
       }
 
       return Expect(posts, null);
+    } catch (error) {
+      print(error);
+      var message = "Unable to Fetch posts";
+      if (error is APIResponse && error.message != null) {
+        message = error.message!;
+      } else if (error is String) {
+        message = error;
+      }
+
+      return Expect(null, message);
+    }
+  }
+
+  Future<Expect<Post>> createPost(UserRepository userRepository, int channelId,
+      String title, String content) async {
+    try {
+      final newPost = await postAPIProvider.createPost(
+          userRepository.loggedInUser, channelId,
+          title: title, content: content);
+      return Expect(newPost, null);
     } catch (error) {
       print(error);
       var message = "Unable to Fetch posts";

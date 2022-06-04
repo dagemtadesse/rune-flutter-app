@@ -16,3 +16,11 @@ class LoadingPostFailed extends PostState {
 
   LoadingPostFailed(this.errorMessage);
 }
+
+class UploadingPost extends PostState {}
+
+class UploadingPostSucced extends PostState {}
+
+class UploadingPostFailed extends PostState {}
+
+class UploadingPostCancled extends PostState {}

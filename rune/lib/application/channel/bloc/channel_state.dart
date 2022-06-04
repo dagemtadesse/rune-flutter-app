@@ -24,7 +24,19 @@ class ChannleLoadingFailed extends ChannelState {
   const ChannleLoadingFailed(this.errMsg);
 }
 
-class ChannelCreated extends ChannelState {}
+class ChannelCreationFailed extends ChannelState {
+  final String errMsg;
+
+  const ChannelCreationFailed(this.errMsg);
+}
+
+class ChannelCreated extends ChannelState {
+  final Channel channel;
+
+  ChannelCreated(this.channel);
+}
+
+class ChannelCreating extends ChannelState {}
 
 class ChannelDeleted extends ChannelState {}
 

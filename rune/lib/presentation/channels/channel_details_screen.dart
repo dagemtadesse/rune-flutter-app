@@ -15,6 +15,7 @@ class ChannelDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<PostBloc>().add(LoadChannelsPosts(channel.id));
+    final _key = GlobalKey();
     return Scaffold(
       body: ListView(
         children: [
@@ -76,7 +77,9 @@ class ChannelDetailsPage extends StatelessWidget {
             ),
             context: context,
             builder: (_) {
-              return PostForm(currentUser: null);
+              return PostForm(
+                key: _key,
+              );
             },
           );
         }),
@@ -88,13 +91,3 @@ class ChannelDetailsPage extends StatelessWidget {
     );
   }
 }
-
-// ListView.builder(
-                      //   itemCount: posts.data!.length + 1,
-                      //   itemBuilder: (context, index) {
-                      //     if (index == 0) {
-                      //       return ChannelAppBar(channel: channel.data!);
-                      //     }
-                      //     return PostCard(post: posts.data![index ]);
-                      //   },
-                      // ),

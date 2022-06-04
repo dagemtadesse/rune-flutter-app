@@ -1,126 +1,139 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rune/domain/models.dart';
+import 'package:rune/application/post/bloc/post_bloc.dart';
 import 'package:rune/infrastructure/repositories.dart';
+import 'package:rune/presentation/post/widgets/post_input.dart';
 import 'package:rune/theme.dart';
 
-class PostForm extends StatelessWidget {
-  final User? currentUser; //TODO: change this
+import 'widgets/card_info.dart';
 
-  const PostForm({Key? key, required this.currentUser}) : super(key: key);
+class PostForm extends StatelessWidget {
+  PostForm({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
+  final titleController = TextEditingController();
+  final contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final user = context.read<UserRepository>().loggedInUser;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                  style: TextButton.styleFrom(primary: RuneTheme.borderColor),
-                  onPressed: (() => Navigator.of(context).pop()),
-                  child: Text(
-                    "Cancel",
-                    style: GoogleFonts.poppins(
-                        fontSize: 15.0, fontWeight: FontWeight.w400),
-                  )),
-              TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: Colors.black,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Post",
-                    style: GoogleFonts.poppins(
-                        fontSize: 15.0, fontWeight: FontWeight.w300),
-                  )),
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Divider(
-            color: RuneTheme.borderColor,
-            thickness: 1.0,
-          ),
-          const SizedBox(height: 8),
-          Column(
+    final uploadPostBloc = context.read<PostBloc>();
+
+    return Builder(builder: (context) {
+      return Container(
+        margin: EdgeInsets.only(
+            left: 18.0,
+            right: 18.0,
+            top: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 24,
-                        backgroundImage: AssetImage("assets/test.jpg"),
+                  TextButton(
+                      style:
+                          TextButton.styleFrom(primary: RuneTheme.borderColor),
+                      onPressed: (() => uploadPostBloc.add(CancelUploadPost())),
+                      child: Text(
+                        "Cancel",
+                        style: GoogleFonts.poppins(
+                            fontSize: 15.0, fontWeight: FontWeight.w400),
+                      )),
+                  BlocConsumer<PostBloc, PostState>(
+                    listener: (context, state) {
+                      if (state is UploadingPostSucced ||
+                          state is UploadingPostCancled) {
+                        Navigator.pop(context);
+                      }
+                      if (state == UploadingPostFailed) {
+                        var snackBar = const SnackBar(
+                            content: Text("Unable to upload your post"));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Navigator.pop(context);
+                      }
+                    },
+                    builder: (_, state) => TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.black,
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user.fullName,
-                            style: GoogleFonts.poppins(
-                                color: const Color.fromRGBO(18, 18, 18, 1),
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(DateTime.now().toString(),
-                              style: GoogleFonts.poppins(fontSize: 14))
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.image_outlined,
-                          color: Color.fromRGBO(18, 18, 18, 1)),
+                      onPressed: state == UploadingPost
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                final title = titleController.text;
+                                final content = contentController.text;
+                                uploadPostBloc.add(
+                                  UploadPost(30, title, content),
+                                );
+                              }
+                            },
+                      child: state == UploadingPost
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ))
+                          : Text(
+                              "Post",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15.0, fontWeight: FontWeight.w300),
+                            ),
                     ),
-                  ]),
+                  ),
                 ],
               ),
-              const SizedBox(height: 12.0),
-              TextFormField(
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  color: const Color.fromARGB(255, 99, 99, 99),
-                ),
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  hintText: "Post Title...",
-                ),
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.done,
-                showCursor: true,
+              const SizedBox(height: 8),
+              const Divider(
+                color: RuneTheme.borderColor,
+                thickness: 1.0,
               ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  color: const Color.fromARGB(255, 99, 99, 99),
+              const SizedBox(height: 8),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CardDetails(user: user),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.image_outlined,
+                                    color: Color.fromRGBO(18, 18, 18, 1)),
+                              ),
+                            ]),
+                      ],
+                    ),
+                    const SizedBox(height: 12.0),
+                    PostInput(
+                        hintText: "Post description...",
+                        controller: titleController),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    PostInput(
+                        hintText: "Post Titie...",
+                        controller: contentController),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                  ],
                 ),
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  hintText: "Post description...",
-                ),
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.done,
-                showCursor: true,
               ),
             ],
           ),
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }

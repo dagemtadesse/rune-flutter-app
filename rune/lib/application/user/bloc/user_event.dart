@@ -8,11 +8,12 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UpdateUserName extends UserEvent {
-  final String userName;
-  final int userId;
+class UpdateProfile extends UserEvent {
+  final String fullName;
+  final String email;
+  final String? handle;
 
-  const UpdateUserName({required this.userId, required this.userName});
+  UpdateProfile(this.fullName, this.email, this.handle);
   @override
-  List<Object> get props => [userName, userId];
+  List<Object> get props => [fullName, email];
 }

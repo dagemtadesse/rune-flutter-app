@@ -5,6 +5,9 @@ import 'package:rune/infrastructure/channel/channel_api_provider.dart';
 import 'package:rune/infrastructure/channel/channel_cache_provider.dart';
 import 'dart:developer' as developer;
 
+import 'package:rune/infrastructure/repositories.dart';
+import 'package:test/test.dart';
+
 class ChannelRepository {
   final ChannelAPIProvider channelAPIProvider;
   final ChannelCacheProvider channelCacheProvider;
@@ -85,6 +88,21 @@ class ChannelRepository {
       }
 
       return Expect(null, message);
+    }
+  }
+
+  Future<Expect<Channel>> createChannel(UserRepository userRepository,
+      String name, String description, String location, String email) async {
+    try {
+      final channel = await channelAPIProvider.createChannel(
+          userRepository.loggedInUser,
+          name: name,
+          description: description,
+          email: email);
+      return Expect(channel, null);
+    } catch (error) {
+      return Expect(
+          null, resolveErrorMessage(error, "Unable to create channel"));
     }
   }
 }

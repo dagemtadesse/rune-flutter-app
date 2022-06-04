@@ -55,6 +55,7 @@ class UserAPIProvider {
   Future<User> update(
       {String? fullName,
       String? email,
+      String? handle,
       String? password,
       String? imagePath,
       required String authToken}) async {
@@ -66,8 +67,9 @@ class UserAPIProvider {
 
       request.headers['Authorization'] = 'Bearer $authToken';
       if (email != null) request.fields['email'] = email;
-      if (fullName != null) request.fields['email'] = fullName;
+      if (fullName != null) request.fields['fullName'] = fullName;
       if (password != null) request.fields['password'] = password;
+      if (handle != null) request.fields['handle'] = handle;
       if (imagePath != null) {
         request.files
             .add(await http.MultipartFile.fromPath("avatar", imagePath));

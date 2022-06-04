@@ -102,4 +102,30 @@ class UserRepository {
       return Expect(null, message);
     }
   }
+
+  Future<Expect<User>> updateUser(
+      String? fullname, String? email, String? handle) async {
+    try {
+      final user = await userApiProvider.update(
+        fullName: fullname,
+        email: email,
+        handle: handle,
+        authToken: loggedInUser.token!,
+      );
+
+      return Expect(user, null);
+    } catch (error) {
+      String message = "Unable to Login";
+      if (error is APIResponse && error.message != null) {
+        message = error.message!;
+        if (error.message!.contains('Database error')) {
+          message = "Email address already taken";
+        }
+      } else if (error is String) {
+        message = error;
+      }
+
+      return Expect(null, message);
+    }
+  }
 }

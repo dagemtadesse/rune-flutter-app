@@ -8,3 +8,15 @@ class LoadChannelsPosts extends PostEvent {
 
   LoadChannelsPosts(this.channelId);
 }
+
+class UploadPost extends PostEvent {
+  final int channelId;
+  final String postTitle;
+  final String postContent;
+  final String? imagePath;
+
+  UploadPost(this.channelId, this.postTitle, this.postContent,
+      {this.imagePath});
+}
+
+class CancelUploadPost extends PostEvent {}

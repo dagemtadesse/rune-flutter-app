@@ -55,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 6),
                 if (user.handle != null)
                   Text(
-                    user.handle!,
+                    '@${user.handle ?? ""}',
                     style: GoogleFonts.poppins(fontSize: 15),
                   ),
                 SizedBox(height: 16),
@@ -79,6 +79,18 @@ class ProfileScreen extends StatelessWidget {
                     leading: const Icon(Icons.chat_bubble_outline),
                     title: const Text("Comments"),
                     onTap: () => navCubit.toCommentsScreen()),
+                if (user.role == 'ADMIN')
+                  ListTile(
+                    leading: const Icon(Icons.create_new_folder_outlined),
+                    title: const Text("Create Channel"),
+                    onTap: () => navCubit.toCreateChannelScreen(),
+                  ),
+                if (user.role == 'USER')
+                  ListTile(
+                    leading: const Icon(Icons.add_moderator_outlined),
+                    title: const Text("Request to become admin"),
+                    onTap: () => navCubit.toSplashScreen(),
+                  ),
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text("Logout"),

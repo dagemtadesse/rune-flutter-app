@@ -47,13 +47,7 @@ class UserFormValidator {
     return null;
   }
 
-  static String? validateUserName(String userName) {
-    if (userName.trim().isEmpty) {
-      return "Username can't be empty";
-    }
-    if (userName.trim().length < 4) {
-      return 'Username must be at least 4 characters in length';
-    }
+  static String? validateUserName(String? userName) {
     return null;
   }
 }

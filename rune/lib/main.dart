@@ -5,6 +5,8 @@ import 'package:rune/application/blocs.dart';
 import 'package:rune/application/post/bloc/post_bloc.dart';
 import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
+import 'package:rune/presentation/channels/create_channel_screen.dart';
+import 'package:rune/presentation/comments/post_comments/post_comments_screen.dart';
 import 'package:rune/presentation/screens.dart';
 
 bool externalDevice = true;
@@ -108,7 +110,11 @@ class RunePages extends StatelessWidget {
                 key: const ValueKey('channel details page'),
                 child: ChannelDetailsPage(channel: state.selectedChannel),
               ),
-
+            if (state is CreateChannelRoute)
+              MaterialPage(
+                key: const ValueKey('channel details page'),
+                child: CreateChannelPage(),
+              ),
             // // tier 7
           ],
           onPopPage: (route, result) {

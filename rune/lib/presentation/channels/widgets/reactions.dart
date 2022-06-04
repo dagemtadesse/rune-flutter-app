@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:rune/application/widgets/hero_dialog_route.dart';
 import 'package:rune/domain/models.dart';
+import 'package:rune/presentation/comments/post_comments/post_comments_screen.dart';
 import 'package:rune/theme.dart';
 
 class ReactButtons extends StatefulWidget {
@@ -83,7 +84,18 @@ class _ReactButtonsState extends State<ReactButtons> {
             ],
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                HeroDialogRoute(
+                  builder: (_) => Center(
+                    child: CommentsScreen(
+                      post: widget.post,
+                    ),
+                  ),
+                ),
+              );
+            },
             icon:
                 const Icon(Icons.comment_rounded, color: RuneTheme.borderColor),
           ),

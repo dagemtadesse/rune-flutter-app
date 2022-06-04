@@ -22,7 +22,6 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
 
   void _onLoadChannels(LoadChannels event, Emitter<ChannelState> emit) async {
     emit(ChannelLoading());
-    developer.log("logged in user is null ${userRepo.loggedInUser == null}");
     final expectedChannels =
         await channelRepo.getChannels(user: userRepo.loggedInUser);
     if (expectedChannels.hasError) {
@@ -33,13 +32,16 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
     emit(ChannelLoadedSuccessfuly(channels: expectedChannels.data));
   }
 
-  void _onCreateChannel(CreateChannel event, Emitter<ChannelState> emit) {
-    final state = this.state;
-
-    if (state is ChannelLoadedSuccessfuly) {
-      emit(ChannelLoadedSuccessfuly(
-          channels: List.from(state.channels)..add(event.channel)));
+  void _onCreateChannel(CreateChannel event, Emitter<ChannelState> emit) async {
+    emit(ChannelCreating());
+    final channel = await channelRepo.createChannel(
+        userRepo, event.name, event.description, event.email, event.location);
+    if (channel.hasError) {
+      emit(ChannelCreationFailed(channel.error));
+      return;
     }
+
+    emit(ChannelCreated(channel.data));
   }
 
   void _onDeleteChannel(DeleteChannel event, Emitter<ChannelState> emit) {
