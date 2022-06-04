@@ -7,11 +7,19 @@ import 'package:rune/presentation/auth/widgets/auth_button.dart';
 import 'package:rune/presentation/auth/widgets/auth_inputs.dart';
 
 void  main() {
-   testWidgets('Log in page contains two input fields',
+   testWidgets('Log in page contains two input fields with one button',
       (WidgetTester tester) async {
     await tester.pumpWidget(SignInScreen());
-    final inputFieldsCount = find.byType(TextFormField);
-    expect(inputFieldsCount, findsNWidgets(2));
+
+    final authInputCount = find.byType(AuthInput);
+    final passwordInputCount = find.byType(PasswordInput);
+    final authButtonCount = find.byType(AuthButton);
+
+    expect(authInputCount, findsOneWidget);
+    expect(passwordInputCount, findsOneWidget);
+    expect(authButtonCount, findsOneWidget);
+
+
 
 
   });
