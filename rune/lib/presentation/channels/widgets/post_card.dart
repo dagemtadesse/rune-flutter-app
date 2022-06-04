@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rune/application/widgets/widgets.dart';
 import 'package:rune/domain/post/post_model.dart';
+
+import 'reactions.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -54,7 +55,7 @@ class PostCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Text(
                 post.title,
                 style: GoogleFonts.poppins(
@@ -62,7 +63,7 @@ class PostCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 12,
+              height: 8,
             ),
             if (post.image != null)
               Container(
@@ -75,13 +76,13 @@ class PostCard extends StatelessWidget {
               ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 40.0, top: 8.0, bottom: 16.0),
+                  const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 16.0),
               child: Text(
                 post.content,
                 style: GoogleFonts.poppins(fontSize: 16),
               ),
             ),
-            const ReactButtons(),
+            ReactButtons(post: post),
           ],
         ),
       ),

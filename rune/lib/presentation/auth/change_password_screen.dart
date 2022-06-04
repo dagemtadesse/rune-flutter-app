@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rune/application/auth/bloc/auth_bloc.dart';
+import 'package:rune/application/blocs.dart';
 import 'package:rune/application/widgets/widgets.dart';
 import 'package:rune/domain/user/user_form_validator.dart';
-import 'package:rune/infrastructure/repositories.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rune/infrastructure/repositories.dart';
 
-import '../../domain/user/user_model.dart';
 import 'widgets/widgets.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
-  final User currentUser;
-
-  ChangePasswordScreen({Key? key, required this.currentUser}) : super(key: key);
+  ChangePasswordScreen({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
   final oldPwdController = TextEditingController();
@@ -21,6 +18,8 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
+    final user = context.read<UserRepository>().loggedInUser;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -82,7 +81,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   dispatcher: () {
                     authBloc.add(
                       ChangePasswordRequest(oldPwdController.text,
-                          newPwdController.text, currentUser.email),
+                          newPwdController.text, user.email),
                     );
                   },
                   formKey: _formKey)

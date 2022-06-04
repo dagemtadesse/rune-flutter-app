@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rune/domain/user/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/theme.dart';
 
 import '../../application/widgets/widgets.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  final User currentUser;
-
-  const EditProfileScreen({Key? key, required this.currentUser})
-      : super(key: key);
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserRepository>().loggedInUser;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

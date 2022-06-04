@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rune/domain/models.dart';
+import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/theme.dart';
 
 class PostForm extends StatelessWidget {
-  const PostForm({Key? key}) : super(key: key);
+  final User? currentUser; //TODO: change this
+
+  const PostForm({Key? key, required this.currentUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserRepository>().loggedInUser;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 20),
       child: Column(
@@ -60,7 +66,7 @@ class PostForm extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Publisher Name",
+                            user.fullName,
                             style: GoogleFonts.poppins(
                                 color: const Color.fromRGBO(18, 18, 18, 1),
                                 fontSize: 15,

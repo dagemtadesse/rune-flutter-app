@@ -10,22 +10,21 @@ import 'package:rune/presentation/screens.dart';
 bool externalDevice = true;
 String host = externalDevice ? "192.168.12.1:9999" : "localhost:9999";
 
+final database = CacheDatabase();
+
+final userRepository = UserRepository(database, host);
+final channelRepository = ChannelRepository(database, host);
+final postRepository = PostRepository(database, host);
+final commmentRepository = CommentRepository(database, host);
+
 void main() {
   runApp(RuneApp());
 }
 
 class RuneApp extends StatelessWidget {
   RuneApp({Key? key}) : super(key: key);
-
-  final database = CacheDatabase();
-
   @override
   Widget build(BuildContext context) {
-    final userRepository = UserRepository(database, host);
-    final channelRepository = ChannelRepository(database, host);
-    final postRepository = PostRepository(database, host);
-    final commmentRepository = CommentRepository(database, host);
-
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (_) => userRepository),
@@ -96,12 +95,12 @@ class RunePages extends StatelessWidget {
             if (state is ChangePasswordRoute)
               MaterialPage(
                 key: ValueKey('change password page'),
-                child: ChangePasswordScreen(currentUser: state.loggedInUser),
+                child: ChangePasswordScreen(),
               ),
             if (state is EditProfileRoute)
               MaterialPage(
                 key: ValueKey('edit profile page'),
-                child: EditProfileScreen(currentUser: state.loggedInUser),
+                child: EditProfileScreen(),
               ),
             // // tier 5
             if (state is ChannelRoute)

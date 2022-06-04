@@ -34,7 +34,7 @@ class AuthButton extends StatelessWidget {
               if (state is AuthRequestSuccessWithMessage) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(state.message)));
-                Future.delayed(Duration(milliseconds: 3000), () {
+                Future.delayed(Duration(milliseconds: 4000), () {
                   navCubit.toDashboardScreen(state.loggedUser, 1);
                 });
               }

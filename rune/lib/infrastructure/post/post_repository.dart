@@ -4,6 +4,7 @@ import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/post/post_api_provider.dart';
 import 'package:rune/infrastructure/post/post_cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
+import 'dart:developer' as developer;
 
 class PostRepository {
   final PostAPIProvider postAPIProvider;
@@ -25,8 +26,7 @@ class PostRepository {
       );
 
       for (var post in posts) {
-        final author = (await userRepository.getUser(post.authorId)).data;
-        print(author);
+        post.author = (await userRepository.getUser(post.authorId)).data;
       }
 
       return Expect(posts, null);
