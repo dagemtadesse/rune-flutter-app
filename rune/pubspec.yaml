@@ -40,12 +40,12 @@ dependencies:
   test: ^1.19.5
   equatable: ^2.0.3
   sqflite: ^2.0.2+1
-  path: ^1.8.1 # dependecy for sqflite
+  path: ^1.8.0 # dependecy for sqflite
+  mockito: ^5.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^5.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
