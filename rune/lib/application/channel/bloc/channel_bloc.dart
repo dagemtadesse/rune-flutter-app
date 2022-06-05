@@ -52,4 +52,5 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
           channels: List.from(state.channels)..remove(event.channel)));
     }
   }
+
 }
