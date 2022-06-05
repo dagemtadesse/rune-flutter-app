@@ -11,7 +11,9 @@ void main() {
     await tester.pumpWidget(SignInScreen());
 
     final authInputCount = find.byType(AuthInput);
+
     final passwordInputCount = find.byType(PasswordInput);
+
     final authButtonCount = find.byType(AuthButton);
 
     expect(authInputCount, findsOneWidget);
@@ -24,8 +26,11 @@ void main() {
     await tester.pumpWidget(SignInScreen());
 
     final textSearch = find.text("Let's Sign you in.");
+
     final textSearch2 = find.text("Don't have an account? Register");
+
     expect(textSearch, findsOneWidget);
+
     expect(textSearch2, findsOneWidget);
   });
 
