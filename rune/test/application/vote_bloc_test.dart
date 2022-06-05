@@ -18,10 +18,8 @@ void main() {
     mockUserRepository = MockUserRepository();
   });
 
-  group('UpdateUser', () {
-    test(
-        'emits states: UserUpdating() -> UserUpdateSuccessful(), when sucessful',
-        () {
+  group('Vote', () {
+    test('emits state: Voted(), when sucessful', () {
       when(mockVoteRepository.votePost(mockUserRepository, 3, ''));
     });
 
