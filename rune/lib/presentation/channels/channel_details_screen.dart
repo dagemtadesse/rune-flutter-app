@@ -44,6 +44,7 @@ class ChannelDetailsPage extends StatelessWidget {
                 return ListView.builder(
                   itemCount: state.posts.length,
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return PostCard(post: state.posts[index]);
                   },
@@ -68,8 +69,11 @@ class ChannelDetailsPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (() {
+          final formKey = GlobalKey<FormState>();
+          final title = TextEditingController();
+          final content = TextEditingController();
           showModalBottomSheet(
-            isScrollControlled: true,
+            isScrollControlled: false,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(20),
@@ -78,6 +82,10 @@ class ChannelDetailsPage extends StatelessWidget {
             context: context,
             builder: (_) {
               return PostForm(
+                channel: channel,
+                formKey: formKey,
+                titleController: title,
+                contentController: content,
                 key: _key,
               );
             },

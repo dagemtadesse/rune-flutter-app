@@ -32,7 +32,7 @@ class DashboardRoute extends NavigationState {
   final User loggedInUser;
   final int tabIndex;
 
-  DashboardRoute(this.loggedInUser, [this.tabIndex = 0]);
+  DashboardRoute(this.loggedInUser, [this.tabIndex = 1]);
 }
 
 class ChannelRoute extends NavigationState {

@@ -18,12 +18,17 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
     on<LoadChannels>(_onLoadChannels);
     on<CreateChannel>(_onCreateChannel);
     on<DeleteChannel>(_onDeleteChannel);
+    on<PinChannel>(_onPinChannel);
   }
 
   void _onLoadChannels(LoadChannels event, Emitter<ChannelState> emit) async {
     emit(ChannelLoading());
+    developer.log("${event.onlyMarked}");
+    final filter = event.onlyMarked ? "true" : "";
     final expectedChannels = await channelRepo.getChannels(
-        user: userRepo.loggedInUser, query: event.query);
+        user: userRepo.loggedInUser,
+        query: event.query,
+        onlyBookmarked: filter);
     if (expectedChannels.hasError) {
       emit(ChannleLoadingFailed(expectedChannels.error));
       return;
@@ -51,5 +56,14 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
       emit(ChannelLoadedSuccessfuly(
           channels: List.from(state.channels)..remove(event.channel)));
     }
+  }
+
+  void _onPinChannel(PinChannel event, emit) async {
+    developer.log("$event");
+    final channel = await channelRepo.pinChannel(
+        user: userRepo.loggedInUser,
+        channelId: event.channel.id,
+        unpin: event.unpin);
+    if (!channel.hasError) emit(PinnedChannel(!event.unpin));
   }
 }

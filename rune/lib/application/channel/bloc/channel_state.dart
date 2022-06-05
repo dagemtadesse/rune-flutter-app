@@ -45,3 +45,9 @@ class ChannelVoted extends ChannelState {
 class ChannelCreating extends ChannelState {}
 
 class ChannelDeleted extends ChannelState {}
+
+class PinnedChannel extends ChannelState {
+  final bool isPinned;
+
+  PinnedChannel(this.isPinned);
+}

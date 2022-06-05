@@ -79,14 +79,6 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-              QuestionTextButton(
-                  question: "Don't have an account?",
-                  link: 'Register',
-                  callback: (context) {
-                    // final pageModel =
-                    //     Provider.of<PageModel>(context, listen: false);
-                    // pageModel.setCurrentPage(Pages.signInPage);
-                  }),
               const SizedBox(height: 10),
               AuthButton(
                   label: "Register",

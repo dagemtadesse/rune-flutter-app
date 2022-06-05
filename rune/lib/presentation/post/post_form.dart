@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/application/post/bloc/post_bloc.dart';
+import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/presentation/post/widgets/post_input.dart';
 import 'package:rune/theme.dart';
@@ -9,11 +10,18 @@ import 'package:rune/theme.dart';
 import 'widgets/card_info.dart';
 
 class PostForm extends StatelessWidget {
-  PostForm({Key? key}) : super(key: key);
+  PostForm(
+      {Key? key,
+      required this.formKey,
+      required this.titleController,
+      required this.contentController,
+      required this.channel})
+      : super(key: key);
 
-  final _formKey = GlobalKey<FormState>();
-  final titleController = TextEditingController();
-  final contentController = TextEditingController();
+  final Channel channel;
+  final GlobalKey<FormState> formKey;
+  final TextEditingController titleController;
+  final TextEditingController contentController;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +53,11 @@ class PostForm extends StatelessWidget {
                       )),
                   BlocConsumer<PostBloc, PostState>(
                     listener: (context, state) {
-                      if (state is UploadingPostSucced ||
-                          state is UploadingPostCancled) {
+                      if (state is UploadingPostSucced) {
                         Navigator.pop(context);
+                        context
+                            .read<PostBloc>()
+                            .add(LoadChannelsPosts(channel.id));
                       }
                       if (state == UploadingPostFailed) {
                         var snackBar = const SnackBar(
@@ -64,11 +74,11 @@ class PostForm extends StatelessWidget {
                       onPressed: state == UploadingPost
                           ? null
                           : () {
-                              if (_formKey.currentState!.validate()) {
+                              if (formKey.currentState!.validate()) {
                                 final title = titleController.text;
                                 final content = contentController.text;
                                 uploadPostBloc.add(
-                                  UploadPost(30, title, content),
+                                  UploadPost(channel.id, title, content),
                                 );
                               }
                             },
@@ -95,7 +105,7 @@ class PostForm extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

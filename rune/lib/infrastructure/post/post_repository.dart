@@ -2,6 +2,7 @@ import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
 import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
+import 'dart:developer' as developer;
 
 import 'data_provider/post_api_provider.dart';
 import 'data_provider/post_cache_provider.dart';
@@ -53,8 +54,8 @@ class PostRepository {
       postCacheProvider.addPost(newPost);
       return Expect(newPost, null);
     } catch (error) {
-      print(error);
-      var message = "Unable to Fetch posts";
+      developer.log("$error");
+      var message = "Unable to Create posts";
       if (error is APIResponse && error.message != null) {
         message = error.message!;
       } else if (error is String) {

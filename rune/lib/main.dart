@@ -130,7 +130,7 @@ class RunePages extends StatelessWidget {
               case PostsRoute:
               case CommentsRoute:
               case EditProfileRoute:
-                navCubit.toDashboardScreen(userRepo.loggedInUser, 1);
+                navCubit.toDashboardScreen(userRepo.loggedInUser, 2);
                 break;
 
               case ChannelRoute:

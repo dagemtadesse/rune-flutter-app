@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rune/presentation/channels/bookmarks_screen.dart';
 import 'package:rune/presentation/screens.dart';
 
 class HostPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class _HostPageState extends State<HostPage> {
   late int myIndex;
 
   final myPages = [
+    const BookmarksScreen(),
     const ChannelPage(),
     const ProfileScreen(),
   ];
@@ -39,6 +41,10 @@ class _HostPageState extends State<HostPage> {
             });
           },
           items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmarks_outlined),
+              label: "Bookmarks",
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
               label: "Search",

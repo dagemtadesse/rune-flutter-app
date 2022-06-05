@@ -14,6 +14,7 @@ class CacheDatabase {
       email TEXT NOT NULL,
       avatar TEXT,
       updatedAT TEXT NOT NULL,
+      role TEXT NOT NULL,
       token TEXT
   )
   ''';
@@ -36,9 +37,10 @@ class CacheDatabase {
     id INTEGER PRIMARY KEY,
       authorId INTEGER NOT NULL,
       name TEXT NOT NULL,
-      descritption TEXT NOT NULL,
+      description TEXT NOT NULL,
       pinned bool NOT NULL,
       updatedAT TEXT NOT NULL,
+      verified BOOL NOT NULL,
       logo TEXT,
       email TEXT,
       address TEXT
@@ -68,7 +70,7 @@ class CacheDatabase {
     WidgetsFlutterBinding.ensureInitialized();
     _database = await openDatabase(
       join(await getDatabasesPath(), 'rune_cache.db'),
-      version: 1,
+      version: 3,
       onCreate: (db, version) {
         db.execute(createUserTable);
         db.execute(createChannelTable);

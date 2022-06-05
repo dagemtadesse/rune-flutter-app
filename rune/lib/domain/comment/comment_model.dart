@@ -40,7 +40,7 @@ class Comment extends Equatable {
         'authorId': authorId,
         'postId': postId,
         'content': content,
-        'updatedAt': updatedAt,
+        'updatedAt': updatedAt.toString(),
         'upVote': upVote,
         'downVote': downVote,
         'vote': vote

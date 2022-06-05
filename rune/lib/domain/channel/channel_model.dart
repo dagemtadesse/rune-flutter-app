@@ -42,8 +42,11 @@ class Channel extends Equatable {
         'name': name,
         'description': description,
         'verified': verified,
-        'createdAt': updatedAt,
-        'pinned': pinned
+        'updatedAt': updatedAt.toString(),
+        'pinned': pinned,
+        'logo': logo,
+        'email': email,
+        'address': address
       };
 
   @override

@@ -48,7 +48,7 @@ class Post extends Equatable {
         'title': title,
         'content': content,
         'image': image,
-        'updatedAt': updatedAt,
+        'updatedAt': updatedAt.toString(),
         'upVote': upVote,
         'downVote': downVote,
         'vote': vote

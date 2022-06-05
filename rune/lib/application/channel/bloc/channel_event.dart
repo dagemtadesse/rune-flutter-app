@@ -10,7 +10,8 @@ abstract class ChannelEvent extends Equatable {
 
 class LoadChannels extends ChannelEvent {
   final String query;
-  const LoadChannels({this.query = ""});
+  final bool onlyMarked;
+  const LoadChannels({this.query = "", this.onlyMarked = false});
 }
 
 class CreateChannel extends ChannelEvent {
@@ -36,4 +37,10 @@ class VoteChannel extends ChannelEvent {
   final int channelId;
 
   VoteChannel(this.channelId);
+}
+
+class PinChannel extends ChannelEvent {
+  final Channel channel;
+  final bool unpin;
+  PinChannel(this.channel, this.unpin);
 }

@@ -48,7 +48,7 @@ class SplashScreen extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        "lorem iosum do  dor sit amet id the simple lorem iosum  dor sit amet id the simple iosum  id the simple iosum   dor sit amet id the simple lorem iosum dodor sit amet id the simplevvv sample paragraph",
+                        "Welcome to Rune. A public interactive platform for sharing and discussing your experiences. Dive into this community-based space to find and contribute answers regarding any and all service providing companies.",
                         style: SplashTheme.textTheme.headline3,
                         textAlign: TextAlign.center,
                       ),

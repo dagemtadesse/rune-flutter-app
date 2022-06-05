@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rune/domain/models.dart';
+import 'dart:developer' as developer;
 import 'package:rune/infrastructure/repositories.dart';
 
 part 'post_event.dart';
@@ -33,8 +34,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
     final expectedPost = await postRepository.createPost(
         userRepository, event.channelId, event.postTitle, event.postContent);
-    if (expectedPost.hasError) {
-      emit(UploadingPostSucced);
+    if (!expectedPost.hasError) {
+      emit(UploadingPostSucced());
       return;
     }
 

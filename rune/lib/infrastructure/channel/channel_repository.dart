@@ -62,11 +62,13 @@ class ChannelRepository {
   }
 
   Future<Expect<Channel>> pinChannel(
-      {required User user, required int channelId}) async {
+      {required User user, required int channelId, bool unpin = false}) async {
     try {
-      final channel = await channelAPIProvider.fetchChannel(user, channelId);
+      final channel =
+          await channelAPIProvider.pinChannel(user, channelId, reverse: unpin);
       return Expect(channel, null);
     } catch (error) {
+      developer.log("$error");
       var message = "Unable to pin the channel";
       if (error is APIResponse && error.message != null) {
         message = error.message!;

@@ -39,9 +39,12 @@ class User extends Equatable {
   Map<String, dynamic> toJson() => {
         'id': id,
         'fullName': fullName,
+        'handle': handle,
         'email': email,
-        'updatedAt': updatedAt,
-        'role': role
+        'avatar': avatar,
+        'updatedAt': updatedAt.toString(),
+        'role': role,
+        'token': token
       };
 
   @override

@@ -73,6 +73,7 @@ class PostAPIProvider {
 
       final response = await request.send();
       final body = await response.stream.bytesToString();
+      print(body);
 
       final apiResponse = APIResponse.fromJson(jsonDecode(body));
       if (apiResponse.status == 'success') {

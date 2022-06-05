@@ -1,30 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:rune/application/blocs.dart';
 import 'package:rune/domain/models.dart';
 
-class ChannelAppBar extends StatefulWidget {
+class ChannelAppBar extends StatelessWidget {
   final Channel channel;
 
   const ChannelAppBar({Key? key, required this.channel}) : super(key: key);
 
   @override
-  State<ChannelAppBar> createState() => _ChannelAppBarState();
-}
-
-class _ChannelAppBarState extends State<ChannelAppBar> {
-  bool _pinned = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _pinned = widget.channel.pinned;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final background = (widget.channel.logo != null)
-        ? NetworkImage(widget.channel.logo!)
+    final background = (channel.logo != null)
+        ? NetworkImage(channel.logo!)
         : const AssetImage("assets/mechanical.jpg");
 
     return Stack(
@@ -51,17 +39,24 @@ class _ChannelAppBarState extends State<ChannelAppBar> {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 actions: [
-                  IconButton(
-                    onPressed: () async {
-                      // setState(() {
-                      //   _pinned = !_pinned;
-                      // });
-                      // Provider.of<PageModel>(context, listen: false).updateUi();
+                  BlocBuilder<ChannelBloc, ChannelState>(
+                    builder: (context, state) {
+                      final isPinned = (state is PinnedChannel)
+                          ? state.isPinned
+                          : channel.pinned;
+
+                      return IconButton(
+                        onPressed: () async {
+                          context
+                              .read<ChannelBloc>()
+                              .add(PinChannel(channel, isPinned));
+                        },
+                        icon: Icon(!isPinned
+                            ? Icons.bookmark_add_outlined
+                            : Icons.bookmark),
+                        color: Colors.white,
+                      );
                     },
-                    icon: Icon(!_pinned
-                        ? Icons.bookmark_add_outlined
-                        : Icons.bookmark),
-                    color: Colors.white,
                   ),
                   const SizedBox(width: 18),
                 ],
@@ -74,7 +69,7 @@ class _ChannelAppBarState extends State<ChannelAppBar> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Text(
-                        widget.channel.name,
+                        channel.name,
                         style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 24.0,
@@ -87,7 +82,7 @@ class _ChannelAppBarState extends State<ChannelAppBar> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Text(
-                        widget.channel.description,
+                        channel.description,
                         style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,
