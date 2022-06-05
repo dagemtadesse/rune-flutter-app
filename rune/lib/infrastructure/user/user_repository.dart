@@ -7,7 +7,17 @@ import 'dart:developer' as developer;
 import 'data_provider/user_api_provider.dart';
 import 'data_provider/user_cache_provider.dart';
 
-class UserRepository {
+abstract class UserRepo {
+  Future<Expect<User>> login(String email, String password);
+  Future<Expect<User>> register(String email, String password, String fullname);
+  Future<Expect<User>> changePassword(
+      String password, String newPassword, String email);
+  Future<Expect<User>> getUser(id);
+  Future<Expect<User>> updateUser(
+      {String? fullname, String? email, String? handle, bool? makeAdmin});
+}
+
+class UserRepository extends UserRepo {
   late User loggedInUser;
 
   UserCacheProvider userCacheProvider;
