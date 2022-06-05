@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../lib/infrastructure/repositories.dart';
+import '../../../lib/infrastructure/repositories.dart';
 import 'package:mockito/mockito.dart';
 import 'package:rune/presentation/auth/login_screen.dart';
 import 'package:rune/presentation/auth/widgets/auth_button.dart';
@@ -12,16 +12,16 @@ void  main() {
     await tester.pumpWidget(SignInScreen());
 
     final authInputCount = find.byType(AuthInput);
+
     final passwordInputCount = find.byType(PasswordInput);
+
     final authButtonCount = find.byType(AuthButton);
 
     expect(authInputCount, findsOneWidget);
+
     expect(passwordInputCount, findsOneWidget);
+
     expect(authButtonCount, findsOneWidget);
-
-
-
-
   });
 
    testWidgets('searching texts if they appear on the login screen',
@@ -29,8 +29,11 @@ void  main() {
     await tester.pumpWidget(SignInScreen());
     
     final textSearch = find.text("Let's Sign you in.");
+
     final textSearch2 = find.text("Don't have an account? Register");
+
     expect(textSearch, findsOneWidget);
+    
     expect(textSearch2, findsOneWidget);
 
   });
