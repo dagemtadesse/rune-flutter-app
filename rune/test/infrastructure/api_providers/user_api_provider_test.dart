@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:rune/domain/models.dart';
+import 'package:rune/infrastructure/user/data_provider/user_api_provider.dart';
 import 'package:test/test.dart';
 import 'package:rune/infrastructure/api_response.dart';
-import 'package:rune/infrastructure/user/user_api_provider.dart';
 
 void main() {
   final UserAPIProvider userAPIProvider =

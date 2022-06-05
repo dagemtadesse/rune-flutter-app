@@ -6,6 +6,7 @@ import 'package:rune/presentation/channels/widgets/post_card.dart';
 import 'package:rune/domain/models.dart';
 import 'package:rune/presentation/channels/widgets/centerd_message.dart';
 import 'package:rune/presentation/channels/widgets/channel_app_bar.dart';
+import 'package:rune/presentation/post/post_form.dart';
 
 class ChannelDetailsPage extends StatelessWidget {
   final Channel channel;
@@ -14,6 +15,7 @@ class ChannelDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<PostBloc>().add(LoadChannelsPosts(channel.id));
+    final _key = GlobalKey();
     return Scaffold(
       body: ListView(
         children: [
@@ -31,7 +33,7 @@ class ChannelDetailsPage extends StatelessWidget {
                   return CenteredMessage(
                     sad: true,
                     child: Text(
-                      "No Channels Available yet",
+                      "No Posts Available yet",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontSize: 21,
@@ -75,8 +77,9 @@ class ChannelDetailsPage extends StatelessWidget {
             ),
             context: context,
             builder: (_) {
-              // return PostForm();
-              return Container();
+              return PostForm(
+                key: _key,
+              );
             },
           );
         }),
@@ -88,13 +91,3 @@ class ChannelDetailsPage extends StatelessWidget {
     );
   }
 }
-
-// ListView.builder(
-                      //   itemCount: posts.data!.length + 1,
-                      //   itemBuilder: (context, index) {
-                      //     if (index == 0) {
-                      //       return ChannelAppBar(channel: channel.data!);
-                      //     }
-                      //     return PostCard(post: posts.data![index ]);
-                      //   },
-                      // ),

@@ -12,6 +12,12 @@ class UserIdle extends UserState {}
 
 class UserUpdating extends UserState {}
 
+class AdminAccessRequested extends UserState {}
+
+class AdminAccessGranted extends UserState {}
+
+class AdminAccessRefused extends UserState {}
+
 class UserUpdateSuccessful extends UserState {}
 
 class UserUpdateFailed extends UserState {

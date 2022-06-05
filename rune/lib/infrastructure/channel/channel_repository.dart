@@ -4,31 +4,12 @@ import 'package:rune/infrastructure/cache_provider.dart';
 import 'dart:developer' as developer;
 
 import 'package:rune/infrastructure/repositories.dart';
+import 'package:test/test.dart';
+
 import 'data_provider/channel_api_provider.dart';
 import 'data_provider/channel_cache_provider.dart';
 
-abstract class ChannelRepo {
-  Future<Expect<List<Channel>>> getChannels(
-      {required User user,
-      int size,
-      int page,
-      String query,
-      String onlyBookmarked});
-
-  Future<Expect<Channel>> getChannel(
-      {required User user, required int channelId});
-
-  Future<Expect<Channel>> pinChannel(
-      {required User user, required int channelId});
-
-  Future<Expect<bool>> removeChannel(
-      {required User user, required int channelId});
-
-  Future<Expect<Channel>> createChannel(UserRepository userRepository,
-      String name, String description, String location, String email);
-}
-
-class ChannelRepository extends ChannelRepo {
+class ChannelRepository {
   final ChannelAPIProvider channelAPIProvider;
   final ChannelCacheProvider channelCacheProvider;
 

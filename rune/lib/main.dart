@@ -3,8 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rune/application/blocs.dart';
 import 'package:rune/application/post/bloc/post_bloc.dart';
+import 'package:rune/application/user/bloc/user_bloc.dart';
+import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
+import 'package:rune/presentation/channels/create_channel_screen.dart';
+import 'package:rune/presentation/comments/post_comments_screen.dart';
 import 'package:rune/presentation/screens.dart';
+
+bool externalDevice = true;
+String host = externalDevice ? "192.168.12.1:9999" : "localhost:9999";
+
+final database = CacheDatabase();
+
+final userRepository = UserRepository(database, host);
+final channelRepository = ChannelRepository(database, host);
+final postRepository = PostRepository(database, host);
+final commmentRepository = CommentRepository(database, host);
 
 void main() {
   runApp(RuneApp());
@@ -12,12 +26,6 @@ void main() {
 
 class RuneApp extends StatelessWidget {
   RuneApp({Key? key}) : super(key: key);
-
-  final userRepository = UserRepository();
-  final channelRepository = ChannelRepository();
-  final postRepository = PostRepository();
-  final commmentRepository = CommentRepository();
-
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -29,9 +37,11 @@ class RuneApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (_) => AuthBloc(userRepository: userRepository)),
           BlocProvider<ChannelBloc>(
               create: (_) => ChannelBloc(channelRepository, userRepository)),
           BlocProvider(create: (_) => PostBloc(postRepository, userRepository)),
+          BlocProvider(create: (_) => UserBloc(userRepository)),
           BlocProvider<NavigationCubit>(create: (_) => NavigationCubit()),
         ],
         child: const RunePages(),
@@ -87,12 +97,12 @@ class RunePages extends StatelessWidget {
               ),
             // // tier 4
             if (state is ChangePasswordRoute)
-              const MaterialPage(
+              MaterialPage(
                 key: ValueKey('change password page'),
                 child: ChangePasswordScreen(),
               ),
             if (state is EditProfileRoute)
-              const MaterialPage(
+              MaterialPage(
                 key: ValueKey('edit profile page'),
                 child: EditProfileScreen(),
               ),
@@ -102,7 +112,11 @@ class RunePages extends StatelessWidget {
                 key: const ValueKey('channel details page'),
                 child: ChannelDetailsPage(channel: state.selectedChannel),
               ),
-
+            if (state is CreateChannelRoute)
+              MaterialPage(
+                key: const ValueKey('channel details page'),
+                child: CreateChannelPage(),
+              ),
             // // tier 7
           ],
           onPopPage: (route, result) {
@@ -110,16 +124,17 @@ class RunePages extends StatelessWidget {
               return false;
             }
             switch (state.runtimeType) {
+              case CreateChannelRoute:
               case ChangePasswordRoute:
               case BookmarksRoute:
               case PostsRoute:
               case CommentsRoute:
               case EditProfileRoute:
-                navCubit.toDashboardScreen(userRepo.loggedInUser!, 1);
+                navCubit.toDashboardScreen(userRepo.loggedInUser, 1);
                 break;
 
               case ChannelRoute:
-                navCubit.toDashboardScreen(userRepo.loggedInUser!);
+                navCubit.toDashboardScreen(userRepo.loggedInUser);
                 break;
             }
             return true;

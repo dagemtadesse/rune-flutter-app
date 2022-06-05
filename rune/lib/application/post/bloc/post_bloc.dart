@@ -12,6 +12,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   PostBloc(this.postRepository, this.userRepository) : super(LoadingPosts()) {
     on<LoadChannelsPosts>(_onLoadChannelPosts);
+    on<UploadPost>(_handleSendUploadPostEvent);
+    on<CancelUploadPost>(_handleCancelUploadPostEvent);
   }
 
   void _onLoadChannelPosts(LoadChannelsPosts event, emit) async {
@@ -25,4 +27,42 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
     emit(LoadingPostsSucced(expectedPosts.data));
   }
+
+  _handleSendUploadPostEvent(UploadPost event, emit) async {
+    emit(UploadingPost());
+
+    final expectedPost = await postRepository.createPost(
+        userRepository, event.channelId, event.postTitle, event.postContent);
+    if (expectedPost.hasError) {
+      emit(UploadingPostSucced);
+      return;
+    }
+
+    emit(UploadingPostFailed());
+  }
+
+  _handleCancelUploadPostEvent(event, emit) {
+    emit(UploadingPostCancled());
+  }
 }
+
+  // UploadPostBloc() : super(UploadPostState.unSentPostUploadState) {
+  //   on<SendUploadPostEvent>(_handleSendUploadPostEvent);
+  //   on<CancelUploadPostEvent>(_handleCancelUploadPostEvent);
+  // }
+
+  // _handleSendUploadPostEvent(SendUploadPostEvent event, emit) async {
+  //   emit(UploadPostState.sentPostUploadState);
+  //   try {
+  //     await Future.delayed(const Duration(seconds: 5));
+  //     await uploadPost(
+  //         event.channelId, event.postTitle, event.postContent, event.imagePath);
+  //     emit(UploadPostState.donePostUploadState);
+  //   } catch (e) {
+  //     emit(UploadPostState.errorPostUploadState);
+  //   }
+  // }
+
+  // _handleCancelUploadPostEvent(event, emit) {
+  //   emit(UploadPostState.donePostUploadState);
+  // }

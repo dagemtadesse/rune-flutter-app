@@ -24,30 +24,24 @@ class ChannleLoadingFailed extends ChannelState {
   const ChannleLoadingFailed(this.errMsg);
 }
 
-class ChannelCreated extends ChannelState {}
+class ChannelCreationFailed extends ChannelState {
+  final String errMsg;
+
+  const ChannelCreationFailed(this.errMsg);
+}
+
+class ChannelCreated extends ChannelState {
+  final Channel channel;
+
+  ChannelCreated(this.channel);
+}
+
+class ChannelVoted extends ChannelState {
+  final Channel channel;
+
+  ChannelVoted(this.channel);
+}
+
+class ChannelCreating extends ChannelState {}
 
 class ChannelDeleted extends ChannelState {}
-
-abstract class SearchState extends ChannelState {
-  const SearchState();
-
-  @override
-  List<Object> get props => [];
-
-}
-
-class SearchLoading extends SearchState {}
-
-class SearchLoadedSuccesfully extends SearchState{
-  final List<Channel> channels;
-
-  const SearchLoadedSuccesfully({required this.channels});
-  @override
-  List<Object> get props => [channels];
-}
-
-class SearchLoadingFailed extends SearchState {
-  final String errMsg;
-  const SearchLoadingFailed(this.errMsg);
-}
-

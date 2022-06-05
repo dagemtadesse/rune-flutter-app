@@ -38,5 +38,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthRequestSuccess(expect.data));
   }
 
-  _handleChangePassword(event, emit) {}
+  _handleChangePassword(ChangePasswordRequest event, emit) async {
+    emit(AuthRequestSent());
+    final expect = await userRepository.changePassword(
+        event.password, event.newPassword, event.email);
+    if (expect.hasError) {
+      emit(AuthRequestFailure(expect.error));
+      return;
+    }
+
+    emit(AuthRequestSuccessWithMessage(
+        userRepository.loggedInUser, "Password changed!"));
+  }
 }

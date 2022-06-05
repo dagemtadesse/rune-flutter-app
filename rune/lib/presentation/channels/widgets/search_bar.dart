@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rune/application/blocs.dart';
 import 'package:rune/theme.dart';
 
 class SearchBar extends StatelessWidget {
   SearchBar({Key? key}) : super(key: key);
-
-  final queryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,11 @@ class SearchBar extends StatelessWidget {
             ),
             Expanded(
               child: TextFormField(
-                controller: queryController,
+                onChanged: (value) {
+                  context
+                      .read<ChannelBloc>()
+                      .add(LoadChannels(query: value.trim()));
+                },
                 style: GoogleFonts.poppins(
                     fontSize: 15, color: RuneTheme.borderColor),
                 decoration: const InputDecoration(

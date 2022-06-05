@@ -16,3 +16,9 @@ class AuthRequestSuccess extends AuthState {
   final User loggedUser;
   AuthRequestSuccess(this.loggedUser);
 }
+
+class AuthRequestSuccessWithMessage extends AuthState {
+  final User loggedUser;
+  final String message;
+  AuthRequestSuccessWithMessage(this.loggedUser, this.message);
+}

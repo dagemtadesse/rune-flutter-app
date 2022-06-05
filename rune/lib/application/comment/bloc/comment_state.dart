@@ -10,10 +10,18 @@ abstract class CommentState extends Equatable {
 
 class CommentLoading extends CommentState {}
 
-class CommentLoaded extends CommentState {
+class CommentLoadingSucceded extends CommentState {
   final List<Comment> comments;
 
-  const CommentLoaded({required this.comments});
+  const CommentLoadingSucceded({required this.comments});
   @override
   List<Object> get props => [comments];
 }
+
+class CommentLoadingFailed extends CommentState {
+  final String message;
+
+  CommentLoadingFailed(this.message);
+}
+
+class CommentAddSuccessfuly extends CommentState {}

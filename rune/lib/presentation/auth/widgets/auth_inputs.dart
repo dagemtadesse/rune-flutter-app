@@ -28,16 +28,18 @@ class AuthInput extends StatelessWidget {
 }
 
 class PasswordInput extends StatefulWidget {
-  const PasswordInput({
-    Key? key,
-    required this.controller,
-    required this.textHint,
-    required this.validator,
-  }) : super(key: key);
+  const PasswordInput(
+      {Key? key,
+      required this.controller,
+      required this.textHint,
+      required this.validator,
+      this.allowPeek = true})
+      : super(key: key);
 
   final TextEditingController controller;
   final String textHint;
   final String? Function(String?) validator;
+  final bool allowPeek;
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -53,14 +55,17 @@ class _PasswordInputState extends State<PasswordInput> {
       obscureText: !_showPassword,
       validator: widget.validator,
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: Icon(_showPassword ? Icons.visibility : Icons.visibility_off),
-          onPressed: () {
-            setState(() {
-              _showPassword = !_showPassword;
-            });
-          },
-        ),
+        suffixIcon: widget.allowPeek
+            ? IconButton(
+                icon: Icon(
+                    _showPassword ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  setState(() {
+                    _showPassword = !_showPassword;
+                  });
+                },
+              )
+            : null,
         hintText: widget.textHint,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),

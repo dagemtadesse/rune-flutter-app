@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:rune/application/blocs.dart';
-
-import 'package:rune/application/widgets/form_banner.dart';
-import 'package:rune/application/widgets/link_button.dart';
-import 'package:rune/domain/page_model.dart';
 import 'package:rune/domain/user/user_form_validator.dart';
-import 'package:rune/infrastructure/repositories.dart';
-
 import 'package:rune/presentation/auth/widgets/widgets.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -20,66 +13,66 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = AuthBloc(userRepository: context.read<UserRepository>());
-    return BlocProvider(
-      create: (context) => authBloc,
-      child: Scaffold(
-        // resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
+    final authBloc = context.read<AuthBloc>();
+    return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const FormBanner(
-                  header: "Let's Sign you in.",
-                  description:
-                      'Welcome to Rune, a platform where everyone has a voice.',
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const FormBanner(
+                header: "Let's Sign you in.",
+                description:
+                    'Welcome to Rune, a platform where everyone has a voice.',
+              ),
+              const SizedBox(
+                height: 48,
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    AuthInput(
+                      controller: emailController,
+                      hintText: 'Email',
+                      validator: UserFormValidator.validateEmail,
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    PasswordInput(
+                        controller: passwordController,
+                        textHint: 'Password',
+                        validator: UserFormValidator.validatePassword),
+                    const SizedBox(
+                      height: 12,
+                    )
+                  ],
                 ),
-                const SizedBox(
-                  height: 48,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      AuthInput(
-                        controller: emailController,
-                        hintText: 'Email',
-                        validator: UserFormValidator.validateEmail,
+              ),
+              const SizedBox(height: 32),
+              AuthButton(
+                  label: "Sign In",
+                  dispatcher: () {
+                    authBloc.add(
+                      LoginRequest(
+                        emailController.text,
+                        passwordController.text,
                       ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      PasswordInput(
-                          controller: passwordController,
-                          textHint: 'Password',
-                          validator: UserFormValidator.validatePassword),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 32),
-                AuthButton(
-                    label: "Sign In",
-                    dispatcher: () {
-                      authBloc.add(
-                        LoginRequest(
-                          emailController.text,
-                          passwordController.text,
-                        ),
-                      );
-                    },
-                    formKey: _formKey)
-              ],
-            ),
+                    );
+                  },
+                  formKey: _formKey)
+            ],
           ),
         ),
       ),

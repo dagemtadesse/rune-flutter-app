@@ -7,3 +7,4 @@ export 'user/edit_profile_screen.dart';
 export 'user/profile_screen.dart';
 export 'channels/channel_details_screen.dart';
 export 'channels/search_screen.dart';
+export 'post/post_form.dart';

@@ -9,16 +9,16 @@ abstract class CommentEvent extends Equatable {
 }
 
 class LoadComments extends CommentEvent {
-  final List<Comment> comments;
+  final int postId;
 
-  const LoadComments({required this.comments});
-  @override
-  List<Object> get props => [comments];
+  LoadComments(this.postId);
 }
 
 class AddComment extends CommentEvent {
-  final Comment comment;
-  const AddComment({required this.comment});
+  final String comment;
+  final int postId;
+
+  const AddComment(this.postId, {required this.comment});
 
   @override
   List<Object> get props => [comment];
