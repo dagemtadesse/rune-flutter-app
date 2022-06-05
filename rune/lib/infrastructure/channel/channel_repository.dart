@@ -1,9 +1,40 @@
 import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
-import 'package:rune/infrastructure/channel/channel_api_provider.dart';
+import 'package:rune/infrastructure/cache_provider.dart';
+import 'dart:developer' as developer;
 
-class ChannelRepository {
-  final channelAPIProvider = ChannelAPIProvider('localhost:9999');
+import 'package:rune/infrastructure/repositories.dart';
+import 'data_provider/channel_api_provider.dart';
+import 'data_provider/channel_cache_provider.dart';
+
+abstract class ChannelRepo {
+  Future<Expect<List<Channel>>> getChannels(
+      {required User user,
+      int size,
+      int page,
+      String query,
+      String onlyBookmarked});
+
+  Future<Expect<Channel>> getChannel(
+      {required User user, required int channelId});
+
+  Future<Expect<Channel>> pinChannel(
+      {required User user, required int channelId});
+
+  Future<Expect<bool>> removeChannel(
+      {required User user, required int channelId});
+
+  Future<Expect<Channel>> createChannel(UserRepository userRepository,
+      String name, String description, String location, String email);
+}
+
+class ChannelRepository extends ChannelRepo {
+  final ChannelAPIProvider channelAPIProvider;
+  final ChannelCacheProvider channelCacheProvider;
+
+  ChannelRepository(CacheDatabase database, String host)
+      : channelCacheProvider = ChannelCacheProvider(database),
+        channelAPIProvider = ChannelAPIProvider(host);
 
   Future<Expect<List<Channel>>> getChannels(
       {required User user,
@@ -12,8 +43,12 @@ class ChannelRepository {
       String query = " ",
       String onlyBookmarked = ""}) async {
     try {
+      developer.log("request sent");
       final channels = await channelAPIProvider.fetchChannels(
           user: user, size: size, query: query, onlyBookmarked: onlyBookmarked);
+      for (final channel in channels) {
+        channelCacheProvider.addChannel(channel);
+      }
       return Expect(channels, null);
     } catch (error) {
       var message = "Unable to Fetch channels";
@@ -31,6 +66,7 @@ class ChannelRepository {
       {required User user, required int channelId}) async {
     try {
       final channel = await channelAPIProvider.fetchChannel(user, channelId);
+      channelCacheProvider.addChannel(channel);
       return Expect(channel, null);
     } catch (error) {
       var message = "Unable to Fetch the channel";
@@ -75,6 +111,21 @@ class ChannelRepository {
       }
 
       return Expect(null, message);
+    }
+  }
+
+  Future<Expect<Channel>> createChannel(UserRepository userRepository,
+      String name, String description, String location, String email) async {
+    try {
+      final channel = await channelAPIProvider.createChannel(
+          userRepository.loggedInUser,
+          name: name,
+          description: description,
+          email: email);
+      return Expect(channel, null);
+    } catch (error) {
+      return Expect(
+          null, resolveErrorMessage(error, "Unable to create channel"));
     }
   }
 }
