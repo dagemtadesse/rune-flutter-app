@@ -7,6 +7,17 @@ import 'dart:developer' as developer;
 import 'data_provider/comment_api_provider.dart';
 import 'data_provider/comment_cache_provider.dart';
 
+abstract class CommentRepo {
+  Future<Expect<List<Comment>>> fetchComments(
+      UserRepository userRepository, int postId);
+
+  Future<Expect<Comment>> addComment(
+      UserRepository userRepository, int postId, String content);
+
+  Future<Expect<Comment>> voteComment(
+      UserRepository userRepository, int commentId, String type);
+}
+
 String resolveErrorMessage(dynamic error, String msg, [String? altMsg]) {
   String message = msg;
 
@@ -21,7 +32,7 @@ String resolveErrorMessage(dynamic error, String msg, [String? altMsg]) {
   return message;
 }
 
-class CommentRepository {
+class CommentRepository extends CommentRepo {
   final CommentAPIProvider commentAPIProvider;
   final CommentCacheProvider commentCacheProvider;
 

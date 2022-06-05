@@ -7,7 +7,19 @@ import 'dart:developer' as developer;
 import 'data_provider/post_api_provider.dart';
 import 'data_provider/post_cache_provider.dart';
 
-class PostRepository {
+abstract class PostRepo {
+  Future<Expect<List<Post>>> getPosts(
+      UserRepository userRepository, int chanId, int page,
+      [int size]);
+
+  Future<Expect<Post>> createPost(UserRepository userRepository, int channelId,
+      String title, String content);
+
+  Future<Expect<Post>> votePost(
+      UserRepository userRepository, int postId, String type);
+}
+
+class PostRepository extends PostRepo {
   final PostAPIProvider postAPIProvider;
   final PostCacheProvider postCacheProvider;
 
