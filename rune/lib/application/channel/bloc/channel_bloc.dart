@@ -14,16 +14,16 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
   final UserRepository userRepo;
 
   ChannelBloc(this.channelRepo, this.userRepo) : super(ChannelLoading()) {
+    on<ChanneIdle>(((event, emit) => ChannelLoading()));
     on<LoadChannels>(_onLoadChannels);
     on<CreateChannel>(_onCreateChannel);
     on<DeleteChannel>(_onDeleteChannel);
-    on<SearchChannel>(_onSearchChannel);
   }
 
   void _onLoadChannels(LoadChannels event, Emitter<ChannelState> emit) async {
     emit(ChannelLoading());
-    final expectedChannels =
-        await channelRepo.getChannels(user: userRepo.loggedInUser);
+    final expectedChannels = await channelRepo.getChannels(
+        user: userRepo.loggedInUser, query: event.query);
     if (expectedChannels.hasError) {
       emit(ChannleLoadingFailed(expectedChannels.error));
       return;
@@ -52,6 +52,4 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
           channels: List.from(state.channels)..remove(event.channel)));
     }
   }
-
-  void _onSearchChannel(SearchChannel event, Emitter<ChannelState> emit) {}
 }

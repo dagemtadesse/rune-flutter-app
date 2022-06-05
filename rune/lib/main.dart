@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rune/application/blocs.dart';
 import 'package:rune/application/post/bloc/post_bloc.dart';
+import 'package:rune/application/user/bloc/user_bloc.dart';
 import 'package:rune/infrastructure/cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/presentation/channels/create_channel_screen.dart';
-import 'package:rune/presentation/comments/post_comments/post_comments_screen.dart';
+import 'package:rune/presentation/comments/post_comments_screen.dart';
 import 'package:rune/presentation/screens.dart';
 
 bool externalDevice = true;
@@ -40,6 +41,7 @@ class RuneApp extends StatelessWidget {
           BlocProvider<ChannelBloc>(
               create: (_) => ChannelBloc(channelRepository, userRepository)),
           BlocProvider(create: (_) => PostBloc(postRepository, userRepository)),
+          BlocProvider(create: (_) => UserBloc(userRepository)),
           BlocProvider<NavigationCubit>(create: (_) => NavigationCubit()),
         ],
         child: const RunePages(),
@@ -122,6 +124,7 @@ class RunePages extends StatelessWidget {
               return false;
             }
             switch (state.runtimeType) {
+              case CreateChannelRoute:
               case ChangePasswordRoute:
               case BookmarksRoute:
               case PostsRoute:

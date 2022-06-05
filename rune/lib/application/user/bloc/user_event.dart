@@ -17,3 +17,5 @@ class UpdateProfile extends UserEvent {
   @override
   List<Object> get props => [fullName, email];
 }
+
+class RequestAdminAccess extends UserEvent {}

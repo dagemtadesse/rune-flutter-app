@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rune/domain/models.dart';
+import 'package:rune/presentation/channels/widgets/reactions.dart';
 
 import 'package:rune/presentation/comments/widgets/reaction_count.dart';
 import 'package:rune/presentation/post/widgets/card_info.dart';
@@ -30,10 +31,16 @@ class CommentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CardDetails(user: comment.author),
-                SizedBox(height: 12.0),
+                SizedBox(height: 16.0),
                 Text(comment.content),
-                SizedBox(height: 8.0),
-                ReactionCount()
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: SizedBox(height: 4.0),
+                ),
+                ReactButtons(
+                  post: comment,
+                  artifactType: "comment",
+                )
               ],
             ),
           ),

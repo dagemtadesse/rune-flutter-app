@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:rune/domain/models.dart';
-import 'package:rune/infrastructure/channel/channel_api_provider.dart';
-import 'package:rune/infrastructure/user/user_api_provider.dart';
+import 'package:rune/infrastructure/channel/data_provider/channel_api_provider.dart';
+import 'package:rune/infrastructure/user/data_provider/user_api_provider.dart';
+
 import 'package:test/test.dart';
 
 void main() {

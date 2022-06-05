@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/application/blocs.dart';
+import 'package:rune/application/user/bloc/user_bloc.dart';
 import 'package:rune/infrastructure/repositories.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -41,62 +42,77 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 12),
-                Text(
-                  user.fullName,
-                  style: GoogleFonts.poppins(
-                      fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 6),
-                if (user.handle != null)
+          BlocListener<UserBloc, UserState>(
+            listener: (context, state) {
+              var message = "";
+              if (state is AdminAccessGranted) {
+                message = "Access Granted: You can now create channels";
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message)));
+              } else if (state is AdminAccessRefused) {
+                message = "Admin request failed";
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message)));
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 12),
                   Text(
-                    '@${user.handle ?? ""}',
-                    style: GoogleFonts.poppins(fontSize: 15),
+                    user.fullName,
+                    style: GoogleFonts.poppins(
+                        fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
-                SizedBox(height: 16),
-                ListTile(
-                    leading: const Icon(Icons.edit_outlined),
-                    title: const Text("Edit Profile"),
-                    onTap: () => navCubit.toEditProfile(user)),
-                ListTile(
-                    leading: const Icon(Icons.lock_outline),
-                    title: const Text("Change Password"),
-                    onTap: () => navCubit.toChangePasswordScreen(user)),
-                ListTile(
-                    leading: const Icon(Icons.bookmarks_outlined),
-                    title: const Text("Bookmarks"),
-                    onTap: () => navCubit.toBookmarksScreen()),
-                ListTile(
-                    leading: const Icon(Icons.image_outlined),
-                    title: const Text("Posts"),
-                    onTap: () => navCubit.toPostsScreen()),
-                ListTile(
-                    leading: const Icon(Icons.chat_bubble_outline),
-                    title: const Text("Comments"),
-                    onTap: () => navCubit.toCommentsScreen()),
-                if (user.role == 'ADMIN')
+                  const SizedBox(height: 6),
+                  if (user.handle != null)
+                    Text(
+                      '@${user.handle ?? ""}',
+                      style: GoogleFonts.poppins(fontSize: 15),
+                    ),
+                  SizedBox(height: 16),
                   ListTile(
-                    leading: const Icon(Icons.create_new_folder_outlined),
-                    title: const Text("Create Channel"),
-                    onTap: () => navCubit.toCreateChannelScreen(),
-                  ),
-                if (user.role == 'USER')
+                      leading: const Icon(Icons.edit_outlined),
+                      title: const Text("Edit Profile"),
+                      onTap: () => navCubit.toEditProfile(user)),
                   ListTile(
-                    leading: const Icon(Icons.add_moderator_outlined),
-                    title: const Text("Request to become admin"),
+                      leading: const Icon(Icons.lock_outline),
+                      title: const Text("Change Password"),
+                      onTap: () => navCubit.toChangePasswordScreen(user)),
+                  // ListTile(
+                  //     leading: const Icon(Icons.bookmarks_outlined),
+                  //     title: const Text("Bookmarks"),
+                  //     onTap: () => navCubit.toBookmarksScreen()),
+                  // ListTile(
+                  //     leading: const Icon(Icons.image_outlined),
+                  //     title: const Text("Posts"),
+                  //     onTap: () => navCubit.toPostsScreen()),
+                  // ListTile(
+                  //     leading: const Icon(Icons.chat_bubble_outline),
+                  //     title: const Text("Comments"),
+                  //     onTap: () => navCubit.toCommentsScreen()),
+                  if (user.role == 'ADMIN')
+                    ListTile(
+                      leading: const Icon(Icons.create_new_folder_outlined),
+                      title: const Text("Create Channel"),
+                      onTap: () => navCubit.toCreateChannelScreen(),
+                    ),
+                  if (user.role == 'USER')
+                    ListTile(
+                        leading: const Icon(Icons.add_moderator_outlined),
+                        title: const Text("Request to become admin"),
+                        onTap: () {
+                          context.read<UserBloc>().add(RequestAdminAccess());
+                        }),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text("Logout"),
                     onTap: () => navCubit.toSplashScreen(),
                   ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text("Logout"),
-                  onTap: () => navCubit.toSplashScreen(),
-                ),
-              ],
+                ],
+              ),
             ),
           )
         ],

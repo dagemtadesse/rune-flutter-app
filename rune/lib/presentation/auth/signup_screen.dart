@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rune/application/blocs.dart';
-import 'package:rune/application/widgets/expandable_button.dart';
-import 'package:rune/application/widgets/form_banner.dart';
-import 'package:rune/application/widgets/link_button.dart';
 import 'package:rune/domain/user/user_form_validator.dart';
-import 'package:rune/infrastructure/repositories.dart';
-import 'package:rune/presentation/auth/widgets/auth_inputs.dart';
-import 'package:rune/theme.dart';
 
-import 'widgets/auth_button.dart';
+import 'widgets/widgets.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);

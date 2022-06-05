@@ -58,6 +58,7 @@ class UserAPIProvider {
       String? handle,
       String? password,
       String? imagePath,
+      bool? grantAdminStatus,
       required String authToken}) async {
     try {
       final request = http.MultipartRequest(
@@ -70,6 +71,7 @@ class UserAPIProvider {
       if (fullName != null) request.fields['fullName'] = fullName;
       if (password != null) request.fields['password'] = password;
       if (handle != null) request.fields['handle'] = handle;
+      if (grantAdminStatus != null) request.fields['grantAdminStatus'] = "true";
       if (imagePath != null) {
         request.files
             .add(await http.MultipartFile.fromPath("avatar", imagePath));
@@ -77,7 +79,6 @@ class UserAPIProvider {
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
-      print(responseBody);
       final apiResponse = APIResponse.fromJson(jsonDecode(responseBody));
 
       if (apiResponse.status == 'success') {

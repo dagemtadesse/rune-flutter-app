@@ -1,12 +1,13 @@
 import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
 import 'package:rune/infrastructure/cache_provider.dart';
-import 'package:rune/infrastructure/channel/channel_api_provider.dart';
-import 'package:rune/infrastructure/channel/channel_cache_provider.dart';
 import 'dart:developer' as developer;
 
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:test/test.dart';
+
+import 'data_provider/channel_api_provider.dart';
+import 'data_provider/channel_cache_provider.dart';
 
 class ChannelRepository {
   final ChannelAPIProvider channelAPIProvider;
@@ -26,7 +27,9 @@ class ChannelRepository {
       developer.log("request sent");
       final channels = await channelAPIProvider.fetchChannels(
           user: user, size: size, query: query, onlyBookmarked: onlyBookmarked);
-
+      for (final channel in channels) {
+        channelCacheProvider.addChannel(channel);
+      }
       return Expect(channels, null);
     } catch (error) {
       var message = "Unable to Fetch channels";
@@ -44,6 +47,7 @@ class ChannelRepository {
       {required User user, required int channelId}) async {
     try {
       final channel = await channelAPIProvider.fetchChannel(user, channelId);
+      channelCacheProvider.addChannel(channel);
       return Expect(channel, null);
     } catch (error) {
       var message = "Unable to Fetch the channel";

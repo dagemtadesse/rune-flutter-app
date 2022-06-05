@@ -1,105 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rune/application/widgets/hero_dialog_route.dart';
+import 'package:rune/application/vote/bloc/votebloc_bloc.dart';
 import 'package:rune/domain/models.dart';
-import 'package:rune/presentation/comments/post_comments/post_comments_screen.dart';
+import 'package:rune/infrastructure/repositories.dart';
+import 'package:rune/presentation/comments/post_comments_screen.dart';
+import 'package:rune/presentation/comments/widgets/hero_dialog_route.dart';
 import 'package:rune/theme.dart';
 
-class ReactButtons extends StatefulWidget {
-  final Post post;
+class ReactButtons extends StatelessWidget {
+  final dynamic post;
+  final String artifactType;
 
-  const ReactButtons({Key? key, required this.post}) : super(key: key);
-
-  @override
-  State<ReactButtons> createState() => _ReactButtonsState();
-}
-
-class _ReactButtonsState extends State<ReactButtons> {
-  late String _vote;
-  late int _upVote;
-  late int _downVote;
-
-  _ReactButtonsState();
-
-  @override
-  void initState() {
-    super.initState();
-    _vote = widget.post.vote;
-    _upVote = widget.post.upVote;
-    _downVote = widget.post.downVote;
-  }
+  const ReactButtons({Key? key, required this.post, this.artifactType = "post"})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    void react(bool isUpVote) async {
-      // final newVote = isUpVote ? "UP_VOTE" : "DOWN_VOTE";
-      // final vote = (_vote != newVote) ? newVote : "NONE";
-      // // final post = await votePost(repo, widget.post.id, vote);
+    final voteBloc = VoteBloc(
+        context.read<PostRepository>(),
+        context.read<UserRepository>(),
+        context.read<CommentRepository>(),
+        Voted(post));
 
-      // setState(() {
-      //   _vote = post.vote;
-      //   _upVote = post.upVote;
-      //   _downVote = post.downVote;
-      // });
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () async {
-                        react(true);
-                      },
-                      icon: const Icon(Icons.upload),
-                      color: (_vote == "UP_VOTE")
-                          ? Colors.red
-                          : RuneTheme.borderColor),
-                  Text(
-                    _upVote.toString(),
-                    style: GoogleFonts.poppins(),
-                  ),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        react(false);
-                      },
-                      icon: Icon(Icons.download,
-                          color: (_vote == "DOWN_VOTE")
+    return BlocProvider(
+      create: (context) => voteBloc,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                BlocBuilder<VoteBloc, VoteState>(builder: (context, state) {
+                  final post = (state as Voted).artifact;
+                  return Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            final type =
+                                post.vote == "UP_VOTE" ? "NONE" : "UP_VOTE";
+                            voteBloc.add(Vote(type, state.artifact,
+                                artifactType: artifactType));
+                          },
+                          icon: const Icon(Icons.upload),
+                          color: (post.vote == "UP_VOTE")
                               ? Colors.red
-                              : RuneTheme.borderColor)),
-                  Text(
-                    _downVote.toString(),
-                    style: GoogleFonts.poppins(),
-                  )
-                ],
-              ),
-            ],
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                HeroDialogRoute(
-                  builder: (_) => Center(
-                    child: CommentsScreen(
-                      post: widget.post,
+                              : RuneTheme.borderColor),
+                      Text(
+                        post.upVote.toString(),
+                        style: GoogleFonts.poppins(),
+                      ),
+                      const SizedBox(
+                        width: 20.0,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            final type =
+                                post.vote == "DOWN_VOTE" ? "NONE" : "DOWN_VOTE";
+                            voteBloc.add(Vote(type, state.artifact,
+                                artifactType: artifactType));
+                          },
+                          icon: Icon(Icons.download,
+                              color: (state.artifact.vote == "DOWN_VOTE")
+                                  ? Colors.red
+                                  : RuneTheme.borderColor)),
+                      Text(
+                        post.downVote.toString(),
+                        style: GoogleFonts.poppins(),
+                      )
+                    ],
+                  );
+                }),
+              ],
+            ),
+            if (artifactType != "comment")
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    HeroDialogRoute(
+                      builder: (_) => Center(
+                        child: CommentsScreen(
+                          post: post,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            },
-            icon:
-                const Icon(Icons.comment_rounded, color: RuneTheme.borderColor),
-          ),
-        ],
+                  );
+                },
+                icon: const Icon(Icons.comment_rounded,
+                    color: RuneTheme.borderColor),
+              ),
+          ],
+        ),
       ),
     );
   }

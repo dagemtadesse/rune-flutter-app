@@ -11,16 +11,27 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this.userRepository) : super(UserIdle()) {
     on<UpdateProfile>(_onUpdateProfile);
+    on<RequestAdminAccess>(_onRequestAdminAccess);
   }
 
   void _onUpdateProfile(UpdateProfile event, Emitter<UserState> emit) async {
     emit(UserUpdating());
     final updated = await userRepository.updateUser(
-        event.fullName, event.email, event.handle);
+        fullname: event.fullName, email: event.email, handle: event.handle);
     if (updated.hasError) {
       emit(UserUpdateFailed(errMsg: updated.error));
       return;
     }
     emit(UserUpdateSuccessful());
+  }
+
+  void _onRequestAdminAccess(event, emit) async {
+    emit(AdminAccessRequested());
+    final updated = await userRepository.updateUser(makeAdmin: true);
+    if (updated.hasError) {
+      emit(AdminAccessRefused());
+      return;
+    }
+    emit(AdminAccessGranted());
   }
 }

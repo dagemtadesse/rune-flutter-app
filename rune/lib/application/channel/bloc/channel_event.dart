@@ -9,7 +9,8 @@ abstract class ChannelEvent extends Equatable {
 }
 
 class LoadChannels extends ChannelEvent {
-  const LoadChannels();
+  final String query;
+  const LoadChannels({this.query = ""});
 }
 
 class CreateChannel extends ChannelEvent {
@@ -29,12 +30,10 @@ class DeleteChannel extends ChannelEvent {
   List<Object> get props => [channel];
 }
 
-class SearchChannel extends ChannelEvent {
-  final Channel channel;
-
-  const SearchChannel({required this.channel});
-  @override
-  List<Object> get props => [channel];
-}
-
 class ChanneIdle extends ChannelEvent {}
+
+class VoteChannel extends ChannelEvent {
+  final int channelId;
+
+  VoteChannel(this.channelId);
+}

@@ -6,7 +6,7 @@ import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/repositories.dart';
 import 'package:rune/presentation/channels/widgets/centerd_message.dart';
 import 'package:rune/presentation/comments/widgets/comment_text_field.dart';
-import '../widgets/comment_card.dart';
+import 'widgets/comment_card.dart';
 import 'dart:developer' as developer;
 
 class CommentsScreen extends StatelessWidget {

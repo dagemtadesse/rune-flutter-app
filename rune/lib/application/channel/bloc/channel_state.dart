@@ -36,8 +36,12 @@ class ChannelCreated extends ChannelState {
   ChannelCreated(this.channel);
 }
 
+class ChannelVoted extends ChannelState {
+  final Channel channel;
+
+  ChannelVoted(this.channel);
+}
+
 class ChannelCreating extends ChannelState {}
 
 class ChannelDeleted extends ChannelState {}
-
-class SearchSuccessful extends ChannelState {}

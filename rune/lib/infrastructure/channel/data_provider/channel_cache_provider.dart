@@ -19,17 +19,17 @@ class ChannelCacheProvider {
     await db.delete('channels', id);
   }
 
-  Future<void> addChannel(Comment comment) async {
-    final map = comment.toJson();
+  Future<void> addChannel(Channel channel) async {
+    final map = channel.toJson();
     await db.insert('channels', map);
   }
 
-  Future<void> updateChannel(Comment comment) async {
-    await db.update('channels', comment.toJson());
+  Future<void> updateChannel(Channel channel) async {
+    await db.update('channels', channel.toJson());
   }
 
-  Future<List<Channel>> getChannels(int commentId) async {
-    final maps = await db.fetchRows('comments');
+  Future<List<Channel>> getChannels(int channelId) async {
+    final maps = await db.fetchRows('channels');
 
     return maps.map((channel) => Channel.fromJson(channel)).toList();
   }

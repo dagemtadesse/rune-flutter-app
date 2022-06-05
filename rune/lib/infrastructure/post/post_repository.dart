@@ -1,12 +1,10 @@
 import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
 import 'package:rune/infrastructure/cache_provider.dart';
-import 'package:rune/infrastructure/post/post_api_provider.dart';
-import 'package:rune/infrastructure/post/post_cache_provider.dart';
 import 'package:rune/infrastructure/repositories.dart';
-import 'dart:developer' as developer;
 
-import 'package:rune/main.dart';
+import 'data_provider/post_api_provider.dart';
+import 'data_provider/post_cache_provider.dart';
 
 class PostRepository {
   final PostAPIProvider postAPIProvider;
@@ -29,6 +27,7 @@ class PostRepository {
 
       for (var post in posts) {
         post.author = (await userRepository.getUser(post.authorId)).data;
+        postCacheProvider.addPost(post);
       }
 
       return Expect(posts, null);
@@ -51,6 +50,7 @@ class PostRepository {
       final newPost = await postAPIProvider.createPost(
           userRepository.loggedInUser, channelId,
           title: title, content: content);
+      postCacheProvider.addPost(newPost);
       return Expect(newPost, null);
     } catch (error) {
       print(error);
@@ -62,6 +62,19 @@ class PostRepository {
       }
 
       return Expect(null, message);
+    }
+  }
+
+  Future<Expect<Post>> votePost(
+      UserRepository userRepository, int postId, String type) async {
+    try {
+      final updated = await postAPIProvider
+          .vote(userRepository.loggedInUser, postId, action: type);
+      postCacheProvider.updatePosts(updated);
+      return Expect(updated, null);
+    } catch (error) {
+      return Expect(
+          null, resolveErrorMessage(error, "Unable to vote the post"));
     }
   }
 }

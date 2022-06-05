@@ -1,9 +1,11 @@
 import 'package:rune/domain/models.dart';
 import 'package:rune/infrastructure/api_response.dart';
 import 'package:rune/infrastructure/cache_provider.dart';
-import 'package:rune/infrastructure/user/user_api_provider.dart';
-import 'package:rune/infrastructure/user/user_cache_provider.dart';
+import 'package:rune/infrastructure/repositories.dart';
 import 'dart:developer' as developer;
+
+import 'data_provider/user_api_provider.dart';
+import 'data_provider/user_cache_provider.dart';
 
 class UserRepository {
   late User loggedInUser;
@@ -38,22 +40,10 @@ class UserRepository {
     try {
       loggedInUser = await userApiProvider.register(fullname, email, password);
       // save the user to db
-      // userCacheProvider.addUser(loggedInUser!);
+      userCacheProvider.addUser(loggedInUser);
       return Expect(loggedInUser, null);
-    } catch (error, stackTrace) {
-      print(error);
-      print(stackTrace);
-      String message = "Unable to Login";
-      if (error is APIResponse && error.message != null) {
-        message = error.message!;
-        if (error.message!.contains('Database error')) {
-          message = "Email address already taken";
-        }
-      } else if (error is String) {
-        message = error;
-      }
-
-      return Expect(null, message);
+    } catch (error) {
+      return Expect(null, resolveErrorMessage(error, "Unable to Login"));
     }
   }
 
@@ -63,69 +53,47 @@ class UserRepository {
       final currentUser = await userApiProvider.login(email, password);
       loggedInUser = await userApiProvider.update(
           password: newPassword, authToken: currentUser.token!);
+      userCacheProvider.addUser(loggedInUser);
       return Expect(loggedInUser, null);
     } catch (error, stackTrace) {
       developer.log("UserRepository", error: error, stackTrace: stackTrace);
-      String message = "Unable to Change password";
-      if (error is APIResponse && error.message != null) {
-        message = error.message!;
-        if (error.message!.contains('Database error')) {
-          message = "Email address already taken";
-        }
-      }
-      if (error is String) {
-        message = error;
-      }
-
-      return Expect(null, message);
+      return Expect(
+          null, resolveErrorMessage(error, "Unable to change password"));
     }
   }
 
   Future<Expect<User>> getUser(id) async {
     try {
       var user = await userCacheProvider.getUser(id);
-      if (user == null)
+      if (user == null) {
         user = await userApiProvider.fetchUser(id, loggedInUser.token!);
-
+        if (user != null) userCacheProvider.addUser(user);
+      }
       return Expect(user, null);
     } catch (error) {
-      String message = "Unable to Login";
-      if (error is APIResponse && error.message != null) {
-        message = error.message!;
-        if (error.message!.contains('Database error')) {
-          message = "Email address already taken";
-        }
-      } else if (error is String) {
-        message = error;
-      }
-
-      return Expect(null, message);
+      return Expect(null, resolveErrorMessage(error, "unable to find a user"));
     }
   }
 
   Future<Expect<User>> updateUser(
-      String? fullname, String? email, String? handle) async {
+      {String? fullname,
+      String? email,
+      String? handle,
+      bool? makeAdmin}) async {
     try {
       final user = await userApiProvider.update(
-        fullName: fullname,
-        email: email,
-        handle: handle,
-        authToken: loggedInUser.token!,
-      );
-
+          fullName: fullname,
+          email: email,
+          handle: handle,
+          authToken: loggedInUser.token!,
+          grantAdminStatus: makeAdmin);
+      userCacheProvider.updateUser(user);
       return Expect(user, null);
     } catch (error) {
-      String message = "Unable to Login";
-      if (error is APIResponse && error.message != null) {
-        message = error.message!;
-        if (error.message!.contains('Database error')) {
-          message = "Email address already taken";
-        }
-      } else if (error is String) {
-        message = error;
-      }
+      developer.log("$error");
 
-      return Expect(null, message);
+      return Expect(
+          null, resolveErrorMessage(error, "Unable to update a user"));
     }
   }
 }

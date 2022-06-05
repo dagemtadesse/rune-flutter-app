@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../application/widgets/mycomments_appbar.dart';
-import '../../../application/widgets/bottomnav.dart';
-import '../widgets/mycomments_card.dart';
+import 'package:rune/presentation/comments/widgets/mycomments_card.dart';
+import 'package:rune/presentation/comments/widgets/widgets.dart';
 
-class MyComments extends StatelessWidget {
-  const MyComments({Key? key}) : super(key: key);
+class MyChannels extends StatelessWidget {
+  const MyChannels({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
       appBar: buildAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

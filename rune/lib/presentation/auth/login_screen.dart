@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rune/application/blocs.dart';
-import 'package:rune/application/widgets/form_banner.dart';
 import 'package:rune/domain/user/user_form_validator.dart';
 import 'package:rune/presentation/auth/widgets/widgets.dart';
 

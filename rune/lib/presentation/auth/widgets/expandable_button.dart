@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../theme.dart';
+import 'package:rune/theme.dart';
 
 class ExpandableButton extends StatelessWidget {
   final Function()? onPressed;

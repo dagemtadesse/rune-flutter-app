@@ -1,6 +1,7 @@
 import 'package:rune/domain/models.dart';
 import 'dart:async';
 import 'dart:convert';
+import "dart:developer" as developer;
 import 'package:http/http.dart' as http;
 import 'package:rune/infrastructure/api_response.dart';
 
@@ -115,6 +116,7 @@ class CommentAPIProvider {
           headers: {'Authorization': 'Bearer ${user.token}'});
 
       final apiResponse = APIResponse.fromJson(jsonDecode(response.body));
+      developer.log(response.body);
 
       if (apiResponse.status == 'success') {
         return Comment.fromJson(apiResponse.data as Map<String, dynamic>);

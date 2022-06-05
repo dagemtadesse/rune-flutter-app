@@ -13,7 +13,7 @@ class CacheDatabase {
       handle TEXT,
       email TEXT NOT NULL,
       avatar TEXT,
-      updatedAT DATETIME NOT NULL,
+      updatedAT TEXT NOT NULL,
       token TEXT
   )
   ''';
@@ -24,7 +24,7 @@ class CacheDatabase {
     authorId INTEGER NOT NULL,
     postId INTEGER NOT NULL,
     content TEXT NOT NULL,
-    updatedAt DATETIME NOT NULL,
+    updatedAt TEXT NOT NULL,
     upVote INTEGER NOT NULL,
     downVote INTEGER NOT NULL,
     vote Text NOT NULL
@@ -38,7 +38,7 @@ class CacheDatabase {
       name TEXT NOT NULL,
       descritption TEXT NOT NULL,
       pinned bool NOT NULL,
-      updatedAT DATETIME NOT NULL,
+      updatedAT TEXT NOT NULL,
       logo TEXT,
       email TEXT,
       address TEXT
@@ -53,7 +53,7 @@ class CacheDatabase {
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     image TEXT,
-    updatedAt DATETIME NOT NULL,
+    updatedAt TEXT NOT NULL,
     upVote INTEGER NOT NULL,
     downVote INTEGER NOT NULL,
     vote Text NOT NULL
